@@ -1,0 +1,36 @@
+# Environment
+.env
+.env.local
+*.pem
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# Flutter
+go-prepared-app/.dart_tool/
+go-prepared-app/build/
+go-prepared-app/.flutter-plugins
+go-prepared-app/.flutter-plugins-dependencies
+go-prepared-app/.packages
+go-prepared-app/**/*.g.dart
+go-prepared-app/**/*.freezed.dart
+
+# Java / Maven
+go-prepared-api/target/
+
+# Python
+go-prepared-content/.venv/
+go-prepared-content/__pycache__/
+go-prepared-content/**/__pycache__/
+go-prepared-content/*.egg-info/
+go-prepared-content/.pytest_cache/
+go-prepared-content/.mypy_cache/
+
+# Generated content (optional - seeds may be committed)
+# go-prepared-content/output/
+
+# Docker volumes (local dev)
+deployment/docker/data/

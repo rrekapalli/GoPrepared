@@ -1,0 +1,12 @@
+---
+description: Python offline content generator
+globs: go-prepared-content/**
+alwaysApply: false
+---
+
+# Python Content (batch only)
+
+- Typer CLI — no FastAPI/runtime HTTP server
+- Output to `go-prepared-content/output/` as contract-valid JSON
+- Validate with Pydantic before write
+- Run via `scripts/generate-content.ps1`

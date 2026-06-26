@@ -1,0 +1,13 @@
+---
+description: GoPrepared monorepo layout and MVP phases
+alwaysApply: true
+---
+
+# GoPrepared Monorepo
+
+- **go-prepared-app** — Flutter (Android, iOS, Web PWA)
+- **go-prepared-api** — Spring Boot + Spring AI (runtime inference only)
+- **go-prepared-content** — Python CLI batch generator (never HTTP at request time)
+- **contracts/ai/** — JSON Schema for all AI outputs
+
+Never commit secrets. Docs go in `Docs/`.

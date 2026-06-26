@@ -1,0 +1,63 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name __DOMAIN__ _;
+
+    root __WEB_ROOT__;
+    index index.html;
+
+    gzip on;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/wasm;
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:__API_PORT__/api/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 120s;
+    }
+
+    location /swagger-ui/ {
+        proxy_pass http://127.0.0.1:__API_PORT__/swagger-ui/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+    }
+
+    location /api-docs {
+        proxy_pass http://127.0.0.1:__API_PORT__/api-docs;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+    }
+
+    location = /flutter_service_worker.js {
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+        try_files $uri =404;
+    }
+
+    location = /manifest.json {
+        add_header Cache-Control "no-cache";
+        try_files $uri =404;
+    }
+
+    location /assets/ {
+        try_files $uri =404;
+        expires 1h;
+        add_header Cache-Control "public, max-age=3600";
+    }
+
+    location ~* ^/(main\.dart\.js|flutter_bootstrap\.js|flutter\.js)$ {
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+        try_files $uri =404;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|webmanifest|wasm)$ {
+        expires 7d;
+        add_header Cache-Control "public, immutable";
+    }
+}

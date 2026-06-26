@@ -1,0 +1,12 @@
+---
+description: Flutter app conventions
+globs: go-prepared-app/**
+alwaysApply: false
+---
+
+# Flutter App
+
+- Use Riverpod + go_router
+- Theme tokens in `lib/core/theme/`
+- Responsive breakpoints in `lib/core/responsive/breakpoints.dart`
+- Match UI to `app_images/` and `Docs/ui-screen-map.md`

@@ -1,0 +1,9 @@
+---
+description: REST API contract source of truth
+globs: Docs/api-contracts.md
+alwaysApply: false
+---
+
+# API Contracts
+
+Keep `Docs/api-contracts.md` in sync with `ApiController` endpoints.

@@ -1,0 +1,13 @@
+---
+description: Spring API and Spring AI conventions
+globs: go-prepared-api/**
+alwaysApply: false
+---
+
+# Spring API
+
+- Runtime AI inference via Spring AI only — not Python
+- Layering: web → service → repository → domain
+- Maven build (`pom.xml`); run with `.\mvnw.cmd spring-boot:run` (Windows) or `./mvnw spring-boot:run`
+- Flyway for schema; JSONB for card_details.content
+- AI DTOs in `AiContracts` nested records

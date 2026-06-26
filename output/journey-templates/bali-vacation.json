@@ -1,0 +1,105 @@
+{
+  "templateKey": "bali-vacation",
+  "classification": {
+    "journeyType": "Travel",
+    "journeySubtype": "Vacation",
+    "activity": "Vacation",
+    "location": "Bali",
+    "title": "Vacation to Bali",
+    "confidence": 0.95
+  },
+  "cards": [
+    {
+      "title": "Preparation Checklist",
+      "summary": "Essential items for tropical humidity, beach days, and temple visits.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 0,
+      "detail": null
+    },
+    {
+      "title": "Travel Info",
+      "summary": "Local customs, currency, weather, and emergency contacts for Bali.",
+      "category": "Travel",
+      "icon": "info",
+      "displayOrder": 1,
+      "detail": {
+        "heroImageUrl": null,
+        "destinationLabel": "Bali, Indonesia",
+        "dos": [
+          "Dress modestly at temples",
+          "Use both hands for giving/receiving"
+        ],
+        "donts": [
+          "Don't touch people's heads",
+          "Don't use your left hand for eating"
+        ],
+        "currency": {
+          "name": "Indonesian Rupiah",
+          "code": "IDR",
+          "exchangeRateNote": "1 USD \u2248 15,500 IDR"
+        },
+        "weather": "Tropical climate. High 80s\u00b0F (27-32\u00b0C). Humid.",
+        "emergencyContacts": [
+          {
+            "label": "Police",
+            "number": "110"
+          },
+          {
+            "label": "Ambulance",
+            "number": "118"
+          }
+        ],
+        "sections": []
+      }
+    },
+    {
+      "title": "Visa Requirements",
+      "summary": "Entry requirements and visa-on-arrival details for Indonesia.",
+      "category": "Documents",
+      "icon": "visa",
+      "displayOrder": 2,
+      "detail": null
+    },
+    {
+      "title": "Weather Insights",
+      "summary": "Seasonal patterns and packing guidance for tropical humidity.",
+      "category": "Weather",
+      "icon": "weather",
+      "displayOrder": 3,
+      "detail": null
+    },
+    {
+      "title": "Packing",
+      "summary": "Clothing and gear for beaches, temples, and jungle excursions.",
+      "category": "Packing",
+      "icon": "packing",
+      "displayOrder": 4,
+      "detail": null
+    },
+    {
+      "title": "Safety Tips",
+      "summary": "Health, transport, and personal safety recommendations.",
+      "category": "Safety",
+      "icon": "safety",
+      "displayOrder": 5,
+      "detail": null
+    },
+    {
+      "title": "Transportation",
+      "summary": "Getting around Bali \u2014 taxis, scooters, and airport transfers.",
+      "category": "Transport",
+      "icon": "transport",
+      "displayOrder": 6,
+      "detail": null
+    },
+    {
+      "title": "Temple Etiquette",
+      "summary": "Dress codes, offerings, and respectful behavior at sacred sites.",
+      "category": "Culture",
+      "icon": "temple",
+      "displayOrder": 7,
+      "detail": null
+    }
+  ]
+}

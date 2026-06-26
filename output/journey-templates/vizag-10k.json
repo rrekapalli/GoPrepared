@@ -1,0 +1,37 @@
+{
+  "templateKey": "vizag-10k",
+  "classification": {
+    "journeyType": "Sports",
+    "journeySubtype": "10K Run",
+    "activity": "Running",
+    "location": "Vizag",
+    "title": "Vizag 10K Run",
+    "confidence": null
+  },
+  "cards": [
+    {
+      "title": "Training Plan",
+      "summary": "8-week build-up schedule for a coastal 10K race.",
+      "category": "Training",
+      "icon": "running",
+      "displayOrder": 0,
+      "detail": null
+    },
+    {
+      "title": "Race Day Checklist",
+      "summary": "Bib, timing chip, hydration, and warm-up essentials.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 1,
+      "detail": null
+    },
+    {
+      "title": "Nutrition",
+      "summary": "Pre-race meals and hydration strategy for humid conditions.",
+      "category": "Health",
+      "icon": "nutrition",
+      "displayOrder": 2,
+      "detail": null
+    }
+  ]
+}

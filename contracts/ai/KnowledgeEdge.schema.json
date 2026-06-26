@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://goprepared.app/contracts/ai/KnowledgeEdge.schema.json",
+  "title": "KnowledgeEdge",
+  "type": "object",
+  "required": ["sourceName", "targetName", "relationshipType"],
+  "properties": {
+    "sourceName": { "type": "string", "minLength": 1 },
+    "targetName": { "type": "string", "minLength": 1 },
+    "relationshipType": {
+      "type": "string",
+      "enum": ["HAS_SUBTYPE", "HAS_ACTIVITY", "LOCATED_IN", "RELATED_TO", "REQUIRES"]
+    }
+  },
+  "additionalProperties": false
+}

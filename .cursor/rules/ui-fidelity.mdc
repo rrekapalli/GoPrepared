@@ -1,0 +1,9 @@
+---
+description: UI fidelity to mockups
+globs: go-prepared-app/lib/features/**
+alwaysApply: false
+---
+
+# UI Fidelity
+
+Match layouts and colors from `app_images/`. Primary blue `#1565C0`. Serif headings via Playfair Display.

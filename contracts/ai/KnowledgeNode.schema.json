@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://goprepared.app/contracts/ai/KnowledgeNode.schema.json",
+  "title": "KnowledgeNode",
+  "type": "object",
+  "required": ["nodeType", "name", "description"],
+  "properties": {
+    "nodeType": {
+      "type": "string",
+      "enum": ["JOURNEY_TYPE", "JOURNEY_SUBTYPE", "ACTIVITY", "LOCATION", "TOPIC"]
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "description": { "type": "string" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

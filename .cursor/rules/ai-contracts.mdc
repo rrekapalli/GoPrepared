@@ -1,0 +1,12 @@
+---
+description: AI JSON schema first development
+globs: contracts/**,**/ai/**,**/prompts/**
+alwaysApply: false
+---
+
+# AI Contracts
+
+1. Update `contracts/ai/*.schema.json` first
+2. Sync Python, Java (`AiContracts`), Flutter models
+3. No markdown in persisted card content — use `PreparationCard.detail` JSON
+4. Runtime: Spring AI; Offline: Python CLI

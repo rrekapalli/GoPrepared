@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://goprepared.app/contracts/ai/CommunityInsight.schema.json",
+  "title": "CommunityInsight",
+  "type": "object",
+  "required": ["insightType", "title", "content"],
+  "properties": {
+    "insightType": {
+      "type": "string",
+      "enum": ["TIP", "WARNING", "EXPERIENCE", "UPDATE"]
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "content": { "type": "string", "minLength": 1 },
+    "journeyContext": { "type": "string" },
+    "severity": {
+      "type": "string",
+      "enum": ["LOW", "MEDIUM", "HIGH", "SEVERE"]
+    }
+  },
+  "additionalProperties": false
+}

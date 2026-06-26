@@ -1,0 +1,23 @@
+[
+  {
+    "insightType": "TIP",
+    "title": "Local SIM cards are 50% cheaper outside the airport",
+    "content": "Buy a local SIM card from a convenience store in the city rather than at arrivals.",
+    "journeyContext": "BALI VACATION",
+    "severity": null
+  },
+  {
+    "insightType": "WARNING",
+    "title": "Temple dress codes",
+    "content": "Sarongs are required at Uluwatu and other major temples. Rent on-site costs 3x more.",
+    "journeyContext": "BALI VACATION",
+    "severity": "SEVERE"
+  },
+  {
+    "insightType": "EXPERIENCE",
+    "title": "Sunrise trek at Mount Batur",
+    "content": "Book the day before \u2014 morning slots fill quickly during peak season.",
+    "journeyContext": "BALI VACATION",
+    "severity": null
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "templateKey": "angiogram",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Medical Procedure",
+    "activity": "Angiogram",
+    "location": "",
+    "title": "Going for an Angiogram",
+    "confidence": null
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Fasting, medication adjustments, and what to bring.",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": null
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, activity restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 1,
+      "detail": null
+    }
+  ]
+}

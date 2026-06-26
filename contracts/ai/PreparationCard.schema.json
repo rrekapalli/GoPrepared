@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://goprepared.app/contracts/ai/PreparationCard.schema.json",
+  "title": "PreparationCard",
+  "type": "object",
+  "required": ["title", "summary", "category", "icon", "displayOrder"],
+  "properties": {
+    "title": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string", "minLength": 1 },
+    "category": { "type": "string", "minLength": 1 },
+    "icon": { "type": "string", "minLength": 1 },
+    "displayOrder": { "type": "integer", "minimum": 0 },
+    "detail": { "$ref": "#/$defs/CardDetail" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "CardDetail": {
+      "type": "object",
+      "properties": {
+        "heroImageUrl": { "type": "string" },
+        "destinationLabel": { "type": "string" },
+        "dos": { "type": "array", "items": { "type": "string" } },
+        "donts": { "type": "array", "items": { "type": "string" } },
+        "currency": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "code": { "type": "string" },
+            "exchangeRateNote": { "type": "string" }
+          }
+        },
+        "weather": { "type": "string" },
+        "emergencyContacts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "number"],
+            "properties": {
+              "label": { "type": "string" },
+              "number": { "type": "string" }
+            }
+          }
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["title", "body"],
+            "properties": {
+              "title": { "type": "string" },
+              "body": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

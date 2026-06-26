@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Travel",
+    "icon": "airplane",
+    "journeyCount": 128
+  },
+  {
+    "name": "Sports",
+    "icon": "soccer",
+    "journeyCount": 64
+  },
+  {
+    "name": "Education",
+    "icon": "graduation",
+    "journeyCount": 96
+  },
+  {
+    "name": "Career",
+    "icon": "briefcase",
+    "journeyCount": 42
+  },
+  {
+    "name": "Finance",
+    "icon": "bank",
+    "journeyCount": 38
+  },
+  {
+    "name": "Health",
+    "icon": "heart",
+    "journeyCount": 55
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://goprepared.app/contracts/ai/ChecklistItem.schema.json",
+  "title": "ChecklistItem",
+  "type": "object",
+  "required": ["title", "description", "category", "displayOrder"],
+  "properties": {
+    "title": { "type": "string", "minLength": 1 },
+    "description": { "type": "string" },
+    "category": { "type": "string", "minLength": 1 },
+    "displayOrder": { "type": "integer", "minimum": 0 },
+    "completed": { "type": "boolean", "default": false }
+  },
+  "additionalProperties": false
+}

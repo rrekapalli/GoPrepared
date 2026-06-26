@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ClassifyResponse",
+  "type": "object",
+  "required": ["classification"],
+  "properties": {
+    "classification": { "$ref": "../JourneyClassification.schema.json" }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,86 @@
+{
+  "nodes": [
+    {
+      "nodeType": "JOURNEY_TYPE",
+      "name": "Travel",
+      "description": "Travel preparations",
+      "metadata": {}
+    },
+    {
+      "nodeType": "JOURNEY_SUBTYPE",
+      "name": "Vacation",
+      "description": "Leisure travel",
+      "metadata": {}
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Bali",
+      "description": "Indonesia island destination",
+      "metadata": {}
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Visa",
+      "description": "Entry and visa requirements",
+      "metadata": {}
+    },
+    {
+      "nodeType": "JOURNEY_TYPE",
+      "name": "Sports",
+      "description": "Athletic events",
+      "metadata": {}
+    },
+    {
+      "nodeType": "JOURNEY_SUBTYPE",
+      "name": "Marathon",
+      "description": "Long-distance running",
+      "metadata": {}
+    },
+    {
+      "nodeType": "JOURNEY_TYPE",
+      "name": "Health",
+      "description": "Medical and wellness",
+      "metadata": {}
+    },
+    {
+      "nodeType": "JOURNEY_TYPE",
+      "name": "Education",
+      "description": "Exams and learning",
+      "metadata": {}
+    },
+    {
+      "nodeType": "JOURNEY_TYPE",
+      "name": "Career",
+      "description": "Professional milestones",
+      "metadata": {}
+    },
+    {
+      "nodeType": "JOURNEY_TYPE",
+      "name": "Finance",
+      "description": "Financial preparation",
+      "metadata": {}
+    }
+  ],
+  "edges": [
+    {
+      "sourceName": "Travel",
+      "targetName": "Vacation",
+      "relationshipType": "HAS_SUBTYPE"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Bali",
+      "relationshipType": "LOCATED_IN"
+    },
+    {
+      "sourceName": "Bali",
+      "targetName": "Visa",
+      "relationshipType": "REQUIRES"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "Marathon",
+      "relationshipType": "HAS_SUBTYPE"
+    }
+  ]
+}

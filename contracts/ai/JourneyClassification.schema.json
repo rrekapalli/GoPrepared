@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://goprepared.app/contracts/ai/JourneyClassification.schema.json",
+  "title": "JourneyClassification",
+  "type": "object",
+  "required": ["journeyType", "journeySubtype", "activity", "location", "title"],
+  "properties": {
+    "journeyType": { "type": "string", "minLength": 1 },
+    "journeySubtype": { "type": "string", "minLength": 1 },
+    "activity": { "type": "string", "minLength": 1 },
+    "location": { "type": "string" },
+    "title": { "type": "string", "minLength": 1 },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+  },
+  "additionalProperties": false
+}
