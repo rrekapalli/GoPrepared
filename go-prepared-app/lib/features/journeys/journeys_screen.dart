@@ -22,7 +22,6 @@ class _JourneysScreenState extends ConsumerState<JourneysScreen> {
   bool _usingDemo = false;
   String _search = '';
   _JourneyFilter _filter = _JourneyFilter.recent;
-  final _bottomSearchController = TextEditingController();
 
   @override
   void initState() {
@@ -32,7 +31,6 @@ class _JourneysScreenState extends ConsumerState<JourneysScreen> {
 
   @override
   void dispose() {
-    _bottomSearchController.dispose();
     super.dispose();
   }
 
@@ -77,9 +75,6 @@ class _JourneysScreenState extends ConsumerState<JourneysScreen> {
     };
   }
 
-  void _applyBottomSearch() {
-    setState(() => _search = _bottomSearchController.text.trim());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +136,7 @@ class _JourneysScreenState extends ConsumerState<JourneysScreen> {
                                 const SizedBox(height: 12),
                                 Text(
                                   _journeys.isEmpty
-                                      ? 'No journeys yet. Start from Discover.'
+                                      ? 'No journeys yet. Start from Home.'
                                       : 'No journeys match your search.',
                                   style: TextStyle(color: Colors.grey.shade500, fontSize: 14),
                                   textAlign: TextAlign.center,
@@ -153,10 +148,6 @@ class _JourneysScreenState extends ConsumerState<JourneysScreen> {
                       ],
                     ),
           ),
-          _BottomSearchBar(
-            controller: _bottomSearchController,
-            onSubmit: _applyBottomSearch,
-          ),
         ],
       ),
       floatingActionButton: Padding(
@@ -164,7 +155,7 @@ class _JourneysScreenState extends ConsumerState<JourneysScreen> {
         child: FloatingActionButton(
           backgroundColor: AppColors.primary,
           elevation: 4,
-          onPressed: () => context.go('/discover'),
+          onPressed: () => context.go('/home'),
           child: const Icon(Icons.add, color: Colors.white, size: 28),
         ),
       ),
@@ -261,61 +252,6 @@ class _FilterChip extends StatelessWidget {
   }
 }
 
-class _BottomSearchBar extends StatelessWidget {
-  const _BottomSearchBar({required this.controller, required this.onSubmit});
-  final TextEditingController controller;
-  final VoidCallback onSubmit;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: const Color(0xFFF5F5F5),
-                borderRadius: BorderRadius.circular(28),
-                border: Border.all(color: Colors.grey.shade300),
-              ),
-              child: TextField(
-                controller: controller,
-                style: const TextStyle(fontSize: 14, color: Colors.black87),
-                decoration: InputDecoration(
-                  hintText: 'Search journeys',
-                  hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 14),
-                  border: InputBorder.none,
-                  isDense: true,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                ),
-                textInputAction: TextInputAction.search,
-                onSubmitted: (_) => onSubmit(),
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Material(
-            color: AppColors.primary,
-            borderRadius: BorderRadius.circular(12),
-            child: InkWell(
-              onTap: onSubmit,
-              borderRadius: BorderRadius.circular(12),
-              child: const SizedBox(
-                width: 44,
-                height: 44,
-                child: Icon(Icons.send_rounded, color: Colors.white, size: 20),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _JourneyCard extends StatelessWidget {
   const _JourneyCard({required this.journey});
   final JourneyModel journey;
@@ -349,7 +285,7 @@ class _JourneyCard extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap: () => context.go('/journeys/${journey.id}/deck'),
+        onTap: () => context.go('/journeys/${journey.id}'),
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Row(
@@ -394,11 +330,13 @@ class _JourneyCard extends StatelessWidget {
                           icon: Icon(Icons.more_vert, size: 20, color: Colors.grey.shade500),
                           padding: EdgeInsets.zero,
                           itemBuilder: (_) => [
+                            const PopupMenuItem(value: 'hub', child: Text('Open hub')),
                             const PopupMenuItem(value: 'deck', child: Text('Open deck')),
                             const PopupMenuItem(value: 'checklist', child: Text('Checklist')),
                           ],
                           onSelected: (v) {
-                            if (v == 'deck') context.go('/journeys/${journey.id}/deck');
+                            if (v == 'hub') context.go('/journeys/${journey.id}');
+                            if (v == 'deck') context.push('/journeys/${journey.id}/deck');
                             if (v == 'checklist') context.push('/journeys/${journey.id}/checklist');
                           },
                         ),
@@ -426,7 +364,7 @@ class _JourneyCard extends StatelessWidget {
                       isLive: _isLive,
                       isComplete: _isComplete,
                       actionLabel: _actionLabel,
-                      onAction: () => context.go('/journeys/${journey.id}/deck'),
+                      onAction: () => context.go('/journeys/${journey.id}'),
                     ),
                   ],
                 ),

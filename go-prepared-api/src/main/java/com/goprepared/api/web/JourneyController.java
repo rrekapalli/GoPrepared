@@ -39,6 +39,12 @@ public class JourneyController {
         return journeyService.listJourneys(SecuritySupport.requireUser(user));
     }
 
+    @GetMapping("/similar")
+    public List<SimilarJourneyResponse> similarJourneys(
+            @AuthenticationPrincipal User user, @RequestParam String query) {
+        return journeyService.findSimilar(SecuritySupport.requireUser(user), query);
+    }
+
     @GetMapping("/{id}")
     public JourneyResponse getJourney(@AuthenticationPrincipal User user, @PathVariable Long id) {
         return journeyService.getJourney(SecuritySupport.requireUser(user), id);

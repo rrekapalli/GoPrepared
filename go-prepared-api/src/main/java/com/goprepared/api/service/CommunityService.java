@@ -27,10 +27,32 @@ public class CommunityService {
     private final JourneyRepository journeyRepository;
 
     @Transactional(readOnly = true)
-    public List<CommunityInsightResponse> listInsights() {
+    public List<CommunityInsightResponse> listInsights(Long journeyId) {
+        if (journeyId == null) {
+            return communityInsightRepository.findByStatusOrderByVotesDesc("ACTIVE").stream()
+                    .map(this::toResponse)
+                    .toList();
+        }
+        Journey journey = journeyRepository
+                .findById(journeyId)
+                .orElseThrow(() -> new EntityNotFoundException("Journey not found"));
+        String title = journey.getTitle() != null ? journey.getTitle().toLowerCase() : "";
+        String query = journey.getOriginalQuery() != null ? journey.getOriginalQuery().toLowerCase() : "";
         return communityInsightRepository.findByStatusOrderByVotesDesc("ACTIVE").stream()
+                .filter(i -> matchesJourney(i, journey, title, query))
                 .map(this::toResponse)
                 .toList();
+    }
+
+    private boolean matchesJourney(CommunityInsightEntity insight, Journey journey, String title, String query) {
+        if (insight.getJourney() != null && insight.getJourney().getId().equals(journey.getId())) {
+            return true;
+        }
+        String context = insight.getJourneyContext() != null ? insight.getJourneyContext().toLowerCase() : "";
+        if (!context.isEmpty() && (title.contains(context) || context.contains(title) || query.contains(context))) {
+            return true;
+        }
+        return false;
     }
 
     @Transactional

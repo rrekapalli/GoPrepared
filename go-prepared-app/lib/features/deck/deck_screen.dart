@@ -12,8 +12,9 @@ import '../../shared/widgets/ui_helpers.dart';
 
 /// Preparation deck — stacked cards for each aspect of a journey (preparation_deck mockup).
 class DeckScreen extends ConsumerStatefulWidget {
-  const DeckScreen({super.key, required this.journeyId});
+  const DeckScreen({super.key, required this.journeyId, this.initialCardIndex});
   final int journeyId;
+  final int? initialCardIndex;
 
   @override
   ConsumerState<DeckScreen> createState() => _DeckScreenState();
@@ -22,7 +23,7 @@ class DeckScreen extends ConsumerStatefulWidget {
 class _DeckScreenState extends ConsumerState<DeckScreen> {
   JourneyModel? _journey;
   List<CardModel> _cards = [];
-  int _index = 0;
+  late int _index;
   bool _loading = true;
 
   static const _layerStep = 28.0;
@@ -31,6 +32,7 @@ class _DeckScreenState extends ConsumerState<DeckScreen> {
   @override
   void initState() {
     super.initState();
+    _index = widget.initialCardIndex ?? 0;
     _load();
   }
 
@@ -42,6 +44,7 @@ class _DeckScreenState extends ConsumerState<DeckScreen> {
         setState(() {
           _journey = journey;
           _cards = cards;
+          if (_index >= cards.length) _index = cards.isEmpty ? 0 : cards.length - 1;
           _loading = false;
         });
       }
@@ -52,7 +55,7 @@ class _DeckScreenState extends ConsumerState<DeckScreen> {
       final repo = ref.read(journeyRepositoryProvider);
       final journey = await repo.getJourney(widget.journeyId);
       final cards = await repo.getCards(widget.journeyId);
-      if (mounted) setState(() { _journey = journey; _cards = cards; _loading = false; });
+      if (mounted) setState(() { _journey = journey; _cards = cards; if (_index >= cards.length) _index = cards.isEmpty ? 0 : cards.length - 1; _loading = false; });
     } catch (_) {
       if (mounted) setState(() => _loading = false);
     }
@@ -66,7 +69,7 @@ class _DeckScreenState extends ConsumerState<DeckScreen> {
     if (_index > 0) setState(() => _index--);
   }
 
-  void _openCard(CardModel card) => context.push('/cards/${card.id}');
+  void _openCard(CardModel card) => context.push('/cards/${card.id}?journeyId=${widget.journeyId}');
 
   String _pageHint(JourneyModel? j, int cardCount) {
     final loc = j?.location;
@@ -99,10 +102,10 @@ class _DeckScreenState extends ConsumerState<DeckScreen> {
             AppTopHeader(
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back, color: AppColors.primary),
-                onPressed: () => popOrGo(context, '/journeys'),
+                onPressed: () => popOrGo(context, '/journeys/${widget.journeyId}'),
               ),
             ),
-            const Expanded(child: Center(child: Text('No cards yet. Generate from Discover.'))),
+            const Expanded(child: Center(child: Text('No cards yet. Generate from Home.'))),
           ],
         ),
       );
@@ -119,7 +122,21 @@ class _DeckScreenState extends ConsumerState<DeckScreen> {
           AppTopHeader(
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: AppColors.primary),
-              onPressed: () => popOrGo(context, '/journeys'),
+              onPressed: () => popOrGo(context, '/journeys/${widget.journeyId}'),
+            ),
+            onNotifications: null,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 0, 12, 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton.icon(
+                  onPressed: () => context.push('/journeys/${widget.journeyId}/checklist'),
+                  icon: const Icon(Icons.checklist, size: 18, color: AppColors.primary),
+                  label: const Text('Checklist', style: TextStyle(color: AppColors.primary)),
+                ),
+              ],
             ),
           ),
           Expanded(
@@ -236,14 +253,12 @@ class _DeckScreenState extends ConsumerState<DeckScreen> {
               ),
             ),
           ),
-          _DeckBottomNav(currentPath: '/journeys'),
         ],
       ),
     );
   }
 }
 
-/// Tilted strip behind the front card — category/title visible at the top edge.
 class _DeckPeekCard extends StatelessWidget {
   const _DeckPeekCard({
     required this.card,
@@ -455,85 +470,6 @@ class _PageDots extends StatelessWidget {
           ),
         );
       }),
-    );
-  }
-}
-
-/// Bottom nav on deck (mockup shows full app chrome; Journeys tab highlighted).
-class _DeckBottomNav extends StatelessWidget {
-  const _DeckBottomNav({required this.currentPath});
-  final String currentPath;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(top: BorderSide(color: Colors.grey.shade200)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, -2))],
-      ),
-      child: SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _NavTab(icon: Icons.home_outlined, selectedIcon: Icons.home, label: 'Discover', selected: currentPath == '/discover', onTap: () => context.go('/discover')),
-              _NavTab(icon: Icons.explore_outlined, selectedIcon: Icons.explore, label: 'Journeys', selected: currentPath == '/journeys', onTap: () => context.go('/journeys')),
-              _NavTab(icon: Icons.menu_book_outlined, selectedIcon: Icons.menu_book, label: 'Knowledge', selected: false, onTap: () => context.go('/knowledge')),
-              _NavTab(icon: Icons.people_outline, selectedIcon: Icons.people, label: 'Community', selected: false, onTap: () => context.go('/community')),
-              _NavTab(icon: Icons.person_outline, selectedIcon: Icons.person, label: 'Me', selected: false, onTap: () => context.go('/me')),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _NavTab extends StatelessWidget {
-  const _NavTab({
-    required this.icon,
-    required this.selectedIcon,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final IconData selectedIcon;
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(24),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: selected ? BoxDecoration(color: AppColors.primary, shape: BoxShape.circle) : null,
-              child: Icon(selected ? selectedIcon : icon, size: 20, color: selected ? Colors.white : Colors.grey.shade600),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
-                color: selected ? AppColors.primary : Colors.grey.shade600,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

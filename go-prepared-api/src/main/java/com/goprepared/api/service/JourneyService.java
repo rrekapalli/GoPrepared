@@ -1,5 +1,8 @@
 package com.goprepared.api.service;
 
+import com.goprepared.api.ai.rag.StaticContentRetrievalService;
+import com.goprepared.api.domain.ContentTemplate;
+import com.goprepared.api.ai.dto.AiContracts.CardDetail;
 import com.goprepared.api.ai.dto.AiContracts.JourneyClassification;
 import com.goprepared.api.ai.dto.AiContracts.PreparationCard;
 import com.goprepared.api.ai.dto.AiContracts.UserQueryResponse;
@@ -10,7 +13,10 @@ import com.goprepared.api.web.dto.ApiDtos.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.goprepared.api.ai.dto.AiContracts.CardDetail;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +37,7 @@ public class JourneyService {
     private final CardGenerationWorkflow cardGenerationWorkflow;
     private final CardExpansionWorkflow cardExpansionWorkflow;
     private final UserQueryWorkflow userQueryWorkflow;
+    private final StaticContentRetrievalService staticContent;
     private final ObjectMapper objectMapper;
 
     @Transactional
@@ -98,6 +105,69 @@ public class JourneyService {
         return cardRepository.findByJourneyOrderByDisplayOrderAsc(journey).stream()
                 .map(this::toCardSummary)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<SimilarJourneyResponse> findSimilar(User user, String query) {
+        String q = query.toLowerCase(Locale.ROOT).trim();
+        Map<Long, SimilarJourneyResponse> results = new LinkedHashMap<>();
+
+        for (Journey journey : journeyRepository.findByUserOrderByCreatedAtDesc(user)) {
+            if (matchesQuery(q, journey.getTitle(), journey.getOriginalQuery()) && !results.containsKey(journey.getId())) {
+                results.put(
+                        journey.getId(),
+                        new SimilarJourneyResponse(
+                                journey.getId(),
+                                journey.getTitle(),
+                                journey.getOriginalQuery(),
+                                "journey",
+                                journey.getProgressPercent()));
+            }
+        }
+
+        for (ContentTemplate template : staticContent.findAllTemplates()) {
+            if (matchesQuery(q, templateTitle(template), template.getLocation(), template.getTemplateKey())) {
+                long syntheticId = -template.getId();
+                if (!results.containsKey(syntheticId)) {
+                    String title = templateTitle(template);
+                    if (title.isBlank()) {
+                        title = template.getTemplateKey();
+                    }
+                    results.put(
+                            syntheticId,
+                            new SimilarJourneyResponse(syntheticId, title, title, "template", 0));
+                }
+            }
+        }
+
+        return new ArrayList<>(results.values());
+    }
+
+    private boolean matchesQuery(String query, String... fields) {
+        for (String field : fields) {
+            if (field == null || field.isBlank()) {
+                continue;
+            }
+            String f = field.toLowerCase(Locale.ROOT);
+            if (query.contains(f) || f.contains(query)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @SuppressWarnings("unchecked")
+    private String templateTitle(ContentTemplate template) {
+        Map<String, Object> payload = template.getPayload();
+        if (payload == null) {
+            return "";
+        }
+        Object classification = payload.get("classification");
+        if (!(classification instanceof Map<?, ?> map)) {
+            return "";
+        }
+        Object title = map.get("title");
+        return title != null ? title.toString() : "";
     }
 
     @Transactional(readOnly = true)

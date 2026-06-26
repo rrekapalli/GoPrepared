@@ -209,6 +209,62 @@ class ChecklistModel {
       );
 }
 
+class SimilarJourneyModel {
+  SimilarJourneyModel({
+    required this.id,
+    required this.title,
+    required this.originalQuery,
+    required this.source,
+    this.progressPercent = 0,
+  });
+
+  final int id;
+  final String title;
+  final String originalQuery;
+  final String source;
+  final int progressPercent;
+
+  factory SimilarJourneyModel.fromJson(Map<String, dynamic> json) => SimilarJourneyModel(
+        id: json['id'] as int,
+        title: json['title'] as String? ?? '',
+        originalQuery: json['originalQuery'] as String? ?? '',
+        source: json['source'] as String? ?? 'journey',
+        progressPercent: json['progressPercent'] as int? ?? 0,
+      );
+
+  bool get isExistingJourney => source == 'journey';
+}
+
+class KnowledgeTemplateModel {
+  KnowledgeTemplateModel({
+    required this.templateKey,
+    required this.title,
+    required this.journeyType,
+    this.journeySubtype,
+    this.activity,
+    this.location,
+    this.suggestedQuery,
+  });
+
+  final String templateKey;
+  final String title;
+  final String journeyType;
+  final String? journeySubtype;
+  final String? activity;
+  final String? location;
+  final String? suggestedQuery;
+
+  factory KnowledgeTemplateModel.fromJson(Map<String, dynamic> json) => KnowledgeTemplateModel(
+        templateKey: json['templateKey'] as String? ?? '',
+        title: json['title'] as String? ?? '',
+        journeyType: json['journeyType'] as String? ?? '',
+        journeySubtype: json['journeySubtype'] as String?,
+        activity: json['activity'] as String?,
+        location: json['location'] as String?,
+        suggestedQuery: json['suggestedQuery'] as String?,
+      );
+}
+
 class KnowledgeCategoryModel {
   KnowledgeCategoryModel({required this.name, required this.icon, required this.journeyCount});
 

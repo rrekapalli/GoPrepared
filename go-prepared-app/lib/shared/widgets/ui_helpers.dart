@@ -10,6 +10,7 @@ class QueryBar extends StatefulWidget {
     this.loading = false,
     this.leadingIcon = Icons.search,
     this.showAiButton = true,
+    this.initialText,
   });
 
   final String hint;
@@ -17,13 +18,20 @@ class QueryBar extends StatefulWidget {
   final bool loading;
   final IconData leadingIcon;
   final bool showAiButton;
+  final String? initialText;
 
   @override
   State<QueryBar> createState() => _QueryBarState();
 }
 
 class _QueryBarState extends State<QueryBar> {
-  final _controller = TextEditingController();
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.initialText);
+  }
 
   @override
   void dispose() {

@@ -99,6 +99,11 @@ class JourneyRepository {
     return ChecklistItemModel.fromJson(res.data as Map<String, dynamic>);
   }
 
+  Future<List<SimilarJourneyModel>> findSimilarJourneys(String query) async {
+    final res = await _dio.get('/journeys/similar', queryParameters: {'query': query});
+    return (res.data as List).map((e) => SimilarJourneyModel.fromJson(e as Map<String, dynamic>)).toList();
+  }
+
   Future<ProfileStatsModel> profileStats() async {
     final journeys = await listJourneys();
     var cardsCompleted = 0;
@@ -132,9 +137,18 @@ class KnowledgeRepository {
     return (res.data as List).map((e) => KnowledgeCategoryModel.fromJson(e as Map<String, dynamic>)).toList();
   }
 
-  Future<List<KnowledgeNodeModel>> nodes() async {
-    final res = await _dio.get('/knowledge/nodes');
+  Future<List<KnowledgeNodeModel>> nodes({String? category}) async {
+    final res = await _dio.get('/knowledge/nodes', queryParameters: {
+      if (category != null && category.isNotEmpty) 'category': category,
+    });
     return (res.data as List).map((e) => KnowledgeNodeModel.fromJson(e as Map<String, dynamic>)).toList();
+  }
+
+  Future<List<KnowledgeTemplateModel>> templates({String? journeyType}) async {
+    final res = await _dio.get('/knowledge/templates', queryParameters: {
+      if (journeyType != null && journeyType.isNotEmpty) 'journeyType': journeyType,
+    });
+    return (res.data as List).map((e) => KnowledgeTemplateModel.fromJson(e as Map<String, dynamic>)).toList();
   }
 
   Future<List<KnowledgeEdgeModel>> relationships() async {
@@ -142,10 +156,14 @@ class KnowledgeRepository {
     return (res.data as List).map((e) => KnowledgeEdgeModel.fromJson(e as Map<String, dynamic>)).toList();
   }
 
-  Future<List<CommunityInsightModel>> community() async {
-    final res = await _dio.get('/community');
+  Future<List<CommunityInsightModel>> community({int? journeyId}) async {
+    final res = await _dio.get('/community', queryParameters: {
+      if (journeyId != null) 'journeyId': journeyId,
+    });
     return (res.data as List).map((e) => CommunityInsightModel.fromJson(e as Map<String, dynamic>)).toList();
   }
+
+  Future<List<CommunityInsightModel>> communityForJourney(int journeyId) => community(journeyId: journeyId);
 
   Future<CommunityInsightModel> contribute({
     required String insightType,

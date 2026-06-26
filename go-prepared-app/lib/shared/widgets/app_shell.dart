@@ -71,7 +71,7 @@ class AppShell extends ConsumerWidget {
   const AppShell({super.key, required this.navigationShell});
   final StatefulNavigationShell navigationShell;
 
-  static const tabs = ['/discover', '/journeys', '/knowledge', '/community', '/me'];
+  static const tabs = ['/home', '/journeys', '/explore', '/me'];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -104,7 +104,7 @@ class AppShell extends ConsumerWidget {
                 _NavItem(
                   icon: Icons.home_outlined,
                   selectedIcon: Icons.home,
-                  label: 'Discover',
+                  label: 'Home',
                   selected: navigationShell.currentIndex == 0,
                   onTap: () => navigationShell.goBranch(0),
                 ),
@@ -118,23 +118,16 @@ class AppShell extends ConsumerWidget {
                 _NavItem(
                   icon: Icons.menu_book_outlined,
                   selectedIcon: Icons.menu_book,
-                  label: 'Knowledge',
+                  label: 'Explore',
                   selected: navigationShell.currentIndex == 2,
                   onTap: () => navigationShell.goBranch(2),
-                ),
-                _NavItem(
-                  icon: Icons.people_outline,
-                  selectedIcon: Icons.people,
-                  label: 'Community',
-                  selected: navigationShell.currentIndex == 3,
-                  onTap: () => navigationShell.goBranch(3),
                 ),
                 _NavItem(
                   icon: Icons.person_outline,
                   selectedIcon: Icons.person,
                   label: 'Me',
-                  selected: navigationShell.currentIndex == 4,
-                  onTap: () => navigationShell.goBranch(4),
+                  selected: navigationShell.currentIndex == 3,
+                  onTap: () => navigationShell.goBranch(3),
                 ),
               ],
             ),

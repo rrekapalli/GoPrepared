@@ -21,8 +21,8 @@ public class CommunityController {
     private final CommunityService communityService;
 
     @GetMapping
-    public List<CommunityInsightResponse> list() {
-        return communityService.listInsights();
+    public List<CommunityInsightResponse> list(@RequestParam(required = false) Long journeyId) {
+        return communityService.listInsights(journeyId);
     }
 
     @PostMapping("/contribute")

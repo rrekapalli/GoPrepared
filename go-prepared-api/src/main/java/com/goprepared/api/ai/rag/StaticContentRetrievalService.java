@@ -21,6 +21,10 @@ public class StaticContentRetrievalService {
     private final ContentTemplateRepository contentTemplateRepository;
     private final ObjectMapper objectMapper;
 
+    public List<ContentTemplate> findAllTemplates() {
+        return contentTemplateRepository.findAll();
+    }
+
     public Optional<ContentTemplate> findBestTemplate(String query) {
         String q = query.toLowerCase(Locale.ROOT).trim();
         if (q.isEmpty()) {

@@ -68,6 +68,18 @@ public final class ApiDtos {
 
     public record KnowledgeEdgeResponse(String sourceName, String targetName, String relationshipType) {}
 
+    public record KnowledgeTemplateResponse(
+            String templateKey,
+            String title,
+            String journeyType,
+            String journeySubtype,
+            String activity,
+            String location,
+            String suggestedQuery) {}
+
+    public record SimilarJourneyResponse(
+            Long id, String title, String originalQuery, String source, int progressPercent) {}
+
     public record CommunityInsightResponse(
             Long id,
             String insightType,
