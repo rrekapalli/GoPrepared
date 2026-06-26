@@ -224,6 +224,21 @@ build_pwa_artifact_native() {
     [[ -d "$build_dir" ]] || { log_error "Build dir missing: $build_dir"; exit 1; }
     [[ -f "${build_dir}/index.html" ]] || { log_error "index.html missing in build output"; exit 1; }
 
+    if [[ -f "${build_dir}/version.json" && -f "${build_dir}/.last_build_id" ]]; then
+        python3 - "${build_dir}" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+build_dir = Path(sys.argv[1])
+version_path = build_dir / "version.json"
+build_id = (build_dir / ".last_build_id").read_text().strip()
+data = json.loads(version_path.read_text())
+data["build_id"] = build_id
+version_path.write_text(json.dumps(data, separators=(",", ":")) + "\n")
+PY
+    fi
+
     rm -f "${artifacts_dir}/pwa-dist.zip"
     (cd "$build_dir" && zip -qr "${artifacts_dir}/pwa-dist.zip" .)
     log_success "PWA zip: ${artifacts_dir}/pwa-dist.zip"

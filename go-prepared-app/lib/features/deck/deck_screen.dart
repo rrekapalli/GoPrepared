@@ -1,16 +1,14 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/theme/app_colors.dart';
 import '../../data/demo/demo_data.dart';
 import '../../data/models/ai_models.dart';
 import '../../data/repositories/journey_repository.dart';
 import '../../shared/widgets/app_shell.dart';
+import '../../shared/widgets/preparation_deck_stack.dart';
 import '../../shared/widgets/ui_helpers.dart';
 
-/// Preparation deck — stacked cards for each aspect of a journey (preparation_deck mockup).
+/// Full-screen stacked deck view (same card layout as hub, focused browsing).
 class DeckScreen extends ConsumerStatefulWidget {
   const DeckScreen({super.key, required this.journeyId, this.initialCardIndex});
   final int journeyId;
@@ -25,9 +23,6 @@ class _DeckScreenState extends ConsumerState<DeckScreen> {
   List<CardModel> _cards = [];
   late int _index;
   bool _loading = true;
-
-  static const _layerStep = 28.0;
-  static const _maxPeekLayers = 3;
 
   @override
   void initState() {
@@ -55,65 +50,32 @@ class _DeckScreenState extends ConsumerState<DeckScreen> {
       final repo = ref.read(journeyRepositoryProvider);
       final journey = await repo.getJourney(widget.journeyId);
       final cards = await repo.getCards(widget.journeyId);
-      if (mounted) setState(() { _journey = journey; _cards = cards; if (_index >= cards.length) _index = cards.isEmpty ? 0 : cards.length - 1; _loading = false; });
+      if (mounted) {
+        setState(() {
+          _journey = journey;
+          _cards = cards;
+          if (_index >= cards.length) _index = cards.isEmpty ? 0 : cards.length - 1;
+          _loading = false;
+        });
+      }
     } catch (_) {
       if (mounted) setState(() => _loading = false);
     }
   }
 
-  void _next() {
-    if (_index < _cards.length - 1) setState(() => _index++);
-  }
-
-  void _prev() {
-    if (_index > 0) setState(() => _index--);
-  }
-
-  void _openCard(CardModel card) => context.push('/cards/${card.id}?journeyId=${widget.journeyId}');
-
-  String _pageHint(JourneyModel? j, int cardCount) {
-    final loc = j?.location;
-    final where = (loc != null && loc.isNotEmpty) ? ' to $loc' : '';
-    return 'Swipe through $cardCount AI-curated preparation cards$where. '
-        'Tap any card for the full guide, or use the arrows to browse the deck.';
-  }
-
-  String _subtitle(JourneyModel? j) {
-    if (j?.location != null && j!.location!.isNotEmpty) {
-      return 'Essential preparation steps tailored for your journey to ${j.location}.';
-    }
-    return 'Essential preparation steps tailored for your journey.';
-  }
+  void _openCard(CardModel card) => openJourneyCard(context, card, widget.journeyId);
 
   @override
   Widget build(BuildContext context) {
     if (_loading) {
       return const Scaffold(
         backgroundColor: Colors.white,
-        body: Center(child: CircularProgressIndicator(color: AppColors.primary)),
-      );
-    }
-
-    if (_cards.isEmpty) {
-      return Scaffold(
-        backgroundColor: Colors.white,
-        body: Column(
-          children: [
-            AppTopHeader(
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back, color: AppColors.primary),
-                onPressed: () => popOrGo(context, '/journeys/${widget.journeyId}'),
-              ),
-            ),
-            const Expanded(child: Center(child: Text('No cards yet. Generate from Home.'))),
-          ],
-        ),
+        body: Center(child: CircularProgressIndicator()),
+        bottomNavigationBar: AppBottomNav(selectedIndex: 1),
       );
     }
 
     final journey = _journey;
-    final card = _cards[_index];
-    final peekCount = (_cards.length - _index - 1).clamp(0, _maxPeekLayers);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -121,355 +83,26 @@ class _DeckScreenState extends ConsumerState<DeckScreen> {
         children: [
           AppTopHeader(
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: AppColors.primary),
+              icon: const Icon(Icons.arrow_back, color: Color(0xFF1565C0)),
               onPressed: () => popOrGo(context, '/journeys/${widget.journeyId}'),
-            ),
-            onNotifications: null,
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(12, 0, 12, 4),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton.icon(
-                  onPressed: () => context.push('/journeys/${widget.journeyId}/checklist'),
-                  icon: const Icon(Icons.checklist, size: 18, color: AppColors.primary),
-                  label: const Text('Checklist', style: TextStyle(color: AppColors.primary)),
-                ),
-              ],
             ),
           ),
           Expanded(
-            child: GestureDetector(
-              onHorizontalDragEnd: (d) {
-                final v = d.primaryVelocity ?? 0;
-                if (v < -280) _next();
-                if (v > 280) _prev();
-              },
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'AI RECOMMENDATION',
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: Colors.grey.shade500,
-                            letterSpacing: 1.2,
-                            fontWeight: FontWeight.w500,
-                          ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      'Your preparation for:',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Colors.black87,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                    Text(
-                      journey?.title ?? 'Your Journey',
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.bold,
-                            height: 1.15,
-                          ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      _subtitle(journey),
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.grey.shade600,
-                            height: 1.35,
-                          ),
-                    ),
-                    const SizedBox(height: 20),
-                    Expanded(
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          final frontTop = peekCount * _layerStep;
-                          final cardHeight = constraints.maxHeight * 0.75;
-                          return Stack(
-                            clipBehavior: Clip.none,
-                            alignment: Alignment.topCenter,
-                            children: [
-                              for (var layer = peekCount; layer >= 1; layer--)
-                                _DeckPeekCard(
-                                  card: _cards[_index + layer],
-                                  cardIndex: _index + layer,
-                                  layer: layer,
-                                  top: (layer - 1) * _layerStep,
-                                  widthFactor: 1 - (layer * 0.02),
-                                ),
-                              Positioned(
-                                top: frontTop,
-                                left: 0,
-                                right: 0,
-                                height: cardHeight,
-                                child: _DeckFrontCard(
-                                  card: card,
-                                  cardIndex: _index,
-                                  onOpen: () => _openCard(card),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    _PageDots(count: _cards.length, index: _index, onTap: (i) => setState(() => _index = i)),
-                    const SizedBox(height: 12),
-                    Text(
-                      _pageHint(journey, _cards.length),
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Colors.grey.shade600,
-                            height: 1.4,
-                            fontSize: 12,
-                          ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: _index > 0 ? _prev : null,
-                          icon: Icon(Icons.chevron_left, color: _index > 0 ? AppColors.primary : Colors.grey.shade300),
-                        ),
-                        Text(
-                          '${_index + 1} of ${_cards.length}',
-                          style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
-                        ),
-                        IconButton(
-                          onPressed: _index < _cards.length - 1 ? _next : null,
-                          icon: Icon(Icons.chevron_right, color: _index < _cards.length - 1 ? AppColors.primary : Colors.grey.shade300),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                  ],
-                ),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+              child: PreparationDeckStack(
+                journeyTitle: journey?.title ?? 'Your Journey',
+                location: journey?.location,
+                cards: _cards,
+                index: _index,
+                onIndexChanged: (i) => setState(() => _index = i),
+                onOpenCard: _openCard,
               ),
             ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _DeckPeekCard extends StatelessWidget {
-  const _DeckPeekCard({
-    required this.card,
-    required this.cardIndex,
-    required this.layer,
-    required this.top,
-    required this.widthFactor,
-  });
-
-  final CardModel card;
-  final int cardIndex;
-  final int layer;
-  final double top;
-  final double widthFactor;
-
-  static const _tiltDegrees = 5.0;
-
-  @override
-  Widget build(BuildContext context) {
-    final style = DeckCardStyle.forCard(card, cardIndex);
-    final horizontalInset = (1 - widthFactor) * 40;
-    // All back cards tilt the same way; front card stays upright (0°).
-    final angle = _tiltDegrees * math.pi / 180;
-
-    return Positioned(
-      top: top,
-      left: horizontalInset,
-      right: horizontalInset,
-      child: Transform.rotate(
-        angle: angle,
-        alignment: Alignment.topCenter,
-        child: Container(
-          height: 56,
-          decoration: BoxDecoration(
-            color: style.background,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-            border: Border.all(color: Colors.white, width: 2),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.06),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.fromLTRB(18, 12, 18, 8),
-          alignment: Alignment.topLeft,
-          child: Text(
-            card.title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: style.accent,
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-              letterSpacing: 0.2,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Full front preparation card — icon, title, category badge, summary only.
-class _DeckFrontCard extends StatelessWidget {
-  const _DeckFrontCard({
-    required this.card,
-    required this.cardIndex,
-    required this.onOpen,
-  });
-
-  final CardModel card;
-  final int cardIndex;
-  final VoidCallback onOpen;
-
-  @override
-  Widget build(BuildContext context) {
-    final style = DeckCardStyle.forCard(card, cardIndex);
-
-    return Container(
-      decoration: BoxDecoration(
-        color: style.background,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white, width: 2.5),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.10),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        child: InkWell(
-          onTap: onOpen,
-          borderRadius: BorderRadius.circular(20),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 18, 20, 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: style.iconBg,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 4, offset: const Offset(0, 2)),
-                        ],
-                      ),
-                      child: Icon(categoryIcon(card.category), color: style.accent, size: 22),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            card.title,
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
-                                  height: 1.2,
-                                ),
-                          ),
-                          const SizedBox(height: 4),
-                          _CategoryBadge(label: card.category, accent: style.accent),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  card.summary,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.black.withValues(alpha: 0.55),
-                        height: 1.35,
-                        fontSize: 12,
-                      ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CategoryBadge extends StatelessWidget {
-  const _CategoryBadge({required this.label, required this.accent});
-  final String label;
-  final Color accent;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      decoration: BoxDecoration(
-        color: accent.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Text(
-        label.toUpperCase(),
-        style: TextStyle(
-          color: accent,
-          fontSize: 9,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 0.8,
-        ),
-      ),
-    );
-  }
-}
-
-class _PageDots extends StatelessWidget {
-  const _PageDots({required this.count, required this.index, required this.onTap});
-  final int count;
-  final int index;
-  final ValueChanged<int> onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(count, (i) {
-        final selected = i == index;
-        return GestureDetector(
-          onTap: () => onTap(i),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 220),
-            margin: const EdgeInsets.symmetric(horizontal: 4),
-            width: selected ? 28 : 8,
-            height: 8,
-            decoration: BoxDecoration(
-              color: selected ? AppColors.primary : Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(4),
-            ),
-          ),
-        );
-      }),
+      bottomNavigationBar: const AppBottomNav(selectedIndex: 1),
     );
   }
 }

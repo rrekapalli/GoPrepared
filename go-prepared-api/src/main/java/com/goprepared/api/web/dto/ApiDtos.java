@@ -57,7 +57,10 @@ public final class ApiDtos {
     public record GenerateJourneyResponse(Long journeyId, int cardCount) {}
 
     public record ChecklistItemResponse(
-            Long id, String title, String description, String category, int displayOrder, boolean completed) {}
+            Long id, String title, String description, String category, int displayOrder, boolean completed, boolean userAdded) {}
+
+    public record AddChecklistItemRequest(
+            @NotBlank String title, String description, String category) {}
 
     public record ChecklistResponse(
             Long journeyId, String title, int completionPercent, List<ChecklistItemResponse> items) {}

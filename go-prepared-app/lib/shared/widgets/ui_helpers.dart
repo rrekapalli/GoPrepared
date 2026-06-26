@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/models/ai_models.dart';
 
@@ -211,5 +212,49 @@ Color insightTypeColor(String type) {
       return Colors.orange.shade800;
     default:
       return AppColors.primary;
+  }
+}
+
+bool isChecklistCard(CardModel card) {
+  final category = card.category.toLowerCase();
+  final title = card.title.toLowerCase();
+  return category.contains('checklist') || title.contains('checklist');
+}
+
+String checklistCategoryForCard(CardModel card) {
+  final title = card.title.trim();
+  final lower = title.toLowerCase();
+  if (lower.endsWith(' checklist')) {
+    return title.substring(0, title.length - 10);
+  }
+  if (lower.contains('race day')) return 'Race Day';
+  return card.category == 'Checklist' ? 'General' : card.category;
+}
+
+bool checklistItemMatchesCategory(ChecklistItemModel item, String categoryFilter) {
+  final filter = categoryFilter.toLowerCase();
+  final itemCategory = item.category.toLowerCase();
+  return itemCategory == filter ||
+      itemCategory.contains(filter) ||
+      filter.contains(itemCategory);
+}
+
+void openJourneyCard(BuildContext context, CardModel card, int journeyId, {bool replace = false}) {
+  if (isChecklistCard(card)) {
+    final category = checklistCategoryForCard(card);
+    final route =
+        '/journeys/$journeyId/checklist?category=${Uri.encodeComponent(category)}&title=${Uri.encodeComponent(card.title)}';
+    if (replace) {
+      context.pushReplacement(route);
+    } else {
+      context.push(route);
+    }
+    return;
+  }
+  final cardRoute = '/cards/${card.id}?journeyId=$journeyId';
+  if (replace) {
+    context.pushReplacement(cardRoute);
+  } else {
+    context.push(cardRoute);
   }
 }

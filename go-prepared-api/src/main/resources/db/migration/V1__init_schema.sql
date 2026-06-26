@@ -82,7 +82,8 @@ CREATE TABLE checklist_items (
     description TEXT,
     category VARCHAR(64) NOT NULL,
     display_order INT NOT NULL DEFAULT 0,
-    completed BOOLEAN NOT NULL DEFAULT FALSE
+    completed BOOLEAN NOT NULL DEFAULT FALSE,
+    user_added BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 -- Phase 3

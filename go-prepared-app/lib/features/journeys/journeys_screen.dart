@@ -256,14 +256,7 @@ class _JourneyCard extends StatelessWidget {
   const _JourneyCard({required this.journey});
   final JourneyModel journey;
 
-  bool get _isLive => journey.status == 'ACTIVE' && journey.progressPercent > 0 && journey.progressPercent < 100;
-  bool get _isComplete => journey.progressPercent >= 100;
-
-  String get _actionLabel {
-    if (_isComplete) return 'VIEW';
-    if (_isLive || journey.progressPercent >= 20) return 'RESUME →';
-    return 'PREP →';
-  }
+  String get _actionLabel => 'OPEN →';
 
   String get _subtitle {
     final q = journey.originalQuery;
@@ -291,27 +284,7 @@ class _JourneyCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Stack(
-                children: [
-                  journeyThumbnail(journey, size: 76),
-                  if (_isLive)
-                    Positioned(
-                      top: 4,
-                      left: 4,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF3949AB),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: const Text(
-                          'LIVE',
-                          style: TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold, letterSpacing: 0.5),
-                        ),
-                      ),
-                    ),
-                ],
-              ),
+              journeyThumbnail(journey, size: 76),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -359,12 +332,25 @@ class _JourneyCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    _ProgressRow(
-                      journey: journey,
-                      isLive: _isLive,
-                      isComplete: _isComplete,
-                      actionLabel: _actionLabel,
-                      onAction: () => context.go('/journeys/${journey.id}'),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () => context.go('/journeys/${journey.id}'),
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          minimumSize: Size.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        child: Text(
+                          _actionLabel,
+                          style: const TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            letterSpacing: 0.3,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -374,79 +360,6 @@ class _JourneyCard extends StatelessWidget {
         ),
       ),
     ),
-    );
-  }
-}
-
-class _ProgressRow extends StatelessWidget {
-  const _ProgressRow({
-    required this.journey,
-    required this.isLive,
-    required this.isComplete,
-    required this.actionLabel,
-    required this.onAction,
-  });
-
-  final JourneyModel journey;
-  final bool isLive;
-  final bool isComplete;
-  final String actionLabel;
-  final VoidCallback onAction;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        if (isLive && !isComplete) ...[
-          Container(
-            width: 8,
-            height: 8,
-            decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
-          ),
-          const SizedBox(width: 6),
-          const Text('In Progress', style: TextStyle(color: AppColors.primary, fontSize: 12, fontWeight: FontWeight.w500)),
-        ] else ...[
-          Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(3),
-              child: LinearProgressIndicator(
-                value: (journey.progressPercent / 100).clamp(0.0, 1.0),
-                minHeight: 5,
-                backgroundColor: Colors.grey.shade200,
-                color: AppColors.primary,
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Text(
-            '${journey.progressPercent}%',
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.black87),
-          ),
-        ],
-        const Spacer(),
-        if (isComplete)
-          Padding(
-            padding: const EdgeInsets.only(right: 4),
-            child: Icon(Icons.history, size: 16, color: Colors.grey.shade500),
-          ),
-        TextButton(
-          onPressed: onAction,
-          style: TextButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            minimumSize: Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ),
-          child: Text(
-            actionLabel,
-            style: const TextStyle(
-              color: AppColors.primary,
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-              letterSpacing: 0.3,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

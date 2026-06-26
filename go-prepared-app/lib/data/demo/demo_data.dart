@@ -1,4 +1,5 @@
 import '../models/ai_models.dart';
+import '../../shared/widgets/community_journey_matcher.dart';
 
 /// Sample journeys and cards for offline / API-unavailable demo (matches app mockups).
 class DemoData {
@@ -252,6 +253,77 @@ class DemoData {
       _cardsByJourney[journeyId] ?? [];
 
   static CardModel? cardById(int cardId) => _cardById[cardId];
+
+  static final List<CommunityInsightModel> _allDemoInsights = [
+    CommunityInsightModel(
+      id: -1001,
+      insightType: 'TIP',
+      title: 'Local SIM cards are 50% cheaper outside the airport',
+      content: 'Buy a local SIM card from a convenience store in the city rather than at arrivals.',
+      journeyContext: 'TRAVEL|VACATION|BALI',
+      votes: 126,
+    ),
+    CommunityInsightModel(
+      id: -1002,
+      insightType: 'WARNING',
+      title: 'Temple dress codes',
+      content: 'Sarongs are required at Uluwatu and other major temples. Rent on-site costs 3x more.',
+      journeyContext: 'TRAVEL|VACATION|BALI',
+      severity: 'SEVERE',
+      votes: 98,
+    ),
+    CommunityInsightModel(
+      id: -1003,
+      insightType: 'EXPERIENCE',
+      title: 'Sunrise trek at Mount Batur',
+      content: 'Book the day before — morning slots fill quickly during peak season.',
+      journeyContext: 'TRAVEL|VACATION|BALI',
+      votes: 74,
+    ),
+    CommunityInsightModel(
+      id: -1004,
+      insightType: 'TIP',
+      title: 'Start hydrating 48h before a coastal race',
+      content: 'Humid air at Vizag and other coastal courses increases sweat loss. Begin electrolyte drinks two days before race day.',
+      journeyContext: 'SPORTS|10K RUN|VIZAG',
+      votes: 52,
+    ),
+    CommunityInsightModel(
+      id: -1005,
+      insightType: 'WARNING',
+      title: 'Arrive early for bib pickup',
+      content: 'Expo queues are long the morning before local 10K events. Pick up bib and timing chip the prior evening when possible.',
+      journeyContext: 'SPORTS|10K RUN|VIZAG',
+      votes: 38,
+    ),
+    CommunityInsightModel(
+      id: -1006,
+      insightType: 'EXPERIENCE',
+      title: 'Pace the first 2 km conservatively',
+      content: 'Coastal courses often feel flat but humidity spikes heart rate early. Hold back until km 3, then build.',
+      journeyContext: 'SPORTS|10K RUN|VIZAG',
+      votes: 41,
+    ),
+    CommunityInsightModel(
+      id: -1007,
+      insightType: 'TIP',
+      title: 'Generic sports event warm-up',
+      content: 'Dynamic stretches plus 5 minutes of easy jogging 30 minutes before start helps for any 10K or half marathon.',
+      journeyContext: 'SPORTS|10K RUN',
+      votes: 29,
+    ),
+    CommunityInsightModel(
+      id: -1008,
+      insightType: 'TIP',
+      title: 'Fast before your procedure window',
+      content: 'Confirm nil-by-mouth time with your care team. Clear fluids may be allowed until 2 hours before for some angiograms.',
+      journeyContext: 'HEALTH|MEDICAL PROCEDURE|ANGIOGRAM',
+      votes: 33,
+    ),
+  ];
+
+  static List<CommunityInsightModel> communityInsightsFor(JourneyModel journey) =>
+      filterInsightsForJourney(_allDemoInsights, journey);
 }
 
 extension JourneyModelCopy on JourneyModel {

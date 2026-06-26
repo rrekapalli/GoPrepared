@@ -27,4 +27,8 @@ public class ChecklistItemEntity {
     private int displayOrder;
 
     private boolean completed;
+
+    @Column(name = "user_added", nullable = false)
+    @Builder.Default
+    private boolean userAdded = false;
 }

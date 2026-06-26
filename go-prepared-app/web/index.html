@@ -54,13 +54,63 @@
 </head>
 <body>
   <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
-
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
+    Version gate runs before flutter_bootstrap.js so a stale cached bootstrap
+    cannot block PWA updates. See web/flutter_bootstrap.js for polling logic.
   -->
-  <script src="flutter_bootstrap.js" async></script>
+  <script>
+    (function () {
+      var VERSION_KEY = 'goprepared.app.version';
+
+      function releaseLabel(data) {
+        var label = data.version + '+' + data.build_number;
+        if (data.build_id) label += '+' + data.build_id;
+        return label;
+      }
+
+      function purgeClient() {
+        var tasks = [];
+        if ('serviceWorker' in navigator) {
+          tasks.push(
+            navigator.serviceWorker.getRegistrations().then(function (regs) {
+              return Promise.all(regs.map(function (r) { return r.unregister(); }));
+            })
+          );
+        }
+        if ('caches' in window) {
+          tasks.push(
+            caches.keys().then(function (names) {
+              return Promise.all(names.map(function (n) { return caches.delete(n); }));
+            })
+          );
+        }
+        return Promise.all(tasks);
+      }
+
+      function loadBootstrap() {
+        var s = document.createElement('script');
+        s.src = 'flutter_bootstrap.js';
+        document.body.appendChild(s);
+      }
+
+      fetch('/version.json?t=' + Date.now(), { cache: 'no-store' })
+        .then(function (res) { return res.ok ? res.json() : null; })
+        .then(function (data) {
+          if (!data) return loadBootstrap();
+          var label = releaseLabel(data);
+          var prev = localStorage.getItem(VERSION_KEY);
+          if (prev && prev !== label) {
+            return purgeClient().then(function () {
+              localStorage.removeItem(VERSION_KEY);
+              var url = new URL(window.location.href);
+              url.searchParams.set('_gp', String(Date.now()));
+              window.location.replace(url.toString());
+            });
+          }
+          if (!prev) localStorage.setItem(VERSION_KEY, label);
+          loadBootstrap();
+        })
+        .catch(function () { loadBootstrap(); });
+    })();
+  </script>
 </body>
 </html>

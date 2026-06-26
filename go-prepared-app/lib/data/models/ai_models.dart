@@ -167,6 +167,7 @@ class ChecklistItemModel {
     required this.category,
     required this.displayOrder,
     required this.completed,
+    this.userAdded = false,
   });
 
   final int id;
@@ -175,6 +176,17 @@ class ChecklistItemModel {
   final String category;
   final int displayOrder;
   final bool completed;
+  final bool userAdded;
+
+  ChecklistItemModel copyWith({bool? completed}) => ChecklistItemModel(
+        id: id,
+        title: title,
+        description: description,
+        category: category,
+        displayOrder: displayOrder,
+        completed: completed ?? this.completed,
+        userAdded: userAdded,
+      );
 
   factory ChecklistItemModel.fromJson(Map<String, dynamic> json) => ChecklistItemModel(
         id: json['id'] as int,
@@ -183,6 +195,7 @@ class ChecklistItemModel {
         category: json['category'] as String? ?? 'General',
         displayOrder: json['displayOrder'] as int? ?? 0,
         completed: json['completed'] as bool? ?? false,
+        userAdded: json['userAdded'] as bool? ?? false,
       );
 }
 

@@ -224,7 +224,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                     children: [
                       const Text('Resume preparation', style: TextStyle(color: Colors.white70, fontSize: 12)),
                       Text(journey.title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
-                      Text('${journey.progressPercent}% complete', style: const TextStyle(color: Colors.white70, fontSize: 12)),
+                      Text('${journey.title} — tap to read your preparation guides', style: const TextStyle(color: Colors.white70, fontSize: 12)),
                     ],
                   ),
                 ),

@@ -36,6 +36,15 @@ if (-not (Test-Path (Join-Path $BuildDir "index.html"))) {
     throw "Flutter web build failed: index.html missing in $BuildDir"
 }
 
+$VersionJson = Join-Path $BuildDir "version.json"
+$BuildIdFile = Join-Path $BuildDir ".last_build_id"
+if ((Test-Path $VersionJson) -and (Test-Path $BuildIdFile)) {
+    $buildId = (Get-Content $BuildIdFile -Raw).Trim()
+    $version = Get-Content $VersionJson -Raw | ConvertFrom-Json
+    $version | Add-Member -NotePropertyName "build_id" -NotePropertyValue $buildId -Force
+    ($version | ConvertTo-Json -Compress) + "`n" | Set-Content $VersionJson -NoNewline
+}
+
 New-Item -ItemType Directory -Force -Path $ArtifactsDir | Out-Null
 if (Test-Path $ZipPath) { Remove-Item $ZipPath -Force }
 

@@ -99,6 +99,24 @@ class JourneyRepository {
     return ChecklistItemModel.fromJson(res.data as Map<String, dynamic>);
   }
 
+  Future<ChecklistItemModel> addChecklistItem(
+    int journeyId, {
+    required String title,
+    String description = '',
+    String? category,
+  }) async {
+    final res = await _dio.post('/journeys/$journeyId/checklist/items', data: {
+      'title': title,
+      if (description.isNotEmpty) 'description': description,
+      if (category != null && category.isNotEmpty) 'category': category,
+    });
+    return ChecklistItemModel.fromJson(res.data as Map<String, dynamic>);
+  }
+
+  Future<void> deleteChecklistItem(int itemId) async {
+    await _dio.delete('/checklist/$itemId');
+  }
+
   Future<List<SimilarJourneyModel>> findSimilarJourneys(String query) async {
     final res = await _dio.get('/journeys/similar', queryParameters: {'query': query});
     return (res.data as List).map((e) => SimilarJourneyModel.fromJson(e as Map<String, dynamic>)).toList();

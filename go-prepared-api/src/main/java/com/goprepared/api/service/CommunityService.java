@@ -1,7 +1,6 @@
 package com.goprepared.api.service;
 
 import com.goprepared.api.domain.CommunityInsightEntity;
-import com.goprepared.api.domain.CommunityInsightVoteEntity;
 import com.goprepared.api.domain.Journey;
 import com.goprepared.api.domain.User;
 import com.goprepared.api.repository.CommunityInsightRepository;
@@ -11,8 +10,10 @@ import com.goprepared.api.web.dto.ApiDtos.CommunityInsightResponse;
 import com.goprepared.api.web.dto.ApiDtos.ContributeInsightRequest;
 import com.goprepared.api.web.dto.ApiDtos.VoteInsightRequest;
 import com.goprepared.api.web.dto.ApiDtos.VoteInsightResponse;
+import com.goprepared.api.domain.CommunityInsightVoteEntity;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.Instant;
+import java.util.Comparator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,31 +29,24 @@ public class CommunityService {
 
     @Transactional(readOnly = true)
     public List<CommunityInsightResponse> listInsights(Long journeyId) {
+        List<CommunityInsightEntity> active =
+                communityInsightRepository.findByStatusOrderByVotesDesc("ACTIVE");
         if (journeyId == null) {
-            return communityInsightRepository.findByStatusOrderByVotesDesc("ACTIVE").stream()
-                    .map(this::toResponse)
-                    .toList();
+            return active.stream().map(this::toResponse).toList();
         }
+
         Journey journey = journeyRepository
                 .findById(journeyId)
                 .orElseThrow(() -> new EntityNotFoundException("Journey not found"));
-        String title = journey.getTitle() != null ? journey.getTitle().toLowerCase() : "";
-        String query = journey.getOriginalQuery() != null ? journey.getOriginalQuery().toLowerCase() : "";
-        return communityInsightRepository.findByStatusOrderByVotesDesc("ACTIVE").stream()
-                .filter(i -> matchesJourney(i, journey, title, query))
-                .map(this::toResponse)
-                .toList();
-    }
 
-    private boolean matchesJourney(CommunityInsightEntity insight, Journey journey, String title, String query) {
-        if (insight.getJourney() != null && insight.getJourney().getId().equals(journey.getId())) {
-            return true;
-        }
-        String context = insight.getJourneyContext() != null ? insight.getJourneyContext().toLowerCase() : "";
-        if (!context.isEmpty() && (title.contains(context) || context.contains(title) || query.contains(context))) {
-            return true;
-        }
-        return false;
+        return active.stream()
+                .map(insight -> new ScoredInsight(insight, CommunityJourneyMatcher.score(insight, journey)))
+                .filter(scored -> scored.score() > 0)
+                .sorted(Comparator.comparingInt(ScoredInsight::score)
+                        .reversed()
+                        .thenComparing((ScoredInsight s) -> s.insight().getVotes(), Comparator.reverseOrder()))
+                .map(scored -> toResponse(scored.insight()))
+                .toList();
     }
 
     @Transactional
@@ -123,4 +117,6 @@ public class CommunityService {
                 e.getSeverity(),
                 e.getVotes());
     }
+
+    private record ScoredInsight(CommunityInsightEntity insight, int score) {}
 }

@@ -20,10 +20,29 @@
 cd go-prepared-api
 .\mvnw.cmd spring-boot:run
 
-# 4. Flutter
+# 4. Flutter (web)
 cd go-prepared-app
-flutter run -d chrome
+..\scripts\flutter-run-web.ps1
 ```
+
+Or, if `flutter run -d chrome` is already running, **stop it first** (`q`) — hot restart does not reload patched engine code.
+
+```powershell
+.\scripts\patch-flutter-web-context-lost.ps1
+.\scripts\flutter-run-web.ps1
+```
+
+### Flutter web dev notes
+
+On `localhost`, the PWA service worker and version polling are disabled so hot reload/restart is not fighting cache updates.
+
+If hot restart logs `LateInitializationError: _handledContextLostEvent`, apply the one-time engine patch (stable 3.44.x is missing [flutter#184683](https://github.com/flutter/flutter/issues/184683)):
+
+```powershell
+.\scripts\patch-flutter-web-context-lost.ps1
+```
+
+Then restart `flutter run -d chrome`. Re-run the patch after `flutter upgrade` if the error returns.
 
 ## WSL (Ubuntu 24.04) — deploy & Linux tooling
 

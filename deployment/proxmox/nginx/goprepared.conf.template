@@ -62,13 +62,15 @@ server {
         try_files $uri =404;
     }
 
-    location / {
-        add_header Cache-Control "no-cache, no-store, must-revalidate";
-        try_files $uri $uri/ /index.html;
-    }
-
+    # Long-cache hashed/static assets — must come before location / fallback.
     location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|webmanifest|wasm)$ {
         expires 7d;
         add_header Cache-Control "public, immutable";
+        try_files $uri =404;
+    }
+
+    location / {
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+        try_files $uri $uri/ /index.html;
     }
 }

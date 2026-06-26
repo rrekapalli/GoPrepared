@@ -18,7 +18,6 @@ class KnowledgeScreen extends ConsumerStatefulWidget {
 class _KnowledgeScreenState extends ConsumerState<KnowledgeScreen> {
   List<KnowledgeCategoryModel> _categories = [];
   List<KnowledgeEdgeModel> _edges = [];
-  List<KnowledgeNodeModel> _nodes = [];
   List<KnowledgeTemplateModel> _templates = [];
   String? _selectedCategory;
   bool _loading = true;
@@ -34,12 +33,10 @@ class _KnowledgeScreenState extends ConsumerState<KnowledgeScreen> {
       final repo = ref.read(knowledgeRepositoryProvider);
       final categories = await repo.categories();
       final edges = await repo.relationships();
-      final nodes = await repo.nodes();
       if (mounted) {
         setState(() {
           _categories = categories;
           _edges = edges;
-          _nodes = nodes;
           _selectedCategory = categories.isNotEmpty ? categories.first.name : null;
           _loading = false;
         });
@@ -74,16 +71,6 @@ class _KnowledgeScreenState extends ConsumerState<KnowledgeScreen> {
     return path;
   }
 
-  List<KnowledgeNodeModel> _nodesForCategory(String category) {
-    final path = _pathForCategory(category);
-    final names = path.map((n) => n.toLowerCase()).toSet();
-    return _nodes.where((n) {
-      final type = n.nodeType.toLowerCase();
-      final name = n.name.toLowerCase();
-      return names.contains(type) || names.contains(name) || type == category.toLowerCase();
-    }).toList();
-  }
-
   IconData _categoryIcon(String name) {
     switch (name.toLowerCase()) {
       case 'travel':
@@ -103,36 +90,6 @@ class _KnowledgeScreenState extends ConsumerState<KnowledgeScreen> {
     }
   }
 
-  void _showNodeDetail(KnowledgeNodeModel node) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (ctx) => Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(node.name, style: Theme.of(ctx).textTheme.titleLarge?.copyWith(color: AppColors.primary)),
-            const SizedBox(height: 4),
-            Text(node.nodeType, style: TextStyle(color: Colors.grey.shade600)),
-            const SizedBox(height: 12),
-            Text(node.description.isNotEmpty ? node.description : 'Explore preparation topics for ${node.name}.'),
-            const SizedBox(height: 16),
-            FilledButton(
-              onPressed: () {
-                Navigator.pop(ctx);
-                final query = 'Prepare for ${node.name}';
-                context.go('/home?q=${Uri.encodeComponent(query)}');
-              },
-              child: Text('Prepare for ${node.name}'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   void _prepareFromTemplate(KnowledgeTemplateModel template) {
     final query = template.suggestedQuery ?? template.title;
     context.go('/home?q=${Uri.encodeComponent(query)}');
@@ -141,7 +98,6 @@ class _KnowledgeScreenState extends ConsumerState<KnowledgeScreen> {
   @override
   Widget build(BuildContext context) {
     final path = _selectedCategory != null ? _pathForCategory(_selectedCategory!) : <String>[];
-    final categoryNodes = _selectedCategory != null ? _nodesForCategory(_selectedCategory!) : <KnowledgeNodeModel>[];
 
     final body = _loading
         ? const Center(child: CircularProgressIndicator())
@@ -226,18 +182,6 @@ class _KnowledgeScreenState extends ConsumerState<KnowledgeScreen> {
                           trailing: const Icon(Icons.arrow_forward_ios, size: 14),
                           onTap: () => _prepareFromTemplate(t),
                         ),
-                      )),
-                ],
-                if (categoryNodes.isNotEmpty) ...[
-                  const SizedBox(height: 24),
-                  const Text('Knowledge nodes', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 8),
-                  ...categoryNodes.take(12).map((n) => ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        title: Text(n.name),
-                        subtitle: Text(n.nodeType, style: const TextStyle(fontSize: 12)),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap: () => _showNodeDetail(n),
                       )),
                 ],
               ],

@@ -3,21 +3,49 @@
     "insightType": "TIP",
     "title": "Local SIM cards are 50% cheaper outside the airport",
     "content": "Buy a local SIM card from a convenience store in the city rather than at arrivals.",
-    "journeyContext": "BALI VACATION",
+    "journeyContext": "TRAVEL|VACATION|BALI",
     "severity": null
   },
   {
     "insightType": "WARNING",
     "title": "Temple dress codes",
     "content": "Sarongs are required at Uluwatu and other major temples. Rent on-site costs 3x more.",
-    "journeyContext": "BALI VACATION",
+    "journeyContext": "TRAVEL|VACATION|BALI",
     "severity": "SEVERE"
   },
   {
     "insightType": "EXPERIENCE",
     "title": "Sunrise trek at Mount Batur",
-    "content": "Book the day before \u2014 morning slots fill quickly during peak season.",
-    "journeyContext": "BALI VACATION",
+    "content": "Book the day before — morning slots fill quickly during peak season.",
+    "journeyContext": "TRAVEL|VACATION|BALI",
+    "severity": null
+  },
+  {
+    "insightType": "TIP",
+    "title": "Start hydrating 48h before a coastal race",
+    "content": "Humid air at Vizag and other coastal courses increases sweat loss. Begin electrolyte drinks two days before race day.",
+    "journeyContext": "SPORTS|10K RUN|VIZAG",
+    "severity": null
+  },
+  {
+    "insightType": "WARNING",
+    "title": "Arrive early for bib pickup",
+    "content": "Expo queues are long the morning before local 10K events. Pick up bib and timing chip the prior evening when possible.",
+    "journeyContext": "SPORTS|10K RUN|VIZAG",
+    "severity": null
+  },
+  {
+    "insightType": "EXPERIENCE",
+    "title": "Pace the first 2 km conservatively",
+    "content": "Coastal courses often feel flat but humidity spikes heart rate early. Hold back until km 3, then build.",
+    "journeyContext": "SPORTS|10K RUN|VIZAG",
+    "severity": null
+  },
+  {
+    "insightType": "TIP",
+    "title": "Generic sports event warm-up",
+    "content": "Dynamic stretches plus 5 minutes of easy jogging 30 minutes before start helps for any 10K or half marathon.",
+    "journeyContext": "SPORTS|10K RUN",
     "severity": null
   }
 ]

@@ -8,6 +8,7 @@ import com.goprepared.api.domain.Journey;
 import com.goprepared.api.domain.User;
 import com.goprepared.api.repository.ChecklistItemRepository;
 import com.goprepared.api.repository.JourneyRepository;
+import com.goprepared.api.web.dto.ApiDtos.AddChecklistItemRequest;
 import com.goprepared.api.web.dto.ApiDtos.ChecklistItemResponse;
 import com.goprepared.api.web.dto.ApiDtos.ChecklistResponse;
 import jakarta.persistence.EntityNotFoundException;
@@ -60,6 +61,40 @@ public class ChecklistService {
     }
 
     @Transactional
+    public ChecklistItemResponse addUserItem(User user, Long journeyId, AddChecklistItemRequest request) {
+        Journey journey = getOwnedJourney(user, journeyId);
+        List<ChecklistItemEntity> existing = checklistItemRepository.findByJourneyOrderByDisplayOrderAsc(journey);
+        int nextOrder = existing.stream().mapToInt(ChecklistItemEntity::getDisplayOrder).max().orElse(-1) + 1;
+        String category = request.category() != null && !request.category().isBlank()
+                ? request.category().trim()
+                : "My items";
+        ChecklistItemEntity item = ChecklistItemEntity.builder()
+                .journey(journey)
+                .title(request.title().trim())
+                .description(request.description() != null ? request.description().trim() : "")
+                .category(category)
+                .displayOrder(nextOrder)
+                .completed(false)
+                .userAdded(true)
+                .build();
+        checklistItemRepository.save(item);
+        return toItemResponse(item);
+    }
+
+    @Transactional
+    public void deleteUserItem(User user, Long itemId) {
+        ChecklistItemEntity item = checklistItemRepository
+                .findById(itemId)
+                .orElseThrow(() -> new EntityNotFoundException("Checklist item not found"));
+        if (!item.getJourney().getUser().getId().equals(user.getId()) || !item.isUserAdded()) {
+            throw new EntityNotFoundException("Checklist item not found");
+        }
+        Journey journey = item.getJourney();
+        checklistItemRepository.delete(item);
+        updateJourneyProgress(journey);
+    }
+
+    @Transactional
     public ChecklistItemResponse toggleComplete(User user, Long itemId) {
         ChecklistItemEntity item = checklistItemRepository
                 .findById(itemId)
@@ -100,7 +135,8 @@ public class ChecklistService {
                 item.getDescription(),
                 item.getCategory(),
                 item.getDisplayOrder(),
-                item.isCompleted());
+                item.isCompleted(),
+                item.isUserAdded());
     }
 
     private Journey getOwnedJourney(User user, Long id) {

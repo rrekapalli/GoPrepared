@@ -2,15 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../data/demo/demo_data.dart';
 import '../../data/models/ai_models.dart';
 import '../../data/repositories/journey_repository.dart';
+import '../../shared/widgets/community_journey_matcher.dart';
 import '../../shared/widgets/ui_helpers.dart';
 
 class CommunityScreen extends ConsumerStatefulWidget {
-  const CommunityScreen({super.key, this.embedded = false, this.journeyId, this.journeyContext});
+  const CommunityScreen({
+    super.key,
+    this.embedded = false,
+    this.journeyId,
+    this.journey,
+    this.journeyContext,
+  });
 
   final bool embedded;
   final int? journeyId;
+  final JourneyModel? journey;
   final String? journeyContext;
 
   @override
@@ -21,20 +30,66 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
   List<CommunityInsightModel> _insights = [];
   bool _loading = true;
 
+  bool get _scopedToJourney => widget.journeyId != null || widget.journey != null;
+
+  String get _contributeContext {
+    if (widget.journey != null) return journeyCommunityContext(widget.journey!);
+    return widget.journeyContext ?? '';
+  }
+
+  String get _sectionTitle {
+    if (!_scopedToJourney) return 'Featured Insights';
+    final title = widget.journey?.title ?? widget.journeyContext;
+    if (title != null && title.isNotEmpty) return 'Tips for $title';
+    return 'Journey tips';
+  }
+
   @override
   void initState() {
     super.initState();
     _load();
   }
 
+  @override
+  void didUpdateWidget(covariant CommunityScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.journeyId != widget.journeyId ||
+        oldWidget.journey?.id != widget.journey?.id ||
+        oldWidget.journey?.title != widget.journey?.title) {
+      _load();
+    }
+  }
+
   Future<void> _load() async {
+    setState(() => _loading = true);
     try {
+      if (widget.journey != null && DemoData.isDemoJourney(widget.journey!.id)) {
+        final insights = DemoData.communityInsightsFor(widget.journey!);
+        if (mounted) setState(() { _insights = insights; _loading = false; });
+        return;
+      }
+
+      await ref.read(sessionProvider.future);
       final repo = ref.read(knowledgeRepositoryProvider);
-      final insights = widget.journeyId != null
-          ? await repo.communityForJourney(widget.journeyId!)
-          : await repo.community();
+      final id = widget.journeyId;
+      final raw = id != null ? await repo.communityForJourney(id) : await repo.community();
+
+      var insights = raw;
+      if (widget.journey != null) {
+        insights = filterInsightsForJourney(raw, widget.journey!);
+      }
+
       if (mounted) setState(() { _insights = insights; _loading = false; });
     } catch (_) {
+      if (widget.journey != null && DemoData.isDemoJourney(widget.journey!.id)) {
+        if (mounted) {
+          setState(() {
+            _insights = DemoData.communityInsightsFor(widget.journey!);
+            _loading = false;
+          });
+        }
+        return;
+      }
       if (mounted) setState(() => _loading = false);
     }
   }
@@ -64,6 +119,7 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
     final titleCtrl = TextEditingController();
     final contentCtrl = TextEditingController();
     var type = 'TIP';
+    final contextLabel = _contributeContext;
 
     showModalBottomSheet(
       context: context,
@@ -76,6 +132,10 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text('Share your wisdom', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: AppColors.primary)),
+              if (_scopedToJourney && contextLabel.isNotEmpty) ...[
+                const SizedBox(height: 8),
+                Text('For: $contextLabel', style: TextStyle(color: Colors.grey.shade600, fontSize: 13)),
+              ],
               const SizedBox(height: 16),
               Wrap(
                 spacing: 8,
@@ -102,7 +162,7 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
                           title: titleCtrl.text.trim(),
                           content: contentCtrl.text.trim(),
                           journeyId: widget.journeyId,
-                          journeyContext: widget.journeyContext,
+                          journeyContext: contextLabel.isNotEmpty ? contextLabel : widget.journeyContext,
                         );
                     if (ctx.mounted) Navigator.pop(ctx);
                     _load();
@@ -126,30 +186,44 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
         : RefreshIndicator(
             onRefresh: _load,
             child: ListView(
-              padding: EdgeInsets.fromLTRB(16, 16, 16, widget.embedded ? 24 : 88),
+              padding: EdgeInsets.fromLTRB(16, 16, 16, widget.embedded ? 88 : 88),
               children: [
                 GestureDetector(
                   onTap: _showContributeSheet,
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(20)),
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Share your wisdom', style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
-                        SizedBox(height: 8),
-                        Text('Share something you wish you had known beforehand to help others stay prepared', style: TextStyle(color: Colors.white70)),
+                        Text(
+                          _scopedToJourney ? 'Share a tip for this journey' : 'Share your wisdom',
+                          style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          _scopedToJourney
+                              ? 'Help others preparing for the same journey with something you wish you had known.'
+                              : 'Share something you wish you had known beforehand to help others stay prepared',
+                          style: const TextStyle(color: Colors.white70),
+                        ),
                       ],
                     ),
                   ),
                 ),
                 const SizedBox(height: 24),
-                const Text('Featured Insights', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                Text(_sectionTitle, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 12),
                 if (_insights.isEmpty)
                   Padding(
                     padding: const EdgeInsets.all(24),
-                    child: Text('No insights yet. Be the first to contribute!', style: TextStyle(color: Colors.grey.shade600), textAlign: TextAlign.center),
+                    child: Text(
+                      _scopedToJourney
+                          ? 'No community tips yet for this journey. Be the first to share!'
+                          : 'No insights yet. Be the first to contribute!',
+                      style: TextStyle(color: Colors.grey.shade600),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ..._insights.map((i) => _InsightCard(insight: i, onVote: _vote)),
               ],

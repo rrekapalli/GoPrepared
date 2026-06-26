@@ -67,6 +67,71 @@ class AppTopHeader extends StatelessWidget {
   }
 }
 
+class AppBottomNav extends StatelessWidget {
+  const AppBottomNav({super.key, this.selectedIndex = 1, this.navigationShell});
+
+  /// 0=Home, 1=Journeys, 2=Explore, 3=Me
+  final int selectedIndex;
+  final StatefulNavigationShell? navigationShell;
+
+  void _onTap(BuildContext context, int index) {
+    if (navigationShell != null) {
+      navigationShell!.goBranch(index);
+    } else {
+      context.go(AppShell.tabs[index]);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, -2))],
+      ),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _NavItem(
+                icon: Icons.home_outlined,
+                selectedIcon: Icons.home,
+                label: 'Home',
+                selected: selectedIndex == 0,
+                onTap: () => _onTap(context, 0),
+              ),
+              _NavItem(
+                icon: Icons.explore_outlined,
+                selectedIcon: Icons.explore,
+                label: 'Journeys',
+                selected: selectedIndex == 1,
+                onTap: () => _onTap(context, 1),
+              ),
+              _NavItem(
+                icon: Icons.menu_book_outlined,
+                selectedIcon: Icons.menu_book,
+                label: 'Explore',
+                selected: selectedIndex == 2,
+                onTap: () => _onTap(context, 2),
+              ),
+              _NavItem(
+                icon: Icons.person_outline,
+                selectedIcon: Icons.person,
+                label: 'Me',
+                selected: selectedIndex == 3,
+                onTap: () => _onTap(context, 3),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class AppShell extends ConsumerWidget {
   const AppShell({super.key, required this.navigationShell});
   final StatefulNavigationShell navigationShell;
@@ -90,50 +155,7 @@ class AppShell extends ConsumerWidget {
           Expanded(child: navigationShell),
         ],
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, -2))],
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _NavItem(
-                  icon: Icons.home_outlined,
-                  selectedIcon: Icons.home,
-                  label: 'Home',
-                  selected: navigationShell.currentIndex == 0,
-                  onTap: () => navigationShell.goBranch(0),
-                ),
-                _NavItem(
-                  icon: Icons.explore_outlined,
-                  selectedIcon: Icons.explore,
-                  label: 'Journeys',
-                  selected: navigationShell.currentIndex == 1,
-                  onTap: () => navigationShell.goBranch(1),
-                ),
-                _NavItem(
-                  icon: Icons.menu_book_outlined,
-                  selectedIcon: Icons.menu_book,
-                  label: 'Explore',
-                  selected: navigationShell.currentIndex == 2,
-                  onTap: () => navigationShell.goBranch(2),
-                ),
-                _NavItem(
-                  icon: Icons.person_outline,
-                  selectedIcon: Icons.person,
-                  label: 'Me',
-                  selected: navigationShell.currentIndex == 3,
-                  onTap: () => navigationShell.goBranch(3),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+      bottomNavigationBar: AppBottomNav(selectedIndex: navigationShell.currentIndex, navigationShell: navigationShell),
     );
   }
 }

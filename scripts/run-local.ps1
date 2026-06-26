@@ -12,15 +12,30 @@ if (Get-Command docker -ErrorAction SilentlyContinue) {
     Write-Host "Docker not found — using POSTGRES_* from .env (remote DB OK)" -ForegroundColor Yellow
 }
 
-# 2. Check if API already running
-$apiUp = $false
-try {
-    $r = Invoke-WebRequest -Uri "http://localhost:8080/api/v1/knowledge/categories" -UseBasicParsing -TimeoutSec 3
-    if ($r.StatusCode -eq 200) { $apiUp = $true }
-} catch {}
+# 2. Check if API already running (and has current routes)
+function Test-ApiReady {
+    try {
+        $r = Invoke-WebRequest -Uri "http://localhost:8080/api/v1/knowledge/templates?journeyType=Travel" -UseBasicParsing -TimeoutSec 5
+        return $r.StatusCode -eq 200
+    } catch {
+        return $false
+    }
+}
 
-if (-not $apiUp) {
+$apiUp = Test-ApiReady
+if ($apiUp) {
+    Write-Host "API already running on :8080" -ForegroundColor Green
+} else {
+    # Stale process may answer /categories but not /templates — free the port
+    $portPid = (Get-NetTCPConnection -LocalPort 8080 -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1).OwningProcess
+    if ($portPid) {
+        Write-Host "Stopping stale API on :8080 (PID $portPid)..." -ForegroundColor Yellow
+        Stop-Process -Id $portPid -Force -ErrorAction SilentlyContinue
+        Start-Sleep -Seconds 2
+    }
+
     Write-Host "Starting Spring Boot API on http://localhost:8080 ..."
+    $env:SPRING_FLYWAY_VALIDATE_ON_MIGRATE = "false"
     $apiJob = Start-Job -ScriptBlock {
         Set-Location $using:Root\go-prepared-api
         & .\mvnw.cmd spring-boot:run 2>&1
@@ -28,21 +43,16 @@ if (-not $apiUp) {
     Write-Host "Waiting for API (up to 90s)..."
     for ($i = 0; $i -lt 45; $i++) {
         Start-Sleep -Seconds 2
-        try {
-            $r = Invoke-WebRequest -Uri "http://localhost:8080/api/v1/knowledge/categories" -UseBasicParsing -TimeoutSec 3
-            if ($r.StatusCode -eq 200) {
-                $apiUp = $true
-                Write-Host "API is ready." -ForegroundColor Green
-                break
-            }
-        } catch {}
+        if (Test-ApiReady) {
+            $apiUp = $true
+            Write-Host "API is ready." -ForegroundColor Green
+            break
+        }
     }
     if (-not $apiUp) {
         Write-Host "API did not start in time. Check: Receive-Job -Id $($apiJob.Id)" -ForegroundColor Red
-        Write-Host "Or run manually: cd go-prepared-api; .\mvnw.cmd spring-boot:run"
+        Write-Host "Or run manually: cd go-prepared-api; `$env:SPRING_FLYWAY_VALIDATE_ON_MIGRATE='false'; .\mvnw.cmd spring-boot:run"
     }
-} else {
-    Write-Host "API already running on :8080" -ForegroundColor Green
 }
 
 # 3. Flutter web

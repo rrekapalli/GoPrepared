@@ -15,7 +15,7 @@ final appRouter = GoRouter(
     final path = state.uri.path;
     if (path == '/discover') return '/home';
     if (path == '/knowledge') return '/explore';
-    if (path == '/community') return '/explore?tab=community';
+    if (path == '/community') return '/journeys';
     return null;
   },
   routes: [
@@ -34,14 +34,7 @@ final appRouter = GoRouter(
         StatefulShellBranch(routes: [GoRoute(path: '/journeys', builder: (_, __) => const JourneysScreen())]),
         StatefulShellBranch(
           routes: [
-            GoRoute(
-              path: '/explore',
-              builder: (_, state) {
-                final tab = state.uri.queryParameters['tab'];
-                final initialTab = tab == 'community' ? 1 : 0;
-                return ExploreScreen(initialTab: initialTab);
-              },
-            ),
+            GoRoute(path: '/explore', builder: (_, __) => const ExploreScreen()),
           ],
         ),
         StatefulShellBranch(routes: [GoRoute(path: '/me', builder: (_, __) => const ProfileScreen())]),
@@ -49,7 +42,14 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/journeys/:id',
-      builder: (_, state) => JourneyHubScreen(journeyId: int.parse(state.pathParameters['id']!)),
+      builder: (_, state) {
+        final tab = state.uri.queryParameters['tab'];
+        final initialTab = tab == 'community' ? 1 : 0;
+        return JourneyHubScreen(
+          journeyId: int.parse(state.pathParameters['id']!),
+          initialTab: initialTab,
+        );
+      },
     ),
     GoRoute(
       path: '/journeys/:id/deck',
@@ -73,7 +73,11 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/journeys/:id/checklist',
-      builder: (_, state) => ChecklistScreen(journeyId: int.parse(state.pathParameters['id']!)),
+      builder: (_, state) => ChecklistScreen(
+        journeyId: int.parse(state.pathParameters['id']!),
+        categoryFilter: state.uri.queryParameters['category'],
+        pageTitle: state.uri.queryParameters['title'],
+      ),
     ),
   ],
 );

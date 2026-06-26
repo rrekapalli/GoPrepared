@@ -39,7 +39,15 @@ class _CardDetailScreenState extends ConsumerState<CardDetailScreen> {
   Future<void> _load() async {
     if (DemoData.isDemoCard(widget.cardId)) {
       final card = DemoData.cardById(widget.cardId);
-      if (mounted) setState(() { _card = card; _loading = false; });
+      if (mounted) {
+        setState(() { _card = card; _loading = false; });
+        if (widget.journeyId != null && card != null && isChecklistCard(card)) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!mounted) return;
+            openJourneyCard(context, card, widget.journeyId!, replace: true);
+          });
+        }
+      }
       return;
     }
 
@@ -53,7 +61,15 @@ class _CardDetailScreenState extends ConsumerState<CardDetailScreen> {
         final idx = cards.indexWhere((c) => c.id == widget.cardId);
         if (idx >= 0 && idx < cards.length - 1) next = cards[idx + 1];
       }
-      if (mounted) setState(() { _card = card; _nextCard = next; _loading = false; });
+      if (mounted) {
+        setState(() { _card = card; _nextCard = next; _loading = false; });
+        if (widget.journeyId != null && card != null && isChecklistCard(card)) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!mounted) return;
+            openJourneyCard(context, card, widget.journeyId!, replace: true);
+          });
+        }
+      }
     } catch (_) {
       if (mounted) setState(() => _loading = false);
     }
@@ -125,15 +141,24 @@ class _CardDetailScreenState extends ConsumerState<CardDetailScreen> {
     context.pushReplacement(path);
   }
 
+  Widget? get _journeyBottomNav =>
+      widget.journeyId != null ? const AppBottomNav(selectedIndex: 1) : null;
+
   @override
   Widget build(BuildContext context) {
-    if (_loading) return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    if (_loading) {
+      return Scaffold(
+        body: const Center(child: CircularProgressIndicator()),
+        bottomNavigationBar: _journeyBottomNav,
+      );
+    }
 
     final card = _card;
     if (card == null) {
       return Scaffold(
         appBar: AppBar(leading: BackButton(onPressed: () => popOrGo(context, _deckFallback))),
         body: const Center(child: Text('Card not found')),
+        bottomNavigationBar: _journeyBottomNav,
       );
     }
 
@@ -199,6 +224,7 @@ class _CardDetailScreenState extends ConsumerState<CardDetailScreen> {
           showAiButton: false,
         ),
       ),
+      bottomNavigationBar: _journeyBottomNav,
     );
   }
 
