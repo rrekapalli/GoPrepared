@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-colonoscopy",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Diagnostic Test",
+    "activity": "Colonoscopy",
+    "location": "",
+    "title": "Preparing for Colonoscopy",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Clear-liquid diet day before; complete prep solution on schedule. Sedation \u2014 no driving 24 h. Follow polyp removal instructions if applicabl...",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Clear-liquid diet day before; complete prep solution on schedule. Sedation \u2014 no driving 24 h. Follow polyp removal instructions if applicable."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Prep solution, Diet restrictions, Sedation, Aftercare"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

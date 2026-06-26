@@ -1,0 +1,23 @@
+# Production-style stack: API container + optional local Postgres/Ollama.
+# On Proxmox LXC, only the API container runs; nginx on the host proxies /api/ → :8080.
+
+services:
+  api:
+    image: goprepared-api:latest
+    container_name: goprepared-api
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8080"
+    env_file:
+      - ../../.env
+    environment:
+      GOPREPARED_CONTENT_SYNC_ON_STARTUP: "true"
+      GOPREPARED_CONTENT_CONTENT_PATH: /app/content
+    volumes:
+      - ../../go-prepared-content/output:/app/content:ro
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://127.0.0.1:8080/api/v1/knowledge/categories"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 90s

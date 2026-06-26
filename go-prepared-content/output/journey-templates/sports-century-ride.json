@@ -1,0 +1,56 @@
+{
+  "templateKey": "sports-century-ride",
+  "classification": {
+    "journeyType": "Sports",
+    "journeySubtype": "Marathon",
+    "activity": "Century Ride",
+    "location": "",
+    "title": "Preparing for Century Ride",
+    "confidence": 0.9
+  },
+  "cards": [
+    {
+      "title": "Training Plan",
+      "summary": "Build weekly mileage gradually. Practice eating on the bike every 45 minutes. Check tire sealant and carry spare tubes....",
+      "category": "Training",
+      "icon": "running",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Build weekly mileage gradually. Practice eating on the bike every 45 minutes. Check tire sealant and carry spare tubes."
+          },
+          {
+            "title": "Focus areas",
+            "body": "Bike fit, Nutrition on bike, Group riding, Mechanical checklist"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Race Day Checklist",
+      "summary": "Gear, nutrition, and warm-up essentials.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 1
+    },
+    {
+      "title": "Nutrition & Hydration",
+      "summary": "Fuel strategy before and during the event.",
+      "category": "Health",
+      "icon": "nutrition",
+      "displayOrder": 2
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-event rest, stretching, and injury prevention.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 3
+    }
+  ]
+}

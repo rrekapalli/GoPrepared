@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-root-canal",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Medical Procedure",
+    "activity": "Root Canal",
+    "location": "",
+    "title": "Preparing for Root Canal",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Take antibiotics if prescribed before visit. Soft diet after temp crown. Complete permanent crown within recommended window....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Take antibiotics if prescribed before visit. Soft diet after temp crown. Complete permanent crown within recommended window."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Antibiotics, Temporary crown, Pain expectations, Final restoration"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

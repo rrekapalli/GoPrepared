@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-skin-biopsy",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Diagnostic Test",
+    "activity": "Skin Biopsy",
+    "location": "",
+    "title": "Preparing for Skin Biopsy",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Stop NSAIDs/ blood thinners if surgeon advises. Keep bandage dry 24 h. Results typically 7\u201310 business days....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Stop NSAIDs/ blood thinners if surgeon advises. Keep bandage dry 24 h. Results typically 7\u201310 business days."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Medication hold, Wound care, Result timeline, Sun protection"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

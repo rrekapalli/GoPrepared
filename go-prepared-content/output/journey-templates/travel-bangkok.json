@@ -1,0 +1,101 @@
+{
+  "templateKey": "travel-bangkok",
+  "classification": {
+    "journeyType": "Travel",
+    "journeySubtype": "Vacation",
+    "activity": "Vacation",
+    "location": "Bangkok",
+    "title": "Vacation to Bangkok",
+    "confidence": 0.92
+  },
+  "cards": [
+    {
+      "title": "Preparation Checklist",
+      "summary": "Packing, documents, and bookings for Bangkok, Thailand.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 0
+    },
+    {
+      "title": "Travel Info",
+      "summary": "Local customs, transport, and essentials for Bangkok.",
+      "category": "Travel Info",
+      "icon": "info",
+      "displayOrder": 1,
+      "detail": {
+        "destinationLabel": "Bangkok, Thailand",
+        "dos": [
+          "Research Nov\u2013Feb weather before packing",
+          "Save embassy/consulate contacts offline"
+        ],
+        "donts": [
+          "Don't carry all cash in one place",
+          "Don't ignore local dress codes at religious sites"
+        ],
+        "weather": "Best season: Nov\u2013Feb.",
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Dress modestly at wats, use Grab/BTS, and drink bottled water. Songkran (Apr) and cool season (Nov\u2013Feb) are popular travel windows."
+          },
+          {
+            "title": "Key topics",
+            "body": "Thai visa exemption, Temple dress code, Street food safety, Tuk-tuk scams"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Documents & Visa",
+      "summary": "Passport validity, visas, and travel insurance requirements.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 2
+    },
+    {
+      "title": "Packing Guide",
+      "summary": "Season-appropriate clothing and gear for Bangkok.",
+      "category": "Packing",
+      "icon": "packing",
+      "displayOrder": 3
+    },
+    {
+      "title": "Safety Tips",
+      "summary": "Health, scams, and emergency contacts.",
+      "category": "Safety",
+      "icon": "safety",
+      "displayOrder": 4
+    }
+  ],
+  "checklist": [
+    {
+      "title": "Verify passport expiry (6+ months)",
+      "description": "",
+      "category": "Documents",
+      "displayOrder": 0,
+      "completed": false
+    },
+    {
+      "title": "Book flights and accommodation",
+      "description": "",
+      "category": "Booking",
+      "displayOrder": 1,
+      "completed": false
+    },
+    {
+      "title": "Purchase travel insurance",
+      "description": "",
+      "category": "Documents",
+      "displayOrder": 2,
+      "completed": false
+    },
+    {
+      "title": "Research Bangkok transport options",
+      "description": "",
+      "category": "Planning",
+      "displayOrder": 3,
+      "completed": false
+    }
+  ]
+}

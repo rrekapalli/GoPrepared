@@ -1,0 +1,56 @@
+{
+  "templateKey": "sports-ski-season",
+  "classification": {
+    "journeyType": "Sports",
+    "journeySubtype": "Marathon",
+    "activity": "Ski Season",
+    "location": "",
+    "title": "Preparing for Ski Season",
+    "confidence": 0.9
+  },
+  "cards": [
+    {
+      "title": "Training Plan",
+      "summary": "Tune skis before trip. Helmet required. Layer for lift vs run temps. Know avalanche safety if going off-piste....",
+      "category": "Training",
+      "icon": "running",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Tune skis before trip. Helmet required. Layer for lift vs run temps. Know avalanche safety if going off-piste."
+          },
+          {
+            "title": "Focus areas",
+            "body": "Ski tuning, Lift tickets, Lesson booking, Avalanche awareness"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Race Day Checklist",
+      "summary": "Gear, nutrition, and warm-up essentials.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 1
+    },
+    {
+      "title": "Nutrition & Hydration",
+      "summary": "Fuel strategy before and during the event.",
+      "category": "Health",
+      "icon": "nutrition",
+      "displayOrder": 2
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-event rest, stretching, and injury prevention.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 3
+    }
+  ]
+}

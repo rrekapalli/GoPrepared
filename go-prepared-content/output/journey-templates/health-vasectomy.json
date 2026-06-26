@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-vasectomy",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Medical Procedure",
+    "activity": "Vasectomy",
+    "location": "",
+    "title": "Preparing for Vasectomy",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Supportive underwear day of procedure. Ice first 48 h. Alternate contraception until semen analysis confirms azoospermia....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Supportive underwear day of procedure. Ice first 48 h. Alternate contraception until semen analysis confirms azoospermia."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Scrotal support, Ice protocol, Activity limits, Follow-up sample"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-childbirth",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Medical Procedure",
+    "activity": "Childbirth",
+    "location": "",
+    "title": "Preparing for Childbirth",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Pack hospital bag by week 36. Birth plan copies for team. Install car seat; know labor triage criteria....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Pack hospital bag by week 36. Birth plan copies for team. Install car seat; know labor triage criteria."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Hospital bag, Birth plan, Contractions timing, Newborn essentials"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

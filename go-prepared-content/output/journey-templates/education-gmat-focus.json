@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-gmat-focus",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Exam",
+    "activity": "GMAT Focus",
+    "location": "",
+    "title": "Preparing for GMAT Focus",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Data Insights section is new focus area. Official practice exams 2\u20133 before test day. Time management per section critical....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Data Insights section is new focus area. Official practice exams 2\u20133 before test day. Time management per section critical."
+          },
+          {
+            "title": "Study focus",
+            "body": "Data Insights, Official mocks, Pacing strategy, Score sending"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

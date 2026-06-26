@@ -1,0 +1,56 @@
+{
+  "templateKey": "sports-badminton-tournament",
+  "classification": {
+    "journeyType": "Sports",
+    "journeySubtype": "10K Run",
+    "activity": "Badminton Tournament",
+    "location": "",
+    "title": "Preparing for Badminton Tournament",
+    "confidence": 0.9
+  },
+  "cards": [
+    {
+      "title": "Training Plan",
+      "summary": "Fresh grip tape and non-marking shoes required. Dynamic footwork warm-up prevents ankle rolls. Study opponent if bracket...",
+      "category": "Training",
+      "icon": "running",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Fresh grip tape and non-marking shoes required. Dynamic footwork warm-up prevents ankle rolls. Study opponent if bracket published."
+          },
+          {
+            "title": "Focus areas",
+            "body": "String tension, Footwork drills, Tournament format, Recovery between matches"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Race Day Checklist",
+      "summary": "Gear, nutrition, and warm-up essentials.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 1
+    },
+    {
+      "title": "Nutrition & Hydration",
+      "summary": "Fuel strategy before and during the event.",
+      "category": "Health",
+      "icon": "nutrition",
+      "displayOrder": 2
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-event rest, stretching, and injury prevention.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 3
+    }
+  ]
+}

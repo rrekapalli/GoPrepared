@@ -3,84 +3,2567 @@
     {
       "nodeType": "JOURNEY_TYPE",
       "name": "Travel",
-      "description": "Travel preparations",
-      "metadata": {}
-    },
-    {
-      "nodeType": "JOURNEY_SUBTYPE",
-      "name": "Vacation",
-      "description": "Leisure travel",
-      "metadata": {}
-    },
-    {
-      "nodeType": "LOCATION",
-      "name": "Bali",
-      "description": "Indonesia island destination",
-      "metadata": {}
-    },
-    {
-      "nodeType": "TOPIC",
-      "name": "Visa",
-      "description": "Entry and visa requirements",
-      "metadata": {}
+      "description": "International and domestic trip preparation",
+      "metadata": {
+        "category": "Travel"
+      }
     },
     {
       "nodeType": "JOURNEY_TYPE",
       "name": "Sports",
-      "description": "Athletic events",
-      "metadata": {}
-    },
-    {
-      "nodeType": "JOURNEY_SUBTYPE",
-      "name": "Marathon",
-      "description": "Long-distance running",
-      "metadata": {}
+      "description": "Athletic events and fitness goals",
+      "metadata": {
+        "category": "Sports"
+      }
     },
     {
       "nodeType": "JOURNEY_TYPE",
       "name": "Health",
-      "description": "Medical and wellness",
-      "metadata": {}
+      "description": "Medical procedures, surgery, and diagnostics",
+      "metadata": {
+        "category": "Health"
+      }
     },
     {
       "nodeType": "JOURNEY_TYPE",
       "name": "Education",
-      "description": "Exams and learning",
-      "metadata": {}
+      "description": "Exams, certifications, and academic milestones",
+      "metadata": {
+        "category": "Education"
+      }
     },
     {
       "nodeType": "JOURNEY_TYPE",
       "name": "Career",
-      "description": "Professional milestones",
-      "metadata": {}
+      "description": "Professional transitions and licensing",
+      "metadata": {
+        "category": "Career"
+      }
     },
     {
       "nodeType": "JOURNEY_TYPE",
       "name": "Finance",
-      "description": "Financial preparation",
-      "metadata": {}
+      "description": "Personal finance and investing preparation",
+      "metadata": {
+        "category": "Finance"
+      }
+    },
+    {
+      "nodeType": "JOURNEY_SUBTYPE",
+      "name": "Vacation",
+      "description": "Leisure and holiday travel",
+      "metadata": {
+        "category": "Travel"
+      }
+    },
+    {
+      "nodeType": "JOURNEY_SUBTYPE",
+      "name": "Business Travel",
+      "description": "Work-related trips and conferences",
+      "metadata": {
+        "category": "Travel"
+      }
+    },
+    {
+      "nodeType": "JOURNEY_SUBTYPE",
+      "name": "Marathon",
+      "description": "Long-distance running events",
+      "metadata": {
+        "category": "Sports"
+      }
+    },
+    {
+      "nodeType": "JOURNEY_SUBTYPE",
+      "name": "10K Run",
+      "description": "Short road races and fun runs",
+      "metadata": {
+        "category": "Sports"
+      }
+    },
+    {
+      "nodeType": "JOURNEY_SUBTYPE",
+      "name": "Medical Procedure",
+      "description": "Outpatient and inpatient procedures",
+      "metadata": {
+        "category": "Health"
+      }
+    },
+    {
+      "nodeType": "JOURNEY_SUBTYPE",
+      "name": "Surgery",
+      "description": "Operative care and recovery",
+      "metadata": {
+        "category": "Health"
+      }
+    },
+    {
+      "nodeType": "JOURNEY_SUBTYPE",
+      "name": "Diagnostic Test",
+      "description": "Imaging and screening exams",
+      "metadata": {
+        "category": "Health"
+      }
+    },
+    {
+      "nodeType": "JOURNEY_SUBTYPE",
+      "name": "Exam",
+      "description": "Standardized and professional exams",
+      "metadata": {
+        "category": "Education"
+      }
+    },
+    {
+      "nodeType": "JOURNEY_SUBTYPE",
+      "name": "Certification",
+      "description": "Industry credentials and licenses",
+      "metadata": {
+        "category": "Education"
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Paris",
+      "description": "Art, cuisine, and iconic landmarks on the Seine.",
+      "metadata": {
+        "category": "Travel",
+        "country": "France",
+        "overview": "Prepare for metro navigation, museum timed tickets, and modest dress at churches. Spring and fall offer mild weather and shorter queues at the Louvre and Eiffel Tower.",
+        "bestSeason": "Apr\u2013Jun, Sep\u2013Oct",
+        "prepDays": 21,
+        "topics": [
+          "Schengen visa",
+          "Navigo pass",
+          "Museum passes",
+          "French phrases"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Tokyo",
+      "description": "High-tech capital blending tradition and neon districts.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Japan",
+        "overview": "Get a Suica/PASMO card, learn basic transit etiquette, and book popular restaurants early. Cherry blossom (Mar\u2013Apr) and autumn foliage (Nov) are peak seasons.",
+        "bestSeason": "Mar\u2013May, Oct\u2013Nov",
+        "prepDays": 28,
+        "topics": [
+          "JR Pass",
+          "Pocket WiFi",
+          "Temple etiquette",
+          "Cash vs card"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Bali",
+      "description": "Tropical island of temples, rice terraces, and beaches.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Indonesia",
+        "overview": "Pack for humidity, arrange airport transfer, and respect temple sarong rules. Dry season (Apr\u2013Oct) is ideal for outdoor activities and diving.",
+        "bestSeason": "Apr\u2013Oct",
+        "prepDays": 14,
+        "topics": [
+          "VOA visa",
+          "Scooter safety",
+          "Travel insurance",
+          "Monsoon planning"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "New York City",
+      "description": "Global hub of finance, Broadway, and world-class museums.",
+      "metadata": {
+        "category": "Travel",
+        "country": "United States",
+        "overview": "Book Broadway tickets ahead, use OMNY/subway apps, and plan borough-specific days. Fall foliage in Central Park and holiday season are busiest.",
+        "bestSeason": "Apr\u2013Jun, Sep\u2013Nov",
+        "prepDays": 14,
+        "topics": [
+          "ESTA/visa",
+          "MetroCard",
+          "Broadway tickets",
+          "Tipping culture"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "London",
+      "description": "Historic capital with royal sites and diverse neighborhoods.",
+      "metadata": {
+        "category": "Travel",
+        "country": "United Kingdom",
+        "overview": "Oyster/contactless works on TfL. Book Tower of London and West End shows early. UK plug adapters and rain layers are essentials year-round.",
+        "bestSeason": "May\u2013Sep",
+        "prepDays": 21,
+        "topics": [
+          "UK visa",
+          "Oyster card",
+          "NHS travel insurance",
+          "Left-side traffic"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Rome",
+      "description": "Ancient ruins, Vatican City, and trattoria culture.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Italy",
+        "overview": "Reserve Colosseum and Vatican skip-the-line slots. Dress shoulders/knees for churches. August is hot and many locals leave the city.",
+        "bestSeason": "Apr\u2013Jun, Sep\u2013Oct",
+        "prepDays": 21,
+        "topics": [
+          "Schengen visa",
+          "Roma Pass",
+          "Pickpocket awareness",
+          "Dining reservations"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Dubai",
+      "description": "Desert metropolis of skyscrapers and luxury shopping.",
+      "metadata": {
+        "category": "Travel",
+        "country": "UAE",
+        "overview": "Respect local customs (modest dress in malls/mosques). Summer heat is extreme; Nov\u2013Mar is pleasant. Friday\u2013Saturday weekend affects hours.",
+        "bestSeason": "Nov\u2013Mar",
+        "prepDays": 14,
+        "topics": [
+          "UAE visa on arrival",
+          "Desert safari booking",
+          "Alcohol rules",
+          "Ramadan hours"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Barcelona",
+      "description": "Gaud\u00ed architecture, Mediterranean beaches, and tapas.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Spain",
+        "overview": "Book Sagrada Fam\u00edlia timed entry, watch belongings on La Rambla, and learn Catalan/Spanish basics. Late dinners are the norm.",
+        "bestSeason": "May\u2013Jun, Sep\u2013Oct",
+        "prepDays": 14,
+        "topics": [
+          "Schengen visa",
+          "Hola BCN transport",
+          "Siesta hours",
+          "Beach gear"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Sydney",
+      "description": "Harbour city with Opera House and coastal walks.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Australia",
+        "overview": "Apply for ETA/eVisitor before flying. Opal card covers trains, ferries, and buses. Sun protection is critical; seasons are reversed from the Northern Hemisphere.",
+        "bestSeason": "Sep\u2013Nov, Mar\u2013May",
+        "prepDays": 21,
+        "topics": [
+          "Australian ETA",
+          "Opal card",
+          "Biosecurity rules",
+          "Sun safety"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Istanbul",
+      "description": "Bridge between Europe and Asia with bazaars and mosques.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Turkey",
+        "overview": "Get an e-Visa online, haggle politely in bazaars, and remove shoes at mosques. Hagia Sophia and Grand Bazaar are must-sees \u2014 go early.",
+        "bestSeason": "Apr\u2013May, Sep\u2013Oct",
+        "prepDays": 14,
+        "topics": [
+          "Turkey e-Visa",
+          "Istanbulkart",
+          "Hagia Sophia hours",
+          "Currency exchange"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Bangkok",
+      "description": "Temples, street food, and vibrant night markets.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Thailand",
+        "overview": "Dress modestly at wats, use Grab/BTS, and drink bottled water. Songkran (Apr) and cool season (Nov\u2013Feb) are popular travel windows.",
+        "bestSeason": "Nov\u2013Feb",
+        "prepDays": 10,
+        "topics": [
+          "Thai visa exemption",
+          "Temple dress code",
+          "Street food safety",
+          "Tuk-tuk scams"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Singapore",
+      "description": "Clean garden city and Asian food capital.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Singapore",
+        "overview": "Most nationalities get visa-free entry. MRT is efficient; chewing gum and litter fines are strict. Book Gardens by the Bay in advance.",
+        "bestSeason": "Feb\u2013Apr",
+        "prepDays": 10,
+        "topics": [
+          "SG Arrival Card",
+          "EZ-Link card",
+          "Strict laws",
+          "Hawker centers"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Santorini",
+      "description": "Cliffside villages and Aegean sunsets.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Greece",
+        "overview": "Book ferries/flights early for summer. Oia sunsets draw crowds \u2014 arrive hours ahead. Sturdy shoes for cobblestones and steps.",
+        "bestSeason": "May\u2013Oct",
+        "prepDays": 21,
+        "topics": [
+          "Ferry booking",
+          "Schengen visa",
+          "Sunset reservations",
+          "ATV rental rules"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Machu Picchu",
+      "description": "Inca citadel in the Andes cloud forest.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Peru",
+        "overview": "Permits and train tickets sell out months ahead. Acclimatize in Cusco (3,400 m) before the trek. Dry season (May\u2013Sep) is peak.",
+        "bestSeason": "May\u2013Sep",
+        "prepDays": 60,
+        "topics": [
+          "Inca Trail permit",
+          "Altitude sickness",
+          "Cusco acclimatization",
+          "Guided tour booking"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Maldives",
+      "description": "Overwater villas and coral atolls.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Maldives",
+        "overview": "Confirm resort transfer (seaplane/speedboat) when booking. Pack reef-safe sunscreen. Dec\u2013Apr is dry season with calm seas for snorkeling.",
+        "bestSeason": "Dec\u2013Apr",
+        "prepDays": 21,
+        "topics": [
+          "Resort transfer",
+          "Visa on arrival",
+          "Diving certification",
+          "All-inclusive planning"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Kyoto",
+      "description": "Geisha districts, bamboo groves, and zen gardens.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Japan",
+        "overview": "Reserve popular temples (Kiyomizu, Fushimi Inari early AM). Wear easy-remove shoes for tatami. Spring cherry and autumn maple seasons are crowded.",
+        "bestSeason": "Mar\u2013May, Oct\u2013Nov",
+        "prepDays": 21,
+        "topics": [
+          "JR Pass segments",
+          "Ryokan etiquette",
+          "Kimono rental",
+          "Temple timing"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Amsterdam",
+      "description": "Canals, museums, and cycling culture.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Netherlands",
+        "overview": "Book Anne Frank House and Rijksmuseum slots weeks ahead. Watch for bikes on paths. OV-chipkaart covers trams and trains.",
+        "bestSeason": "Apr\u2013Sep",
+        "prepDays": 14,
+        "topics": [
+          "Schengen visa",
+          "Museum tickets",
+          "Bike rental",
+          "Canal cruise"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Los Angeles",
+      "description": "Entertainment capital, beaches, and diverse food scenes.",
+      "metadata": {
+        "category": "Travel",
+        "country": "United States",
+        "overview": "Rent a car for sprawl; traffic peaks at rush hour. Hiking Griffith Park and studio tours need reservations. Sunscreen year-round.",
+        "bestSeason": "Mar\u2013May, Sep\u2013Nov",
+        "prepDays": 14,
+        "topics": [
+          "ESTA/visa",
+          "Car rental",
+          "Theme park tickets",
+          "Wildfire season"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Canc\u00fan",
+      "description": "Caribbean beaches and Mayan ruin day trips.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Mexico",
+        "overview": "Use resort zone shuttles or licensed taxis. Hurricane season Jun\u2013Nov \u2014 travel insurance recommended. Book Chichen Itz\u00e1 tours early.",
+        "bestSeason": "Dec\u2013Apr",
+        "prepDays": 14,
+        "topics": [
+          "FMM tourist card",
+          "Resort transfers",
+          "Ruins day trip",
+          "Sunburn prevention"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Swiss Alps",
+      "description": "Mountain peaks, skiing, and scenic rail journeys.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Switzerland",
+        "overview": "Swiss Travel Pass covers trains and many lifts. Layer clothing for altitude swings. Book Jungfraujoch and Glacier Express ahead in peak season.",
+        "bestSeason": "Jun\u2013Sep (hiking), Dec\u2013Mar (ski)",
+        "prepDays": 21,
+        "topics": [
+          "Swiss Travel Pass",
+          "Altitude gear",
+          "Ski rental",
+          "Schengen visa"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Iceland",
+      "description": "Waterfalls, geysers, and northern lights.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Iceland",
+        "overview": "Rent a 4WD for F-roads in summer only. Weather changes hourly \u2014 pack waterproof layers. Book Blue Lagoon and ice cave tours early.",
+        "bestSeason": "Jun\u2013Aug (midnight sun), Sep\u2013Mar (aurora)",
+        "prepDays": 28,
+        "topics": [
+          "Ring Road planning",
+          "Aurora forecast",
+          "4WD rental",
+          "Thermal pool etiquette"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Cairo & Pyramids",
+      "description": "Ancient wonders along the Nile.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Egypt",
+        "overview": "Hire licensed guides at Giza. Dress modestly; stay hydrated. Nile cruise and Luxor extensions need separate bookings.",
+        "bestSeason": "Oct\u2013Apr",
+        "prepDays": 21,
+        "topics": [
+          "Egypt e-Visa",
+          "Guided tours",
+          "Heat precautions",
+          "Bargaining tips"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Kenya Safari",
+      "description": "Maasai Mara wildlife and Great Migration.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Kenya",
+        "overview": "Yellow fever certificate may be required. Book lodges inside reserve for early game drives. Jul\u2013Oct for river crossings; Jan\u2013Feb for calving.",
+        "bestSeason": "Jul\u2013Oct, Jan\u2013Feb",
+        "prepDays": 45,
+        "topics": [
+          "Safari visa",
+          "Vaccinations",
+          "Binoculars",
+          "Migration timing"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Rio de Janeiro",
+      "description": "Copacabana beaches, Christ the Redeemer, and samba.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Brazil",
+        "overview": "Stay alert in tourist zones; use registered taxis/ Uber_once. Carnival (Feb/Mar) requires months-ahead planning. Portuguese basics help.",
+        "bestSeason": "Dec\u2013Mar",
+        "prepDays": 21,
+        "topics": [
+          "Brazil visa/eVisa",
+          "Beach safety",
+          "Carnival tickets",
+          "Yellow fever zones"
+        ]
+      }
+    },
+    {
+      "nodeType": "LOCATION",
+      "name": "Vancouver",
+      "description": "Mountains, ocean, and multicultural neighborhoods.",
+      "metadata": {
+        "category": "Travel",
+        "country": "Canada",
+        "overview": "eTA required for visa-exempt flyers. Compass Card for SkyTrain. Stanley Park and Capilano Suspension Bridge are top sights \u2014 book Capilano online.",
+        "bestSeason": "Jun\u2013Sep",
+        "prepDays": 14,
+        "topics": [
+          "Canada eTA",
+          "Compass Card",
+          "Whistler day trip",
+          "Rain gear"
+        ]
+      }
+    },
+    {
+      "nodeType": "ACTIVITY",
+      "name": "Full Marathon",
+      "description": "26.2-mile road race requiring months of endurance training.",
+      "metadata": {
+        "category": "Sports",
+        "overview": "Follow a 16\u201320 week plan peaking at 20-mile long runs. Practice race-day fueling every long run. Taper two weeks before event.",
+        "prepWeeks": 20,
+        "topics": [
+          "Long run schedule",
+          "Gel strategy",
+          "Race pace",
+          "Taper week"
+        ],
+        "subtype": "Marathon"
+      }
+    },
+    {
+      "nodeType": "ACTIVITY",
+      "name": "10K Run",
+      "description": "Popular 6.2-mile road or trail race.",
+      "metadata": {
+        "category": "Sports",
+        "overview": "8-week plans work for beginners. Include one tempo and one interval session weekly. Hydrate for humid race locations like coastal cities.",
+        "prepWeeks": 8,
+        "topics": [
+          "Couch to 10K",
+          "Race morning routine",
+          "Pacing chart",
+          "Post-race recovery"
+        ],
+        "subtype": "10K Run"
+      }
+    },
+    {
+      "nodeType": "ACTIVITY",
+      "name": "Half Marathon",
+      "description": "13.1-mile challenge between 10K and full marathon.",
+      "metadata": {
+        "category": "Sports",
+        "overview": "12-week training with long runs up to 11\u201312 miles. Don't skip rest days. Test shoes and socks on longest runs only.",
+        "prepWeeks": 12,
+        "topics": [
+          "Long run progression",
+          "Mid-race fuel",
+          "Half marathon pace",
+          "Injury prevention"
+        ],
+        "subtype": "Marathon"
+      }
+    },
+    {
+      "nodeType": "ACTIVITY",
+      "name": "Soccer Tournament",
+      "description": "Team football competition requiring agility and stamina.",
+      "metadata": {
+        "category": "Sports",
+        "overview": "Arrive early for dynamic warm-up. Bring extra cleats, shin guards, and hydration. Know substitution and tie-break rules for your bracket.",
+        "prepWeeks": 6,
+        "topics": [
+          "Team roster",
+          "Warm-up drills",
+          "Hydration plan",
+          "Tournament rules"
+        ],
+        "subtype": "10K Run"
+      }
+    },
+    {
+      "nodeType": "ACTIVITY",
+      "name": "Basketball League",
+      "description": "Indoor or outdoor league play with weekly games.",
+      "metadata": {
+        "category": "Sports",
+        "overview": "Condition with suicides and plyometrics. Ankle braces if injury-prone. Confirm game schedule and playoff format with league admin.",
+        "prepWeeks": 4,
+        "topics": [
+          "League registration",
+          "Skill conditioning",
+          "Injury prevention",
+          "Playoff format"
+        ],
+        "subtype": "10K Run"
+      }
+    },
+    {
+      "nodeType": "ACTIVITY",
+      "name": "Tennis Championship",
+      "description": "Singles or doubles match play tournament.",
+      "metadata": {
+        "category": "Sports",
+        "overview": "Restring racquets before event. Pack extra grips, towels, and electrolytes. Learn tiebreak and let rules for your division.",
+        "prepWeeks": 8,
+        "topics": [
+          "Racquet prep",
+          "Match strategy",
+          "Court surface adapt",
+          "Tournament draw"
+        ],
+        "subtype": "10K Run"
+      }
+    },
+    {
+      "nodeType": "ACTIVITY",
+      "name": "Open Water Swim",
+      "description": "Lake, river, or ocean distance swimming event.",
+      "metadata": {
+        "category": "Sports",
+        "overview": "Practice sighting and drafting in open water. Wetsuit legal per water temp rules. Never swim alone in training.",
+        "prepWeeks": 10,
+        "topics": [
+          "Wetsuit fit",
+          "Sighting drills",
+          "Safety buoy",
+          "Cold water acclimation"
+        ],
+        "subtype": "10K Run"
+      }
+    },
+    {
+      "nodeType": "ACTIVITY",
+      "name": "Century Ride",
+      "description": "100-mile cycling endurance event.",
+      "metadata": {
+        "category": "Sports",
+        "overview": "Build weekly mileage gradually. Practice eating on the bike every 45 minutes. Check tire sealant and carry spare tubes.",
+        "prepWeeks": 16,
+        "topics": [
+          "Bike fit",
+          "Nutrition on bike",
+          "Group riding",
+          "Mechanical checklist"
+        ],
+        "subtype": "Marathon"
+      }
+    },
+    {
+      "nodeType": "ACTIVITY",
+      "name": "Sprint Triathlon",
+      "description": "Swim-bike-run multi-sport sprint distance.",
+      "metadata": {
+        "category": "Sports",
+        "overview": "Brick workouts (bike then run) are essential. Know transition layout and rack setup. Practice wetsuit removal speed.",
+        "prepWeeks": 12,
+        "topics": [
+          "Brick sessions",
+          "Transition setup",
+          "Swim start strategy",
+          "Race belt"
+        ],
+        "subtype": "Marathon"
+      }
+    },
+    {
+      "nodeType": "ACTIVITY",
+      "name": "Golf Club Championship",
+      "description": "Stroke-play or match-play club tournament.",
+      "metadata": {
+        "category": "Sports",
+        "overview": "Know local rules and pace-of-play policy. Practice lag putting week before. Book practice range slot day prior.",
+        "prepWeeks": 4,
+        "topics": [
+          "Handicap verification",
+          "Course layout",
+          "Club selection",
+          "Weather plan"
+        ],
+        "subtype": "10K Run"
+      }
+    },
+    {
+      "nodeType": "ACTIVITY",
+      "name": "Yoga Retreat",
+      "description": "Multi-day yoga intensive or wellness retreat.",
+      "metadata": {
+        "category": "Sports",
+        "overview": "Bring mat, blocks, and comfortable layers. Inform instructors of injuries. Hydrate and ease into advanced poses.",
+        "prepWeeks": 2,
+        "topics": [
+          "Mat and props",
+          "Modifications",
+          "Retreat schedule",
+          "Mindful nutrition"
+        ],
+        "subtype": "10K Run"
+      }
+    },
+    {
+      "nodeType": "ACTIVITY",
+      "name": "Rock Climbing Expedition",
+      "description": "Outdoor sport or trad climbing trip.",
+      "metadata": {
+        "category": "Sports",
+        "overview": "Check harness, helmet, and rope age. Partner checks mandatory. Study route topo and descent plan before climbing.",
+        "prepWeeks": 8,
+        "topics": [
+          "Gear inspection",
+          "Partner communication",
+          "Anchor basics",
+          "Weather abort criteria"
+        ],
+        "subtype": "Marathon"
+      }
+    },
+    {
+      "nodeType": "ACTIVITY",
+      "name": "Ski Season",
+      "description": "Alpine skiing vacation or race camp.",
+      "metadata": {
+        "category": "Sports",
+        "overview": "Tune skis before trip. Helmet required. Layer for lift vs run temps. Know avalanche safety if going off-piste.",
+        "prepWeeks": 4,
+        "topics": [
+          "Ski tuning",
+          "Lift tickets",
+          "Lesson booking",
+          "Avalanche awareness"
+        ],
+        "subtype": "Marathon"
+      }
+    },
+    {
+      "nodeType": "ACTIVITY",
+      "name": "Cricket Match Series",
+      "description": "League or friendly cricket match preparation.",
+      "metadata": {
+        "category": "Sports",
+        "overview": "Break in batting gloves and shoes. Warm up shoulders and core. Know format (T20/ODI) and field restrictions.",
+        "prepWeeks": 3,
+        "topics": [
+          "Kit checklist",
+          "Bowling workload",
+          "Field placements",
+          "Hydration in heat"
+        ],
+        "subtype": "10K Run"
+      }
+    },
+    {
+      "nodeType": "ACTIVITY",
+      "name": "Badminton Tournament",
+      "description": "Singles or doubles shuttle competition.",
+      "metadata": {
+        "category": "Sports",
+        "overview": "Fresh grip tape and non-marking shoes required. Dynamic footwork warm-up prevents ankle rolls. Study opponent if bracket published.",
+        "prepWeeks": 4,
+        "topics": [
+          "String tension",
+          "Footwork drills",
+          "Tournament format",
+          "Recovery between matches"
+        ],
+        "subtype": "10K Run"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Angiogram",
+      "description": "Cardiac catheter imaging of coronary arteries.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Fast 6\u20138 hours; inform team of metformin/blood thinners. Arrange ride home; drink fluids post-procedure. Watch puncture site for bleeding.",
+        "prepDays": 3,
+        "topics": [
+          "Fasting",
+          "Medication hold",
+          "Contrast allergy",
+          "Site care"
+        ],
+        "subtype": "Medical Procedure"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Colonoscopy",
+      "description": "Screening exam of the large intestine.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Clear-liquid diet day before; complete prep solution on schedule. Sedation \u2014 no driving 24 h. Follow polyp removal instructions if applicable.",
+        "prepDays": 2,
+        "topics": [
+          "Prep solution",
+          "Diet restrictions",
+          "Sedation",
+          "Aftercare"
+        ],
+        "subtype": "Diagnostic Test"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "MRI Scan",
+      "description": "Magnetic resonance imaging without radiation.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Remove all metal; inform staff of implants. Claustrophobic patients may request mild sedation. Earplugs provided \u2014 exam 30\u201360 min.",
+        "prepDays": 1,
+        "topics": [
+          "Metal screening",
+          "Contrast dye",
+          "Claustrophobia",
+          "Implant cards"
+        ],
+        "subtype": "Diagnostic Test"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Knee Replacement",
+      "description": "Total or partial knee arthroplasty.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Prehab strengthening 4\u20136 weeks improves outcomes. Home safety prep (rails, raised toilet seat). PT starts day 1 post-op.",
+        "prepDays": 42,
+        "topics": [
+          "Prehab exercises",
+          "Home setup",
+          "Blood thinners",
+          "PT schedule"
+        ],
+        "subtype": "Surgery"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Cataract Surgery",
+      "description": "Lens replacement for cloudy vision.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Use prescribed drops starting days before. No food morning of surgery. Sunglasses and shield at night post-op.",
+        "prepDays": 7,
+        "topics": [
+          "Eye drops",
+          "Fasting",
+          "Post-op shield",
+          "Activity limits"
+        ],
+        "subtype": "Surgery"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Childbirth",
+      "description": "Hospital labor and delivery preparation.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Pack hospital bag by week 36. Birth plan copies for team. Install car seat; know labor triage criteria.",
+        "prepDays": 30,
+        "topics": [
+          "Hospital bag",
+          "Birth plan",
+          "Contractions timing",
+          "Newborn essentials"
+        ],
+        "subtype": "Medical Procedure"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Dental Implant",
+      "description": "Titanium post placement for tooth replacement.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Antibiotic prophylaxis if directed. Soft diet 1\u20132 weeks. No straws or smoking \u2014 protects clot.",
+        "prepDays": 7,
+        "topics": [
+          "Antibiotics",
+          "Soft foods",
+          "Smoking cessation",
+          "Follow-up imaging"
+        ],
+        "subtype": "Surgery"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Gallbladder Surgery",
+      "description": "Laparoscopic cholecystectomy for gallstones.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Low-fat diet pre-op if instructed. Arrange help first 48 h home. Incision care \u2014 no heavy lifting 4\u20136 weeks.",
+        "prepDays": 7,
+        "topics": [
+          "Diet changes",
+          "Laparoscopic prep",
+          "Pain management",
+          "Lift restrictions"
+        ],
+        "subtype": "Surgery"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Hernia Repair",
+      "description": "Inguinal or umbilical hernia correction.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Stop blood thinners per surgeon schedule. Support garment may be provided. Gradual return to activity per protocol.",
+        "prepDays": 14,
+        "topics": [
+          "Mesh info",
+          "Activity timeline",
+          "Cough support",
+          "Follow-up exam"
+        ],
+        "subtype": "Surgery"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Hip Replacement",
+      "description": "Total hip arthroplasty for arthritis.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Home modifications reduce fall risk. Hip precautions (no bending past 90\u00b0) if posterior approach. Walker/cane training pre-op helps.",
+        "prepDays": 42,
+        "topics": [
+          "Hip precautions",
+          "Home rails",
+          "DVT prevention",
+          "PT milestones"
+        ],
+        "subtype": "Surgery"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "LASIK Eye Surgery",
+      "description": "Laser vision correction procedure.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Stop contacts 2+ weeks before (varies by lens type). No makeup day of surgery. Drops schedule strict first month.",
+        "prepDays": 14,
+        "topics": [
+          "Contact lens hold",
+          "Dry eye treatment",
+          "Post-op drops",
+          "Screen time limits"
+        ],
+        "subtype": "Surgery"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Mammogram",
+      "description": "Breast cancer screening imaging.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Schedule after menstrual period for comfort. No deodorant day of exam. Bring prior images if changing facilities.",
+        "prepDays": 1,
+        "topics": [
+          "Timing cycle",
+          "Deodorant rule",
+          "Prior films",
+          "Results follow-up"
+        ],
+        "subtype": "Diagnostic Test"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Appendectomy",
+      "description": "Emergency or scheduled appendix removal.",
+      "metadata": {
+        "category": "Health",
+        "overview": "NPO if acute symptoms \u2014 surgery urgent. Post-op early ambulation prevents ileus. Incision infection signs to report.",
+        "prepDays": 1,
+        "topics": [
+          "NPO status",
+          "Emergency signs",
+          "Ambulation",
+          "Wound care"
+        ],
+        "subtype": "Surgery"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Chemotherapy",
+      "description": "Systemic cancer treatment cycles.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Port care education if applicable. Anti-nausea meds filled before cycle 1. Low neutrophil precautions explained by oncology nurse.",
+        "prepDays": 7,
+        "topics": [
+          "Port care",
+          "Anti-nausea",
+          "Neutropenic diet",
+          "Emergency numbers"
+        ],
+        "subtype": "Medical Procedure"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Dialysis",
+      "description": "Renal replacement therapy initiation.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Fistula maturation takes weeks \u2014 protect arm from BP cuffs and needles. Diet phosphorus/potassium limits. Session schedule 3\u00d7 weekly typical.",
+        "prepDays": 21,
+        "topics": [
+          "Access care",
+          "Renal diet",
+          "Fluid limits",
+          "Transport to center"
+        ],
+        "subtype": "Medical Procedure"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Endoscopy",
+      "description": "Upper GI scope for stomach/esophagus.",
+      "metadata": {
+        "category": "Health",
+        "overview": "NPO midnight before; morning meds with sip of water if approved. Throat numbness wears off \u2014 soft foods rest of day.",
+        "prepDays": 1,
+        "topics": [
+          "Fasting",
+          "Medication review",
+          "Sedation recovery",
+          "Biopsy results"
+        ],
+        "subtype": "Diagnostic Test"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Pacemaker Implant",
+      "description": "Cardiac rhythm device placement.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Hold anticoagulants per plan. Arm sling 2\u20134 weeks on implant side. MRI-conditional device card provided.",
+        "prepDays": 7,
+        "topics": [
+          "Device card",
+          "Arm restrictions",
+          "MRI compatibility",
+          "Remote monitoring"
+        ],
+        "subtype": "Surgery"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Prostate Surgery",
+      "description": "TURP or robotic prostatectomy.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Pelvic floor exercises pre/post-op. Catheter care instructions. Pathology follow-up appointment scheduled.",
+        "prepDays": 14,
+        "topics": [
+          "Catheter care",
+          "Kegel exercises",
+          "Pathology timeline",
+          "Incontinence management"
+        ],
+        "subtype": "Surgery"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Root Canal",
+      "description": "Endodontic treatment for infected tooth.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Take antibiotics if prescribed before visit. Soft diet after temp crown. Complete permanent crown within recommended window.",
+        "prepDays": 3,
+        "topics": [
+          "Antibiotics",
+          "Temporary crown",
+          "Pain expectations",
+          "Final restoration"
+        ],
+        "subtype": "Medical Procedure"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Skin Biopsy",
+      "description": "Tissue sample for dermatopathology.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Stop NSAIDs/ blood thinners if surgeon advises. Keep bandage dry 24 h. Results typically 7\u201310 business days.",
+        "prepDays": 2,
+        "topics": [
+          "Medication hold",
+          "Wound care",
+          "Result timeline",
+          "Sun protection"
+        ],
+        "subtype": "Diagnostic Test"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Tonsillectomy",
+      "description": "Tonsil removal for chronic infection or sleep apnea.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Hydration critical \u2014 ice chips and popsicles help. Avoid red foods (can't see bleeding). Pain peaks days 5\u20137.",
+        "prepDays": 7,
+        "topics": [
+          "Hydration",
+          "Pain management",
+          "Bleeding signs",
+          "Diet progression"
+        ],
+        "subtype": "Surgery"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Vasectomy",
+      "description": "Permanent male contraception procedure.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Supportive underwear day of procedure. Ice first 48 h. Alternate contraception until semen analysis confirms azoospermia.",
+        "prepDays": 3,
+        "topics": [
+          "Scrotal support",
+          "Ice protocol",
+          "Activity limits",
+          "Follow-up sample"
+        ],
+        "subtype": "Medical Procedure"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Wisdom Teeth Removal",
+      "description": "Third molar extraction under local or general anesthesia.",
+      "metadata": {
+        "category": "Health",
+        "overview": "No straws/smoking 5\u20137 days (dry socket risk). Soft foods and oral rinse as directed. Swelling peaks day 2\u20133.",
+        "prepDays": 3,
+        "topics": [
+          "Dry socket prevention",
+          "Soft diet",
+          "Irrigation syringe",
+          "Swelling management"
+        ],
+        "subtype": "Surgery"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "ACL Reconstruction",
+      "description": "Knee ligament repair after sports injury.",
+      "metadata": {
+        "category": "Health",
+        "overview": "Prehab quad activation improves outcomes. Brace and crutches training pre-op. PT protocol phased over 6\u20139 months.",
+        "prepDays": 21,
+        "topics": [
+          "Prehab",
+          "Graft options",
+          "Brace use",
+          "Return-to-sport criteria"
+        ],
+        "subtype": "Surgery"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Cardiac Bypass",
+      "description": "Coronary artery bypass grafting (CABG).",
+      "metadata": {
+        "category": "Health",
+        "overview": "Pulmonary toilet exercises pre-op. Sternotomy precautions \u2014 no lifting >10 lb 6 weeks. Cardiac rehab referral standard.",
+        "prepDays": 14,
+        "topics": [
+          "Sternotomy care",
+          "Rehab enrollment",
+          "Medication changes",
+          "Warning signs"
+        ],
+        "subtype": "Surgery"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "GRE Exam",
+      "description": "Graduate Record Examination for US grad schools.",
+      "metadata": {
+        "category": "Education",
+        "overview": "8\u201312 week study plan; ETS PowerPrep for baseline. AWA templates for issue/argument. Scores valid 5 years.",
+        "prepWeeks": 10,
+        "topics": [
+          "Quant review",
+          "Vocabulary",
+          "AWA templates",
+          "Test-day checklist"
+        ],
+        "subtype": "Exam"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "GMAT Focus",
+      "description": "MBA program admissions test.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Data Insights section is new focus area. Official practice exams 2\u20133 before test day. Time management per section critical.",
+        "prepWeeks": 12,
+        "topics": [
+          "Data Insights",
+          "Official mocks",
+          "Pacing strategy",
+          "Score sending"
+        ],
+        "subtype": "Exam"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "SAT",
+      "description": "US college admissions standardized test.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Digital adaptive format \u2014 practice on Bluebook app. Math formula sheet provided. Reading paired passages strategy matters.",
+        "prepWeeks": 12,
+        "topics": [
+          "Bluebook practice",
+          "Calculator policy",
+          "Essay optional",
+          "Score choice"
+        ],
+        "subtype": "Exam"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "ACT",
+      "description": "Alternative US college admissions test.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Science is data interpretation, not memorization. Faster pace than SAT \u2014 drill timing. Superscore policies vary by college.",
+        "prepWeeks": 10,
+        "topics": [
+          "Science pacing",
+          "English grammar",
+          "Math formulas",
+          "Superscore rules"
+        ],
+        "subtype": "Exam"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "IELTS Academic",
+      "description": "English proficiency for UK/Australia study.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Speaking mock tests weekly. Writing Task 1 graph vocabulary lists. Listening accents vary \u2014 practice BBC/podcasts.",
+        "prepWeeks": 8,
+        "topics": [
+          "Speaking mock",
+          "Writing Task 2",
+          "Listening accents",
+          "Band score targets"
+        ],
+        "subtype": "Exam"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "TOEFL iBT",
+      "description": "English proficiency for US universities.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Integrated speaking/writing tasks combine reading+listening. Note templates for lecture summaries. Home edition rules differ.",
+        "prepWeeks": 8,
+        "topics": [
+          "Integrated tasks",
+          "Note-taking",
+          "Home vs center",
+          "Score reporting"
+        ],
+        "subtype": "Exam"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "UPSC Civil Services",
+      "description": "India administrative service examination.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Prelims MCQ + Mains descriptive + Interview. NCERT foundation then standard books. Answer writing practice daily.",
+        "prepWeeks": 52,
+        "topics": [
+          "Prelims strategy",
+          "Optional subject",
+          "Answer writing",
+          "Current affairs"
+        ],
+        "subtype": "Exam"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Bar Exam",
+      "description": "US attorney licensing examination.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Bar review course structured schedule. MBE practice 50+ Q/day. State-specific components (MEE/MPT) need separate prep.",
+        "prepWeeks": 10,
+        "topics": [
+          "Bar review course",
+          "MBE drills",
+          "Essay practice",
+          "Character & fitness"
+        ],
+        "subtype": "Exam"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "CPA Exam",
+      "description": "US Certified Public Accountant licensure.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Four sections \u2014 plan order (FAR/AUD/REG/BEC successor). 18-month window once first pass. Simulations practice essential.",
+        "prepWeeks": 16,
+        "topics": [
+          "Section order",
+          "Sims practice",
+          "NIN application",
+          "Ethics exam"
+        ],
+        "subtype": "Certification"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "PMP Certification",
+      "description": "Project Management Professional credential.",
+      "metadata": {
+        "category": "Education",
+        "overview": "35 contact hours required. PMBOK + Agile Practice Guide. Process groups and ITTOs \u2014 use flashcards.",
+        "prepWeeks": 12,
+        "topics": [
+          "35 PDUs",
+          "Process groups",
+          "Mock exams",
+          "Application audit"
+        ],
+        "subtype": "Certification"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "AWS Solutions Architect",
+      "description": "Associate-level cloud architecture cert.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Hands-on free tier labs reinforce VPC, IAM, S3 patterns. Exam is scenario-heavy \u2014 eliminate wrong answers.",
+        "prepWeeks": 8,
+        "topics": [
+          "VPC design",
+          "IAM policies",
+          "Well-Architected",
+          "Practice exams"
+        ],
+        "subtype": "Certification"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Google Cloud Associate",
+      "description": "GCP foundational cloud engineer cert.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Qwiklabs for Compute Engine and GKE basics. gcloud CLI practice. Case studies on Google exam site.",
+        "prepWeeks": 6,
+        "topics": [
+          "gcloud CLI",
+          "GCE/GKE labs",
+          "IAM roles",
+          "Case studies"
+        ],
+        "subtype": "Certification"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "NCLEX-RN",
+      "description": "US registered nurse licensure exam.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Next Gen format \u2014 case studies and bow-tie items. UWorld or similar QBank daily. Computer adaptive test \u2014 stay calm if questions feel harder.",
+        "prepWeeks": 8,
+        "topics": [
+          "Next Gen format",
+          "QBank volume",
+          "Pharmacology",
+          "Test anxiety"
+        ],
+        "subtype": "Exam"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "MCAT",
+      "description": "Medical school admissions test.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Content review 3 mo + FL exams monthly. CARS daily practice non-negotiable. AAMC materials closest to real exam.",
+        "prepWeeks": 16,
+        "topics": [
+          "AAMC FLs",
+          "CARS daily",
+          "Biochem pathways",
+          "Score release"
+        ],
+        "subtype": "Exam"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "LSAT",
+      "description": "Law school admissions test.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Logic games elimination strategies evolving post-format changes. Blind review of missed questions. PT under timed conditions weekly.",
+        "prepWeeks": 12,
+        "topics": [
+          "Logical reasoning",
+          "Blind review",
+          "Proctoring rules",
+          "Score bands"
+        ],
+        "subtype": "Exam"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "CFA Level 1",
+      "description": "Chartered Financial Analyst first level.",
+      "metadata": {
+        "category": "Education",
+        "overview": "300+ hour guideline. Ethics always tested \u2014 don't skip. Calculator policy strict (BA II Plus allowed).",
+        "prepWeeks": 20,
+        "topics": [
+          "Ethics weight",
+          "Quant methods",
+          "Mock exams",
+          "Calculator rules"
+        ],
+        "subtype": "Certification"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Driving License Test",
+      "description": "DMV written and road skills examination.",
+      "metadata": {
+        "category": "Education",
+        "overview": "State handbook read twice. Parallel parking and mirror checks for road test. Documents: ID, insurance, registration.",
+        "prepWeeks": 2,
+        "topics": [
+          "Handbook",
+          "Road test route",
+          "Document checklist",
+          "Learner permit rules"
+        ],
+        "subtype": "Exam"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Real Estate License",
+      "description": "State realtor pre-licensing and exam.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Complete accredited pre-licensing hours. Practice national + state law exams. Background check and sponsorship for activation.",
+        "prepWeeks": 8,
+        "topics": [
+          "Pre-licensing",
+          "State laws",
+          "Exam prep",
+          "Broker sponsorship"
+        ],
+        "subtype": "Certification"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "PhD Dissertation Defense",
+      "description": "Doctoral thesis oral defense preparation.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Committee questions on methods and limitations. Defense slides 45\u201360 min. Mock defense with lab peers.",
+        "prepWeeks": 8,
+        "topics": [
+          "Slide deck",
+          "Mock defense",
+          "Committee bios",
+          "Publication list"
+        ],
+        "subtype": "Exam"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "University Freshman Year",
+      "description": "First-year college transition preparation.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Housing deposit and course registration deadlines. Health insurance waiver or campus plan. Budget textbooks vs rentals.",
+        "prepWeeks": 4,
+        "topics": [
+          "Course registration",
+          "Housing",
+          "Meal plan",
+          "Campus health"
+        ],
+        "subtype": "Exam"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Study Abroad Semester",
+      "description": "International exchange semester planning.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Visa and course credit approval early. Host university course catalog review. Travel insurance and phone plan.",
+        "prepWeeks": 12,
+        "topics": [
+          "Credit transfer",
+          "Student visa",
+          "Housing abroad",
+          "Banking abroad"
+        ],
+        "subtype": "Exam"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Coding Bootcamp",
+      "description": "Intensive software engineering program.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Prework completion before day 1. Git/GitHub daily. Job prep starts mid-program \u2014 portfolio projects.",
+        "prepWeeks": 2,
+        "topics": [
+          "Prework",
+          "Git workflow",
+          "Portfolio",
+          "Interview prep"
+        ],
+        "subtype": "Certification"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Data Science Certificate",
+      "description": "Professional data analytics/science credential.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Python/pandas + SQL proficiency. Capstone with real dataset. Statistics fundamentals for interviews.",
+        "prepWeeks": 12,
+        "topics": [
+          "Python stack",
+          "SQL joins",
+          "Capstone",
+          "Stats review"
+        ],
+        "subtype": "Certification"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Scrum Master (CSM)",
+      "description": "Certified ScrumMaster agile credential.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Two-day course mandatory. Scrum Guide read cover-to-cover. Servant leadership scenarios for exam.",
+        "prepWeeks": 2,
+        "topics": [
+          "Scrum Guide",
+          "Ceremonies",
+          "Course attendance",
+          "Exam format"
+        ],
+        "subtype": "Certification"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Teacher Certification",
+      "description": "State teaching license and edTPA.",
+      "metadata": {
+        "category": "Education",
+        "overview": "Content area exam + pedagogy test. Student teaching documentation. Background check and fingerprinting.",
+        "prepWeeks": 16,
+        "topics": [
+          "Content exam",
+          "edTPA portfolio",
+          "Student teaching",
+          "State requirements"
+        ],
+        "subtype": "Certification"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Visa",
+      "description": "Entry visas, e-visas, and passport validity",
+      "metadata": {
+        "category": "Travel"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Travel Insurance",
+      "description": "Medical evacuation and trip cancellation cover",
+      "metadata": {
+        "category": "Travel"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Emergency Fund",
+      "description": "3\u20136 months expenses in liquid savings",
+      "metadata": {
+        "category": "Finance"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Tax Filing",
+      "description": "Annual income tax preparation and deductions",
+      "metadata": {
+        "category": "Finance"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Job Interview",
+      "description": "Behavioral and technical interview preparation",
+      "metadata": {
+        "category": "Career"
+      }
+    },
+    {
+      "nodeType": "TOPIC",
+      "name": "Resume Refresh",
+      "description": "ATS-friendly resume and LinkedIn alignment",
+      "metadata": {
+        "category": "Career"
+      }
     }
   ],
   "edges": [
     {
       "sourceName": "Travel",
       "targetName": "Vacation",
-      "relationshipType": "HAS_SUBTYPE"
+      "relationshipType": "HAS_SUBTYPE",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "JOURNEY_SUBTYPE"
     },
     {
-      "sourceName": "Vacation",
-      "targetName": "Bali",
-      "relationshipType": "LOCATED_IN"
-    },
-    {
-      "sourceName": "Bali",
-      "targetName": "Visa",
-      "relationshipType": "REQUIRES"
+      "sourceName": "Travel",
+      "targetName": "Business Travel",
+      "relationshipType": "HAS_SUBTYPE",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "JOURNEY_SUBTYPE"
     },
     {
       "sourceName": "Sports",
       "targetName": "Marathon",
-      "relationshipType": "HAS_SUBTYPE"
+      "relationshipType": "HAS_SUBTYPE",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "JOURNEY_SUBTYPE"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "10K Run",
+      "relationshipType": "HAS_SUBTYPE",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "JOURNEY_SUBTYPE"
+    },
+    {
+      "sourceName": "Health",
+      "targetName": "Medical Procedure",
+      "relationshipType": "HAS_SUBTYPE",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "JOURNEY_SUBTYPE"
+    },
+    {
+      "sourceName": "Health",
+      "targetName": "Surgery",
+      "relationshipType": "HAS_SUBTYPE",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "JOURNEY_SUBTYPE"
+    },
+    {
+      "sourceName": "Health",
+      "targetName": "Diagnostic Test",
+      "relationshipType": "HAS_SUBTYPE",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "JOURNEY_SUBTYPE"
+    },
+    {
+      "sourceName": "Education",
+      "targetName": "Exam",
+      "relationshipType": "HAS_SUBTYPE",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "JOURNEY_SUBTYPE"
+    },
+    {
+      "sourceName": "Education",
+      "targetName": "Certification",
+      "relationshipType": "HAS_SUBTYPE",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "JOURNEY_SUBTYPE"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Paris",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Tokyo",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Bali",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "New York City",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "London",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Rome",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Dubai",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Barcelona",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Sydney",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Istanbul",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Bangkok",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Singapore",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Santorini",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Machu Picchu",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Maldives",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Kyoto",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Amsterdam",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Los Angeles",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Canc\u00fan",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Swiss Alps",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Iceland",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Cairo & Pyramids",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Kenya Safari",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Rio de Janeiro",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Vacation",
+      "targetName": "Vancouver",
+      "relationshipType": "LOCATED_IN",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "LOCATION"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "Full Marathon",
+      "relationshipType": "HAS_ACTIVITY",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Marathon",
+      "targetName": "Full Marathon",
+      "relationshipType": "RELATED_TO",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "10K Run",
+      "relationshipType": "HAS_ACTIVITY",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "10K Run",
+      "targetName": "10K Run",
+      "relationshipType": "RELATED_TO",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "Half Marathon",
+      "relationshipType": "HAS_ACTIVITY",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Marathon",
+      "targetName": "Half Marathon",
+      "relationshipType": "RELATED_TO",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "Soccer Tournament",
+      "relationshipType": "HAS_ACTIVITY",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "10K Run",
+      "targetName": "Soccer Tournament",
+      "relationshipType": "RELATED_TO",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "Basketball League",
+      "relationshipType": "HAS_ACTIVITY",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "10K Run",
+      "targetName": "Basketball League",
+      "relationshipType": "RELATED_TO",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "Tennis Championship",
+      "relationshipType": "HAS_ACTIVITY",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "10K Run",
+      "targetName": "Tennis Championship",
+      "relationshipType": "RELATED_TO",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "Open Water Swim",
+      "relationshipType": "HAS_ACTIVITY",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "10K Run",
+      "targetName": "Open Water Swim",
+      "relationshipType": "RELATED_TO",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "Century Ride",
+      "relationshipType": "HAS_ACTIVITY",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Marathon",
+      "targetName": "Century Ride",
+      "relationshipType": "RELATED_TO",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "Sprint Triathlon",
+      "relationshipType": "HAS_ACTIVITY",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Marathon",
+      "targetName": "Sprint Triathlon",
+      "relationshipType": "RELATED_TO",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "Golf Club Championship",
+      "relationshipType": "HAS_ACTIVITY",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "10K Run",
+      "targetName": "Golf Club Championship",
+      "relationshipType": "RELATED_TO",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "Yoga Retreat",
+      "relationshipType": "HAS_ACTIVITY",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "10K Run",
+      "targetName": "Yoga Retreat",
+      "relationshipType": "RELATED_TO",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "Rock Climbing Expedition",
+      "relationshipType": "HAS_ACTIVITY",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Marathon",
+      "targetName": "Rock Climbing Expedition",
+      "relationshipType": "RELATED_TO",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "Ski Season",
+      "relationshipType": "HAS_ACTIVITY",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Marathon",
+      "targetName": "Ski Season",
+      "relationshipType": "RELATED_TO",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "Cricket Match Series",
+      "relationshipType": "HAS_ACTIVITY",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "10K Run",
+      "targetName": "Cricket Match Series",
+      "relationshipType": "RELATED_TO",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Sports",
+      "targetName": "Badminton Tournament",
+      "relationshipType": "HAS_ACTIVITY",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "10K Run",
+      "targetName": "Badminton Tournament",
+      "relationshipType": "RELATED_TO",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "ACTIVITY"
+    },
+    {
+      "sourceName": "Medical Procedure",
+      "targetName": "Angiogram",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Diagnostic Test",
+      "targetName": "Colonoscopy",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Diagnostic Test",
+      "targetName": "MRI Scan",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Surgery",
+      "targetName": "Knee Replacement",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Surgery",
+      "targetName": "Cataract Surgery",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Medical Procedure",
+      "targetName": "Childbirth",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Surgery",
+      "targetName": "Dental Implant",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Surgery",
+      "targetName": "Gallbladder Surgery",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Surgery",
+      "targetName": "Hernia Repair",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Surgery",
+      "targetName": "Hip Replacement",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Surgery",
+      "targetName": "LASIK Eye Surgery",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Diagnostic Test",
+      "targetName": "Mammogram",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Surgery",
+      "targetName": "Appendectomy",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Medical Procedure",
+      "targetName": "Chemotherapy",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Medical Procedure",
+      "targetName": "Dialysis",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Diagnostic Test",
+      "targetName": "Endoscopy",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Surgery",
+      "targetName": "Pacemaker Implant",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Surgery",
+      "targetName": "Prostate Surgery",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Medical Procedure",
+      "targetName": "Root Canal",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Diagnostic Test",
+      "targetName": "Skin Biopsy",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Surgery",
+      "targetName": "Tonsillectomy",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Medical Procedure",
+      "targetName": "Vasectomy",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Surgery",
+      "targetName": "Wisdom Teeth Removal",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Surgery",
+      "targetName": "ACL Reconstruction",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Surgery",
+      "targetName": "Cardiac Bypass",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Exam",
+      "targetName": "GRE Exam",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Exam",
+      "targetName": "GMAT Focus",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Exam",
+      "targetName": "SAT",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Exam",
+      "targetName": "ACT",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Exam",
+      "targetName": "IELTS Academic",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Exam",
+      "targetName": "TOEFL iBT",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Exam",
+      "targetName": "UPSC Civil Services",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Exam",
+      "targetName": "Bar Exam",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Certification",
+      "targetName": "CPA Exam",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Certification",
+      "targetName": "PMP Certification",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Certification",
+      "targetName": "AWS Solutions Architect",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Certification",
+      "targetName": "Google Cloud Associate",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Exam",
+      "targetName": "NCLEX-RN",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Exam",
+      "targetName": "MCAT",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Exam",
+      "targetName": "LSAT",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Certification",
+      "targetName": "CFA Level 1",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Exam",
+      "targetName": "Driving License Test",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Certification",
+      "targetName": "Real Estate License",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Exam",
+      "targetName": "PhD Dissertation Defense",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Exam",
+      "targetName": "University Freshman Year",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Exam",
+      "targetName": "Study Abroad Semester",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Certification",
+      "targetName": "Coding Bootcamp",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Certification",
+      "targetName": "Data Science Certificate",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Certification",
+      "targetName": "Scrum Master (CSM)",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Certification",
+      "targetName": "Teacher Certification",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_SUBTYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Travel",
+      "targetName": "Visa",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Travel",
+      "targetName": "Travel Insurance",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Finance",
+      "targetName": "Emergency Fund",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Finance",
+      "targetName": "Tax Filing",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Career",
+      "targetName": "Job Interview",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "TOPIC"
+    },
+    {
+      "sourceName": "Career",
+      "targetName": "Resume Refresh",
+      "relationshipType": "REQUIRES",
+      "sourceType": "JOURNEY_TYPE",
+      "targetType": "TOPIC"
     }
   ]
 }

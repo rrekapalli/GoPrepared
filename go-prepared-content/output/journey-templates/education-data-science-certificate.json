@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-data-science-certificate",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Certification",
+    "activity": "Data Science Certificate",
+    "location": "",
+    "title": "Preparing for Data Science Certificate",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Python/pandas + SQL proficiency. Capstone with real dataset. Statistics fundamentals for interviews....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Python/pandas + SQL proficiency. Capstone with real dataset. Statistics fundamentals for interviews."
+          },
+          {
+            "title": "Study focus",
+            "body": "Python stack, SQL joins, Capstone, Stats review"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

@@ -86,6 +86,8 @@ class KnowledgeEdge(BaseModel):
     sourceName: str
     targetName: str
     relationshipType: RelationshipType
+    sourceType: Optional[NodeType] = None
+    targetType: Optional[NodeType] = None
 
 
 class InsightType(str, Enum):

@@ -44,8 +44,13 @@ load_goprepared_env() {
     CORES="$(strip_cr "${GOPREPARED_CORES:-2}")"
     MEMORY_MB="$(strip_cr "${GOPREPARED_MEMORY_MB:-2048}")"
     ROOTFS_GB="$(strip_cr "${GOPREPARED_ROOTFS_GB:-16}")"
-    CONTAINER_USER="$(strip_cr "${CONTAINER_USER:-raja}")"
-    CONTAINER_PASSWORD="$(strip_cr "${CONTAINER_PASSWORD:-}")"
+    CONTAINER_USER="$(strip_cr "${CONTAINER_USER:-${SSH_USER:-raja}}")"
+    CONTAINER_PASSWORD="$(strip_cr "${CONTAINER_PASSWORD:-${SSH_PASSWORD:-}}")"
+    SSH_USER="$(strip_cr "${SSH_USER:-${CONTAINER_USER:-raja}}")"
+    SSH_PASSWORD="$(strip_cr "${SSH_PASSWORD:-${CONTAINER_PASSWORD:-}}")"
+    # Re-sync after fallbacks so chpasswd and direct SSH always match.
+    CONTAINER_USER="$SSH_USER"
+    CONTAINER_PASSWORD="$SSH_PASSWORD"
     WEB_ROOT="$(strip_cr "${GOPREPARED_WEB_ROOT:-/var/www/goprepared}")"
     API_HOME="$(strip_cr "${GOPREPARED_API_HOME:-/opt/goprepared/go-prepared-api}")"
     CONTENT_ROOT="$(strip_cr "${GOPREPARED_CONTENT_ROOT:-/opt/goprepared/go-prepared-content}")"
@@ -55,6 +60,13 @@ load_goprepared_env() {
     LXC_ROOTFS_STORAGE="$(strip_cr "${LXC_ROOTFS_STORAGE:-local-storage}")"
     CLONE_TEMPLATE_VMID="$(strip_cr "${CLONE_TEMPLATE_VMID:-9001}")"
     TAILNET_DNS="$(strip_cr "${TAILNET_DNS:-}")"
+
+    # Direct SSH to LXC on tailnet (MagicDNS or GOPREPARED_HOST)
+    LXC_SSH_HOST="$(strip_cr "${DOMAIN}")"
+    if [[ -z "$LXC_SSH_HOST" && -n "$TAILNET_DNS" ]]; then
+        LXC_SSH_HOST="${CONTAINER_NAME}.${TAILNET_DNS}"
+    fi
+    LXC_SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=15 -o ServerAliveInterval=30"
 
     # PWA production build: API served via nginx on same host
     local host="${DOMAIN#http://}"

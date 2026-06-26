@@ -1,0 +1,101 @@
+{
+  "templateKey": "travel-paris",
+  "classification": {
+    "journeyType": "Travel",
+    "journeySubtype": "Vacation",
+    "activity": "Vacation",
+    "location": "Paris",
+    "title": "Vacation to Paris",
+    "confidence": 0.92
+  },
+  "cards": [
+    {
+      "title": "Preparation Checklist",
+      "summary": "Packing, documents, and bookings for Paris, France.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 0
+    },
+    {
+      "title": "Travel Info",
+      "summary": "Local customs, transport, and essentials for Paris.",
+      "category": "Travel Info",
+      "icon": "info",
+      "displayOrder": 1,
+      "detail": {
+        "destinationLabel": "Paris, France",
+        "dos": [
+          "Research Apr\u2013Jun, Sep\u2013Oct weather before packing",
+          "Save embassy/consulate contacts offline"
+        ],
+        "donts": [
+          "Don't carry all cash in one place",
+          "Don't ignore local dress codes at religious sites"
+        ],
+        "weather": "Best season: Apr\u2013Jun, Sep\u2013Oct.",
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Prepare for metro navigation, museum timed tickets, and modest dress at churches. Spring and fall offer mild weather and shorter queues at the Louvre and Eiffel Tower."
+          },
+          {
+            "title": "Key topics",
+            "body": "Schengen visa, Navigo pass, Museum passes, French phrases"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Documents & Visa",
+      "summary": "Passport validity, visas, and travel insurance requirements.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 2
+    },
+    {
+      "title": "Packing Guide",
+      "summary": "Season-appropriate clothing and gear for Paris.",
+      "category": "Packing",
+      "icon": "packing",
+      "displayOrder": 3
+    },
+    {
+      "title": "Safety Tips",
+      "summary": "Health, scams, and emergency contacts.",
+      "category": "Safety",
+      "icon": "safety",
+      "displayOrder": 4
+    }
+  ],
+  "checklist": [
+    {
+      "title": "Verify passport expiry (6+ months)",
+      "description": "",
+      "category": "Documents",
+      "displayOrder": 0,
+      "completed": false
+    },
+    {
+      "title": "Book flights and accommodation",
+      "description": "",
+      "category": "Booking",
+      "displayOrder": 1,
+      "completed": false
+    },
+    {
+      "title": "Purchase travel insurance",
+      "description": "",
+      "category": "Documents",
+      "displayOrder": 2,
+      "completed": false
+    },
+    {
+      "title": "Research Paris transport options",
+      "description": "",
+      "category": "Planning",
+      "displayOrder": 3,
+      "completed": false
+    }
+  ]
+}

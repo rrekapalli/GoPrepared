@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-tonsillectomy",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Surgery",
+    "activity": "Tonsillectomy",
+    "location": "",
+    "title": "Preparing for Tonsillectomy",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Hydration critical \u2014 ice chips and popsicles help. Avoid red foods (can't see bleeding). Pain peaks days 5\u20137....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Hydration critical \u2014 ice chips and popsicles help. Avoid red foods (can't see bleeding). Pain peaks days 5\u20137."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Hydration, Pain management, Bleeding signs, Diet progression"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

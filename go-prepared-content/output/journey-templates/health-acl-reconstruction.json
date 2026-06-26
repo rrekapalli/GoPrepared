@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-acl-reconstruction",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Surgery",
+    "activity": "ACL Reconstruction",
+    "location": "",
+    "title": "Preparing for ACL Reconstruction",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Prehab quad activation improves outcomes. Brace and crutches training pre-op. PT protocol phased over 6\u20139 months....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Prehab quad activation improves outcomes. Brace and crutches training pre-op. PT protocol phased over 6\u20139 months."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Prehab, Graft options, Brace use, Return-to-sport criteria"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

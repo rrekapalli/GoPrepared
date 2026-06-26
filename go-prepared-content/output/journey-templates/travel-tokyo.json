@@ -1,0 +1,101 @@
+{
+  "templateKey": "travel-tokyo",
+  "classification": {
+    "journeyType": "Travel",
+    "journeySubtype": "Vacation",
+    "activity": "Vacation",
+    "location": "Tokyo",
+    "title": "Vacation to Tokyo",
+    "confidence": 0.92
+  },
+  "cards": [
+    {
+      "title": "Preparation Checklist",
+      "summary": "Packing, documents, and bookings for Tokyo, Japan.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 0
+    },
+    {
+      "title": "Travel Info",
+      "summary": "Local customs, transport, and essentials for Tokyo.",
+      "category": "Travel Info",
+      "icon": "info",
+      "displayOrder": 1,
+      "detail": {
+        "destinationLabel": "Tokyo, Japan",
+        "dos": [
+          "Research Mar\u2013May, Oct\u2013Nov weather before packing",
+          "Save embassy/consulate contacts offline"
+        ],
+        "donts": [
+          "Don't carry all cash in one place",
+          "Don't ignore local dress codes at religious sites"
+        ],
+        "weather": "Best season: Mar\u2013May, Oct\u2013Nov.",
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Get a Suica/PASMO card, learn basic transit etiquette, and book popular restaurants early. Cherry blossom (Mar\u2013Apr) and autumn foliage (Nov) are peak seasons."
+          },
+          {
+            "title": "Key topics",
+            "body": "JR Pass, Pocket WiFi, Temple etiquette, Cash vs card"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Documents & Visa",
+      "summary": "Passport validity, visas, and travel insurance requirements.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 2
+    },
+    {
+      "title": "Packing Guide",
+      "summary": "Season-appropriate clothing and gear for Tokyo.",
+      "category": "Packing",
+      "icon": "packing",
+      "displayOrder": 3
+    },
+    {
+      "title": "Safety Tips",
+      "summary": "Health, scams, and emergency contacts.",
+      "category": "Safety",
+      "icon": "safety",
+      "displayOrder": 4
+    }
+  ],
+  "checklist": [
+    {
+      "title": "Verify passport expiry (6+ months)",
+      "description": "",
+      "category": "Documents",
+      "displayOrder": 0,
+      "completed": false
+    },
+    {
+      "title": "Book flights and accommodation",
+      "description": "",
+      "category": "Booking",
+      "displayOrder": 1,
+      "completed": false
+    },
+    {
+      "title": "Purchase travel insurance",
+      "description": "",
+      "category": "Documents",
+      "displayOrder": 2,
+      "completed": false
+    },
+    {
+      "title": "Research Tokyo transport options",
+      "description": "",
+      "category": "Planning",
+      "displayOrder": 3,
+      "completed": false
+    }
+  ]
+}

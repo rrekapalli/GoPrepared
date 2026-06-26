@@ -1,0 +1,56 @@
+{
+  "templateKey": "sports-yoga-retreat",
+  "classification": {
+    "journeyType": "Sports",
+    "journeySubtype": "10K Run",
+    "activity": "Yoga Retreat",
+    "location": "",
+    "title": "Preparing for Yoga Retreat",
+    "confidence": 0.9
+  },
+  "cards": [
+    {
+      "title": "Training Plan",
+      "summary": "Bring mat, blocks, and comfortable layers. Inform instructors of injuries. Hydrate and ease into advanced poses....",
+      "category": "Training",
+      "icon": "running",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Bring mat, blocks, and comfortable layers. Inform instructors of injuries. Hydrate and ease into advanced poses."
+          },
+          {
+            "title": "Focus areas",
+            "body": "Mat and props, Modifications, Retreat schedule, Mindful nutrition"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Race Day Checklist",
+      "summary": "Gear, nutrition, and warm-up essentials.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 1
+    },
+    {
+      "title": "Nutrition & Hydration",
+      "summary": "Fuel strategy before and during the event.",
+      "category": "Health",
+      "icon": "nutrition",
+      "displayOrder": 2
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-event rest, stretching, and injury prevention.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 3
+    }
+  ]
+}

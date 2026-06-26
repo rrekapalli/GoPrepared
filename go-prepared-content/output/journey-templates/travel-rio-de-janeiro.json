@@ -1,0 +1,101 @@
+{
+  "templateKey": "travel-rio-de-janeiro",
+  "classification": {
+    "journeyType": "Travel",
+    "journeySubtype": "Vacation",
+    "activity": "Vacation",
+    "location": "Rio de Janeiro",
+    "title": "Vacation to Rio de Janeiro",
+    "confidence": 0.92
+  },
+  "cards": [
+    {
+      "title": "Preparation Checklist",
+      "summary": "Packing, documents, and bookings for Rio de Janeiro, Brazil.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 0
+    },
+    {
+      "title": "Travel Info",
+      "summary": "Local customs, transport, and essentials for Rio de Janeiro.",
+      "category": "Travel Info",
+      "icon": "info",
+      "displayOrder": 1,
+      "detail": {
+        "destinationLabel": "Rio de Janeiro, Brazil",
+        "dos": [
+          "Research Dec\u2013Mar weather before packing",
+          "Save embassy/consulate contacts offline"
+        ],
+        "donts": [
+          "Don't carry all cash in one place",
+          "Don't ignore local dress codes at religious sites"
+        ],
+        "weather": "Best season: Dec\u2013Mar.",
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Stay alert in tourist zones; use registered taxis/ Uber_once. Carnival (Feb/Mar) requires months-ahead planning. Portuguese basics help."
+          },
+          {
+            "title": "Key topics",
+            "body": "Brazil visa/eVisa, Beach safety, Carnival tickets, Yellow fever zones"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Documents & Visa",
+      "summary": "Passport validity, visas, and travel insurance requirements.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 2
+    },
+    {
+      "title": "Packing Guide",
+      "summary": "Season-appropriate clothing and gear for Rio de Janeiro.",
+      "category": "Packing",
+      "icon": "packing",
+      "displayOrder": 3
+    },
+    {
+      "title": "Safety Tips",
+      "summary": "Health, scams, and emergency contacts.",
+      "category": "Safety",
+      "icon": "safety",
+      "displayOrder": 4
+    }
+  ],
+  "checklist": [
+    {
+      "title": "Verify passport expiry (6+ months)",
+      "description": "",
+      "category": "Documents",
+      "displayOrder": 0,
+      "completed": false
+    },
+    {
+      "title": "Book flights and accommodation",
+      "description": "",
+      "category": "Booking",
+      "displayOrder": 1,
+      "completed": false
+    },
+    {
+      "title": "Purchase travel insurance",
+      "description": "",
+      "category": "Documents",
+      "displayOrder": 2,
+      "completed": false
+    },
+    {
+      "title": "Research Rio de Janeiro transport options",
+      "description": "",
+      "category": "Planning",
+      "displayOrder": 3,
+      "completed": false
+    }
+  ]
+}

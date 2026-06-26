@@ -13,7 +13,7 @@ deployment/
 ├── build-and-deploy.sh       # forwards to ../deploy.sh
 ├── deploy-all.sh             # forwards to ../deploy.sh
 ├── artifacts/                # built outputs (gitignored)
-├── docker/                   # optional local dev (Postgres + Ollama)
+├── docker/                   # optional local dev (Postgres + Ollama + API container)
 └── proxmox/
     ├── deployment.conf       # VMID, hostname, ports, clone template
     ├── deploy-lxc.sh         # full stack (API + PWA)
@@ -29,13 +29,30 @@ deployment/
 
 Workspace secrets live in the repo root **`.env`** (see `.env.example`).
 
+## WSL dev machine (Ubuntu 24.04)
+
+Same pattern as purana-samhitha and MoneyTree. Use **Ubuntu-24.04** (not `podman-local`) for `./deploy.sh`.
+
+```powershell
+# One-time from Windows
+powershell -File scripts/setup-wsl.ps1
+```
+
+Or inside WSL:
+
+```bash
+./deployment/prepare-dev-machine.sh
+```
+
+Cursor opens **Ubuntu-24.04** at the repo root (`.vscode/settings.json`). See [Docs/local-dev.md](../Docs/local-dev.md).
+
 ## Prerequisites
 
 1. Proxmox host with `pct` (run on host, or set `PROXMOX_*` in `.env` for remote SSH from WSL).
 2. LXC clone template **`moneytree-lxc-base`** (VMID 9001) — SSH, Tailscale package, user `raja`.
 3. **Flutter** + **Java 21** + **Maven** on the build machine (or WSL with `powershell.exe` for Windows Flutter).
 4. **PostgreSQL** and **Ollama** reachable on Tailscale (defaults in `.env`: `pg18.*`, `ollama.*`).
-5. Copy `.env.example` → `.env` and set `CONTAINER_PASSWORD`, `PROXMOX_PASSWORD`, `TS_AUTHKEY`, DB credentials.
+5. Copy `.env.example` → `.env` and set `CONTAINER_PASSWORD` or `SSH_PASSWORD`, `PROXMOX_PASSWORD`, `TS_AUTHKEY`, DB credentials.
 
 Generate static content before first API deploy (imported on startup):
 
@@ -47,7 +64,7 @@ cd go-prepared-content && python -m goprepared_content.cli all
 
 | Service | Port | Role |
 |---------|------|------|
-| nginx | 80 | Flutter PWA + reverse proxy `/api/` → Spring Boot |
+| nginx | 80 | Flutter PWA + reverse proxy `/api/` → API container |
 | goprepared-api | 8080 | Spring Boot (systemd, localhost only) |
 
 External (Tailscale):
@@ -77,8 +94,8 @@ cp .env.example .env   # edit secrets
 
 ```powershell
 powershell -File scripts/build_pwa_artifact.ps1
-cd go-prepared-api; .\mvnw.cmd -DskipTests package
-# copy jar to deployment/artifacts/go-prepared-api.jar if needed
+cd go-prepared-api; ./mvnw -DskipTests package
+# jar copied to deployment/artifacts/go-prepared-api.jar by prepare-artifacts.sh
 ```
 
 ```bash

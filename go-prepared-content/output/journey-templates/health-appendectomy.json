@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-appendectomy",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Surgery",
+    "activity": "Appendectomy",
+    "location": "",
+    "title": "Preparing for Appendectomy",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "NPO if acute symptoms \u2014 surgery urgent. Post-op early ambulation prevents ileus. Incision infection signs to report....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "NPO if acute symptoms \u2014 surgery urgent. Post-op early ambulation prevents ileus. Incision infection signs to report."
+          },
+          {
+            "title": "Key preparations",
+            "body": "NPO status, Emergency signs, Ambulation, Wound care"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

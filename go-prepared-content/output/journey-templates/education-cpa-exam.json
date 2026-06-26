@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-cpa-exam",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Certification",
+    "activity": "CPA Exam",
+    "location": "",
+    "title": "Preparing for CPA Exam",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Four sections \u2014 plan order (FAR/AUD/REG/BEC successor). 18-month window once first pass. Simulations practice essential....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Four sections \u2014 plan order (FAR/AUD/REG/BEC successor). 18-month window once first pass. Simulations practice essential."
+          },
+          {
+            "title": "Study focus",
+            "body": "Section order, Sims practice, NIN application, Ethics exam"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

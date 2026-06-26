@@ -1,0 +1,56 @@
+{
+  "templateKey": "sports-half-marathon",
+  "classification": {
+    "journeyType": "Sports",
+    "journeySubtype": "Marathon",
+    "activity": "Half Marathon",
+    "location": "",
+    "title": "Preparing for Half Marathon",
+    "confidence": 0.9
+  },
+  "cards": [
+    {
+      "title": "Training Plan",
+      "summary": "12-week training with long runs up to 11\u201312 miles. Don't skip rest days. Test shoes and socks on longest runs only....",
+      "category": "Training",
+      "icon": "running",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "12-week training with long runs up to 11\u201312 miles. Don't skip rest days. Test shoes and socks on longest runs only."
+          },
+          {
+            "title": "Focus areas",
+            "body": "Long run progression, Mid-race fuel, Half marathon pace, Injury prevention"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Race Day Checklist",
+      "summary": "Gear, nutrition, and warm-up essentials.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 1
+    },
+    {
+      "title": "Nutrition & Hydration",
+      "summary": "Fuel strategy before and during the event.",
+      "category": "Health",
+      "icon": "nutrition",
+      "displayOrder": 2
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-event rest, stretching, and injury prevention.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 3
+    }
+  ]
+}

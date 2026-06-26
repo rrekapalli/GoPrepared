@@ -35,8 +35,8 @@ if [[ "$SKIP_CONTAINER" == true ]]; then
     [[ -n "$VMID" ]] || { log_error "Container ${CONTAINER_NAME} not found"; exit 1; }
 fi
 
-if [[ -z "$CONTAINER_PASSWORD" ]]; then
-    log_error "Set CONTAINER_PASSWORD in ${ENV_FILE}"
+if [[ -z "${CONTAINER_PASSWORD:-}" ]]; then
+    log_error "Set CONTAINER_PASSWORD or SSH_PASSWORD in ${ENV_FILE}"
     exit 1
 fi
 

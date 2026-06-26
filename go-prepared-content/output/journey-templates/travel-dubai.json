@@ -1,0 +1,101 @@
+{
+  "templateKey": "travel-dubai",
+  "classification": {
+    "journeyType": "Travel",
+    "journeySubtype": "Vacation",
+    "activity": "Vacation",
+    "location": "Dubai",
+    "title": "Vacation to Dubai",
+    "confidence": 0.92
+  },
+  "cards": [
+    {
+      "title": "Preparation Checklist",
+      "summary": "Packing, documents, and bookings for Dubai, UAE.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 0
+    },
+    {
+      "title": "Travel Info",
+      "summary": "Local customs, transport, and essentials for Dubai.",
+      "category": "Travel Info",
+      "icon": "info",
+      "displayOrder": 1,
+      "detail": {
+        "destinationLabel": "Dubai, UAE",
+        "dos": [
+          "Research Nov\u2013Mar weather before packing",
+          "Save embassy/consulate contacts offline"
+        ],
+        "donts": [
+          "Don't carry all cash in one place",
+          "Don't ignore local dress codes at religious sites"
+        ],
+        "weather": "Best season: Nov\u2013Mar.",
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Respect local customs (modest dress in malls/mosques). Summer heat is extreme; Nov\u2013Mar is pleasant. Friday\u2013Saturday weekend affects hours."
+          },
+          {
+            "title": "Key topics",
+            "body": "UAE visa on arrival, Desert safari booking, Alcohol rules, Ramadan hours"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Documents & Visa",
+      "summary": "Passport validity, visas, and travel insurance requirements.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 2
+    },
+    {
+      "title": "Packing Guide",
+      "summary": "Season-appropriate clothing and gear for Dubai.",
+      "category": "Packing",
+      "icon": "packing",
+      "displayOrder": 3
+    },
+    {
+      "title": "Safety Tips",
+      "summary": "Health, scams, and emergency contacts.",
+      "category": "Safety",
+      "icon": "safety",
+      "displayOrder": 4
+    }
+  ],
+  "checklist": [
+    {
+      "title": "Verify passport expiry (6+ months)",
+      "description": "",
+      "category": "Documents",
+      "displayOrder": 0,
+      "completed": false
+    },
+    {
+      "title": "Book flights and accommodation",
+      "description": "",
+      "category": "Booking",
+      "displayOrder": 1,
+      "completed": false
+    },
+    {
+      "title": "Purchase travel insurance",
+      "description": "",
+      "category": "Documents",
+      "displayOrder": 2,
+      "completed": false
+    },
+    {
+      "title": "Research Dubai transport options",
+      "description": "",
+      "category": "Planning",
+      "displayOrder": 3,
+      "completed": false
+    }
+  ]
+}

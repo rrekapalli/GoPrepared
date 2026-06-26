@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-mri-scan",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Diagnostic Test",
+    "activity": "MRI Scan",
+    "location": "",
+    "title": "Preparing for MRI Scan",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Remove all metal; inform staff of implants. Claustrophobic patients may request mild sedation. Earplugs provided \u2014 exam 30\u201360 min....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Remove all metal; inform staff of implants. Claustrophobic patients may request mild sedation. Earplugs provided \u2014 exam 30\u201360 min."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Metal screening, Contrast dye, Claustrophobia, Implant cards"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

@@ -13,4 +13,7 @@ public interface KnowledgeEdgeRepository extends JpaRepository<KnowledgeEdgeEnti
         JOIN FETCH e.targetNode
         """)
     List<KnowledgeEdgeEntity> findAllWithNodes();
+
+    boolean existsBySourceNodeIdAndTargetNodeIdAndRelationshipType(
+            Long sourceNodeId, Long targetNodeId, String relationshipType);
 }

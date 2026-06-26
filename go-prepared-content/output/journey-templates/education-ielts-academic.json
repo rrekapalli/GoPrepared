@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-ielts-academic",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Exam",
+    "activity": "IELTS Academic",
+    "location": "",
+    "title": "Preparing for IELTS Academic",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Speaking mock tests weekly. Writing Task 1 graph vocabulary lists. Listening accents vary \u2014 practice BBC/podcasts....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Speaking mock tests weekly. Writing Task 1 graph vocabulary lists. Listening accents vary \u2014 practice BBC/podcasts."
+          },
+          {
+            "title": "Study focus",
+            "body": "Speaking mock, Writing Task 2, Listening accents, Band score targets"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

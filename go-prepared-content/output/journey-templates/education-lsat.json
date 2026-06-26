@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-lsat",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Exam",
+    "activity": "LSAT",
+    "location": "",
+    "title": "Preparing for LSAT",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Logic games elimination strategies evolving post-format changes. Blind review of missed questions. PT under timed conditions weekly....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Logic games elimination strategies evolving post-format changes. Blind review of missed questions. PT under timed conditions weekly."
+          },
+          {
+            "title": "Study focus",
+            "body": "Logical reasoning, Blind review, Proctoring rules, Score bands"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

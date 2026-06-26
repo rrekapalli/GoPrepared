@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-study-abroad-semester",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Exam",
+    "activity": "Study Abroad Semester",
+    "location": "",
+    "title": "Preparing for Study Abroad Semester",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Visa and course credit approval early. Host university course catalog review. Travel insurance and phone plan....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Visa and course credit approval early. Host university course catalog review. Travel insurance and phone plan."
+          },
+          {
+            "title": "Study focus",
+            "body": "Credit transfer, Student visa, Housing abroad, Banking abroad"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

@@ -213,3 +213,21 @@ ensure_goprepared_user() {
     proxmox_exec_in_container "$vmid" "id goprepared >/dev/null 2>&1 || useradd --system --home ${API_HOME} --shell /usr/sbin/nologin goprepared" || true
     proxmox_exec_in_container "$vmid" "mkdir -p ${API_HOME} ${CONTENT_ROOT}/output /etc/goprepared && chown -R goprepared:goprepared ${API_HOME} ${CONTENT_ROOT}" || true
 }
+
+# Direct SSH into the LXC over Tailscale (uses SSH_USER / SSH_PASSWORD from .env).
+lxc_ssh() {
+    local host="${LXC_SSH_HOST:-${DOMAIN:-}}"
+    [[ -n "$host" ]] || { log_error "LXC SSH host unknown; set GOPREPARED_HOST or TAILNET_DNS in .env"; return 1; }
+    if [[ -n "${SSH_PASSWORD:-}" ]] && command -v sshpass >/dev/null 2>&1; then
+        SSHPASS="$SSH_PASSWORD" sshpass -e ssh ${LXC_SSH_OPTS:-$PROXMOX_SSH_OPTS} "${SSH_USER}@${host}" "$@"
+    else
+        ssh ${LXC_SSH_OPTS:-$PROXMOX_SSH_OPTS} "${SSH_USER}@${host}" "$@"
+    fi
+}
+
+lxc_ssh_exec() {
+    local cmd="$1"
+    local q
+    q=$(printf '%q' "$cmd")
+    lxc_ssh bash -lc "$q"
+}

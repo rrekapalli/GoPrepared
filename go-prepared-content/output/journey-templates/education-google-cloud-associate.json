@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-google-cloud-associate",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Certification",
+    "activity": "Google Cloud Associate",
+    "location": "",
+    "title": "Preparing for Google Cloud Associate",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Qwiklabs for Compute Engine and GKE basics. gcloud CLI practice. Case studies on Google exam site....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Qwiklabs for Compute Engine and GKE basics. gcloud CLI practice. Case studies on Google exam site."
+          },
+          {
+            "title": "Study focus",
+            "body": "gcloud CLI, GCE/GKE labs, IAM roles, Case studies"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

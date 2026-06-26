@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-dialysis",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Medical Procedure",
+    "activity": "Dialysis",
+    "location": "",
+    "title": "Preparing for Dialysis",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Fistula maturation takes weeks \u2014 protect arm from BP cuffs and needles. Diet phosphorus/potassium limits. Session schedule 3\u00d7 weekly typical...",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Fistula maturation takes weeks \u2014 protect arm from BP cuffs and needles. Diet phosphorus/potassium limits. Session schedule 3\u00d7 weekly typical."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Access care, Renal diet, Fluid limits, Transport to center"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

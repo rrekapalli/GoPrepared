@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-endoscopy",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Diagnostic Test",
+    "activity": "Endoscopy",
+    "location": "",
+    "title": "Preparing for Endoscopy",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "NPO midnight before; morning meds with sip of water if approved. Throat numbness wears off \u2014 soft foods rest of day....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "NPO midnight before; morning meds with sip of water if approved. Throat numbness wears off \u2014 soft foods rest of day."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Fasting, Medication review, Sedation recovery, Biopsy results"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

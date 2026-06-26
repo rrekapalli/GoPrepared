@@ -27,7 +27,7 @@ done
 load_goprepared_env "$SCRIPT_DIR"
 init_proxmox_mode
 
-if [[ -z "$CONTAINER_PASSWORD" ]]; then
+if [[ -z "${CONTAINER_PASSWORD:-}" ]]; then
     log_error "Set CONTAINER_PASSWORD in ${ENV_FILE}"
     exit 1
 fi
@@ -38,9 +38,9 @@ fi
 [[ -f "$JAR_PATH" ]] || { log_error "API jar not found: $JAR_PATH. Run ./deploy.sh or ./deployment/prepare-artifacts.sh"; exit 1; }
 
 CONTENT_OUTPUT="${CONTENT_DIR}/output"
-[[ -d "$CONTENT_OUTPUT" ]] || log_warn "Static content missing at ${CONTENT_OUTPUT}; run scripts/generate-content.sh first"
+[[ -d "$CONTENT_OUTPUT" ]] || log_warn "Static content missing at ${CONTENT_OUTPUT}; run: cd go-prepared-content && python -m goprepared_content.cli all"
 
-log_info "=== GoPrepared API deploy ==="
+log_info "=== GoPrepared API deploy (systemd) ==="
 log_info "Jar: $JAR_PATH"
 
 if [[ "$SKIP_CONTAINER" != true ]]; then
@@ -50,6 +50,9 @@ if [[ "$SKIP_CONTAINER" != true ]]; then
     ensure_java "$VMID"
     ensure_goprepared_user "$VMID"
 fi
+
+# Retire podman deployment if present (legacy)
+proxmox_exec_in_container "$VMID" "podman rm -f goprepared-api 2>/dev/null || true" || true
 
 REMOTE_JAR="/tmp/go-prepared-api.jar"
 proxmox_push_file "$VMID" "$JAR_PATH" "$REMOTE_JAR"
@@ -75,6 +78,8 @@ GOPREPARED_AI_PROVIDER=${GOPREPARED_AI_PROVIDER:-ollama}
 OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama.tailce422e.ts.net}
 OLLAMA_MODEL=${OLLAMA_MODEL:-llama3.2}
 OPENAI_API_KEY=${OPENAI_API_KEY:-}
+GOPREPARED_CONTENT_SYNC_ON_STARTUP=true
+GOPREPARED_CONTENT_CONTENT_PATH=${CONTENT_ROOT}/output
 EOF
 proxmox_push_file "$VMID" "$ENV_TMP" "/etc/goprepared/api.env"
 rm -f "$ENV_TMP"
@@ -107,12 +112,12 @@ rm -f "$SYSTEMD_TMP"
 proxmox_exec_in_container "$VMID" "systemctl daemon-reload && systemctl enable goprepared-api && systemctl restart goprepared-api" || exit 1
 
 log_info "Waiting for API health..."
-for i in $(seq 1 30); do
-    if proxmox_exec_in_container "$VMID" "curl -sf -o /dev/null http://127.0.0.1:${API_PORT}/actuator/health 2>/dev/null || curl -sf -o /dev/null http://127.0.0.1:${API_PORT}/api/v1/knowledge/categories 2>/dev/null"; then
+for i in $(seq 1 45); do
+    if proxmox_exec_in_container "$VMID" "curl -sf -o /dev/null http://127.0.0.1:${API_PORT}/api/v1/knowledge/categories 2>/dev/null"; then
         log_success "API responding on port ${API_PORT}"
         break
     fi
-    [[ "$i" -eq 30 ]] && log_warn "API health check timed out; check: pct exec ${VMID} -- journalctl -u goprepared-api -n 50"
+    [[ "$i" -eq 45 ]] && log_warn "API health check timed out; check: pct exec ${VMID} -- journalctl -u goprepared-api -n 50"
     sleep 2
 done
 

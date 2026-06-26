@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-driving-license-test",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Exam",
+    "activity": "Driving License Test",
+    "location": "",
+    "title": "Preparing for Driving License Test",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "State handbook read twice. Parallel parking and mirror checks for road test. Documents: ID, insurance, registration....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "State handbook read twice. Parallel parking and mirror checks for road test. Documents: ID, insurance, registration."
+          },
+          {
+            "title": "Study focus",
+            "body": "Handbook, Road test route, Document checklist, Learner permit rules"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

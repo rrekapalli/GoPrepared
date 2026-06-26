@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-prostate-surgery",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Surgery",
+    "activity": "Prostate Surgery",
+    "location": "",
+    "title": "Preparing for Prostate Surgery",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Pelvic floor exercises pre/post-op. Catheter care instructions. Pathology follow-up appointment scheduled....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Pelvic floor exercises pre/post-op. Catheter care instructions. Pathology follow-up appointment scheduled."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Catheter care, Kegel exercises, Pathology timeline, Incontinence management"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

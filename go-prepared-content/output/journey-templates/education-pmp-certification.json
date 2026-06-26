@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-pmp-certification",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Certification",
+    "activity": "PMP Certification",
+    "location": "",
+    "title": "Preparing for PMP Certification",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "35 contact hours required. PMBOK + Agile Practice Guide. Process groups and ITTOs \u2014 use flashcards....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "35 contact hours required. PMBOK + Agile Practice Guide. Process groups and ITTOs \u2014 use flashcards."
+          },
+          {
+            "title": "Study focus",
+            "body": "35 PDUs, Process groups, Mock exams, Application audit"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

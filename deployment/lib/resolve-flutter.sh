@@ -96,6 +96,58 @@ find_linux_flutter() {
     return 1
 }
 
+# True when WSL can launch Windows .exe (requires [interop] enabled in wsl.conf).
+wsl_can_run_windows_exes() {
+    is_wsl || return 1
+    if command -v cmd.exe >/dev/null 2>&1; then
+        cmd.exe /c ver >/dev/null 2>&1 && return 0
+    fi
+    if [[ -x /mnt/c/Windows/System32/cmd.exe ]]; then
+        /mnt/c/Windows/System32/cmd.exe /c ver >/dev/null 2>&1 && return 0
+    fi
+    return 1
+}
+
+run_powershell_script_windows() {
+    local ps_path="$1"
+
+    if cmd.exe /c "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"$ps_path\""; then
+        return 0
+    fi
+    if [[ -x /mnt/c/Windows/System32/cmd.exe ]]; then
+        /mnt/c/Windows/System32/cmd.exe /c "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"$ps_path\"" && return 0
+    fi
+    if powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$ps_path"; then
+        return 0
+    fi
+    return 1
+}
+
+build_pwa_from_existing_web() {
+    local root_dir="$1"
+    local api_base_url="${2:-http://localhost:8080/api/v1}"
+    local app_dir="${root_dir}/go-prepared-app"
+    local artifacts_dir="${root_dir}/deployment/artifacts"
+    local build_dir="${app_dir}/build/web"
+
+    [[ -f "${build_dir}/index.html" ]] || return 1
+
+    command -v zip >/dev/null 2>&1 || {
+        log_error "zip not found. Install zip and retry."
+        exit 1
+    }
+
+    log_warn "WSL cannot run Windows PowerShell (interop disabled or unavailable)."
+    log_warn "Packaging existing Flutter web build from ${build_dir}"
+    log_warn "Refresh on Windows first if needed: powershell -File scripts/build_pwa_artifact.ps1"
+    log_info "Expected API_BASE_URL for this deploy: ${api_base_url}"
+
+    rm -f "${artifacts_dir}/pwa-dist.zip"
+    (cd "$build_dir" && zip -qr "${artifacts_dir}/pwa-dist.zip" .)
+    log_success "PWA zip (from existing build): ${artifacts_dir}/pwa-dist.zip"
+    return 0
+}
+
 build_pwa_artifact_powershell() {
     local root_dir="$1"
     local ps_script="${root_dir}/scripts/build_pwa_artifact.ps1"
@@ -104,26 +156,23 @@ build_pwa_artifact_powershell() {
         exit 1
     }
 
-    local ps_exe ps_path
-    for ps_exe in powershell.exe pwsh.exe; do
-        if command -v "$ps_exe" >/dev/null 2>&1; then
-            ps_path="$(wslpath -w "$ps_script")"
-            log_info "Building PWA via Windows ${ps_exe}..."
-            if "$ps_exe" -NoProfile -ExecutionPolicy Bypass -File "$ps_path"; then
-                [[ -f "${root_dir}/deployment/artifacts/pwa-dist.zip" ]] || {
-                    log_error "PowerShell build finished but pwa-dist.zip is missing"
-                    exit 1
-                }
-                log_success "PWA zip: ${root_dir}/deployment/artifacts/pwa-dist.zip"
-                return 0
-            fi
-        fi
-    done
+    if ! wsl_can_run_windows_exes; then
+        return 1
+    fi
 
-    log_error "Cannot build with Windows Flutter from WSL."
-    log_error "From Windows: powershell -File scripts/build_pwa_artifact.ps1"
-    log_error "Then from WSL: ./deploy.sh --skip-build"
-    exit 1
+    local ps_path
+    ps_path="$(wslpath -w "$ps_script")"
+    log_info "Building PWA via Windows PowerShell..."
+    if run_powershell_script_windows "$ps_path"; then
+        [[ -f "${root_dir}/deployment/artifacts/pwa-dist.zip" ]] || {
+            log_error "PowerShell build finished but pwa-dist.zip is missing"
+            exit 1
+        }
+        log_success "PWA zip: ${root_dir}/deployment/artifacts/pwa-dist.zip"
+        return 0
+    fi
+
+    return 1
 }
 
 build_pwa_artifact_native() {
@@ -150,9 +199,20 @@ build_pwa_artifact_native() {
         linux_flutter="$(find_linux_flutter || true)"
         if [[ -n "$linux_flutter" ]]; then
             flutter_bin="$linux_flutter"
-        else
-            build_pwa_artifact_powershell "$root_dir"
+        elif build_pwa_artifact_powershell "$root_dir"; then
             return 0
+        elif build_pwa_from_existing_web "$root_dir" "$api_base_url"; then
+            return 0
+        else
+            log_error "Cannot build PWA from WSL with a Windows-only Flutter SDK."
+            log_error "Do one of the following:"
+            log_error "  1) Windows PowerShell:  powershell -File scripts/build_pwa_artifact.ps1"
+            log_error "     Then WSL:           ./deploy.sh --skip-build"
+            log_error "  2) Windows:             flutter build web --release (in go-prepared-app)"
+            log_error "     Then retry deploy from WSL (reuses build/web)"
+            log_error "  3) Install Flutter natively in WSL: FLUTTER=~/flutter/bin/flutter"
+            log_error "  4) Enable WSL interop in /etc/wsl.conf: [interop] enabled=true"
+            exit 1
         fi
     fi
 

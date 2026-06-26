@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-coding-bootcamp",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Certification",
+    "activity": "Coding Bootcamp",
+    "location": "",
+    "title": "Preparing for Coding Bootcamp",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Prework completion before day 1. Git/GitHub daily. Job prep starts mid-program \u2014 portfolio projects....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Prework completion before day 1. Git/GitHub daily. Job prep starts mid-program \u2014 portfolio projects."
+          },
+          {
+            "title": "Study focus",
+            "body": "Prework, Git workflow, Portfolio, Interview prep"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-knee-replacement",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Surgery",
+    "activity": "Knee Replacement",
+    "location": "",
+    "title": "Preparing for Knee Replacement",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Prehab strengthening 4\u20136 weeks improves outcomes. Home safety prep (rails, raised toilet seat). PT starts day 1 post-op....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Prehab strengthening 4\u20136 weeks improves outcomes. Home safety prep (rails, raised toilet seat). PT starts day 1 post-op."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Prehab exercises, Home setup, Blood thinners, PT schedule"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

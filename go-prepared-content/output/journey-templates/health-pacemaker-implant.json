@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-pacemaker-implant",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Surgery",
+    "activity": "Pacemaker Implant",
+    "location": "",
+    "title": "Preparing for Pacemaker Implant",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Hold anticoagulants per plan. Arm sling 2\u20134 weeks on implant side. MRI-conditional device card provided....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Hold anticoagulants per plan. Arm sling 2\u20134 weeks on implant side. MRI-conditional device card provided."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Device card, Arm restrictions, MRI compatibility, Remote monitoring"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "templateKey": "sports-rock-climbing-expedition",
+  "classification": {
+    "journeyType": "Sports",
+    "journeySubtype": "Marathon",
+    "activity": "Rock Climbing Expedition",
+    "location": "",
+    "title": "Preparing for Rock Climbing Expedition",
+    "confidence": 0.9
+  },
+  "cards": [
+    {
+      "title": "Training Plan",
+      "summary": "Check harness, helmet, and rope age. Partner checks mandatory. Study route topo and descent plan before climbing....",
+      "category": "Training",
+      "icon": "running",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Check harness, helmet, and rope age. Partner checks mandatory. Study route topo and descent plan before climbing."
+          },
+          {
+            "title": "Focus areas",
+            "body": "Gear inspection, Partner communication, Anchor basics, Weather abort criteria"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Race Day Checklist",
+      "summary": "Gear, nutrition, and warm-up essentials.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 1
+    },
+    {
+      "title": "Nutrition & Hydration",
+      "summary": "Fuel strategy before and during the event.",
+      "category": "Health",
+      "icon": "nutrition",
+      "displayOrder": 2
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-event rest, stretching, and injury prevention.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 3
+    }
+  ]
+}

@@ -43,10 +43,17 @@ run "systemctl is-active nginx 2>&1"
 run "curl -sI --max-time 5 http://127.0.0.1:${UI_PORT}/ 2>&1 | head -8"
 run "test -f ${WEB_ROOT}/index.html && echo index.html:ok || echo index.html:MISSING"
 
-log_info "--- api ---"
+log_info "--- api (systemd) ---"
 run "systemctl is-active goprepared-api 2>&1"
 run "curl -sf --max-time 5 http://127.0.0.1:${API_PORT}/api/v1/knowledge/categories 2>&1 | head -c 200"
 run "journalctl -u goprepared-api -n 15 --no-pager 2>&1"
+
+log_info "--- lxc ssh (${SSH_USER}@${LXC_SSH_HOST:-${DOMAIN:-unknown}}) ---"
+if [[ -n "${SSH_PASSWORD:-}" ]] && command -v sshpass >/dev/null 2>&1; then
+    lxc_ssh "hostname && uptime" 2>&1 || echo "(ssh failed — is Tailscale up on the LXC?)"
+else
+    log_info "Set SSH_PASSWORD in .env for direct LXC SSH checks"
+fi
 
 log_info "--- firewall ---"
 run "ufw status 2>&1 | head -12"

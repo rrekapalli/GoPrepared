@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-real-estate-license",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Certification",
+    "activity": "Real Estate License",
+    "location": "",
+    "title": "Preparing for Real Estate License",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Complete accredited pre-licensing hours. Practice national + state law exams. Background check and sponsorship for activation....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Complete accredited pre-licensing hours. Practice national + state law exams. Background check and sponsorship for activation."
+          },
+          {
+            "title": "Study focus",
+            "body": "Pre-licensing, State laws, Exam prep, Broker sponsorship"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

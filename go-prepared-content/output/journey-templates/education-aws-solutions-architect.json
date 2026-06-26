@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-aws-solutions-architect",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Certification",
+    "activity": "AWS Solutions Architect",
+    "location": "",
+    "title": "Preparing for AWS Solutions Architect",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Hands-on free tier labs reinforce VPC, IAM, S3 patterns. Exam is scenario-heavy \u2014 eliminate wrong answers....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Hands-on free tier labs reinforce VPC, IAM, S3 patterns. Exam is scenario-heavy \u2014 eliminate wrong answers."
+          },
+          {
+            "title": "Study focus",
+            "body": "VPC design, IAM policies, Well-Architected, Practice exams"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

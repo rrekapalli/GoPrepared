@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-phd-dissertation-defense",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Exam",
+    "activity": "PhD Dissertation Defense",
+    "location": "",
+    "title": "Preparing for PhD Dissertation Defense",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Committee questions on methods and limitations. Defense slides 45\u201360 min. Mock defense with lab peers....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Committee questions on methods and limitations. Defense slides 45\u201360 min. Mock defense with lab peers."
+          },
+          {
+            "title": "Study focus",
+            "body": "Slide deck, Mock defense, Committee bios, Publication list"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

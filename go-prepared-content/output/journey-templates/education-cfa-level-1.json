@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-cfa-level-1",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Certification",
+    "activity": "CFA Level 1",
+    "location": "",
+    "title": "Preparing for CFA Level 1",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "300+ hour guideline. Ethics always tested \u2014 don't skip. Calculator policy strict (BA II Plus allowed)....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "300+ hour guideline. Ethics always tested \u2014 don't skip. Calculator policy strict (BA II Plus allowed)."
+          },
+          {
+            "title": "Study focus",
+            "body": "Ethics weight, Quant methods, Mock exams, Calculator rules"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

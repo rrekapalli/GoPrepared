@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-teacher-certification",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Certification",
+    "activity": "Teacher Certification",
+    "location": "",
+    "title": "Preparing for Teacher Certification",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Content area exam + pedagogy test. Student teaching documentation. Background check and fingerprinting....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Content area exam + pedagogy test. Student teaching documentation. Background check and fingerprinting."
+          },
+          {
+            "title": "Study focus",
+            "body": "Content exam, edTPA portfolio, Student teaching, State requirements"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

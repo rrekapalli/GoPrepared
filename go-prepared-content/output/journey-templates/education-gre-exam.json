@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-gre-exam",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Exam",
+    "activity": "GRE Exam",
+    "location": "",
+    "title": "Preparing for GRE Exam",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "8\u201312 week study plan; ETS PowerPrep for baseline. AWA templates for issue/argument. Scores valid 5 years....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "8\u201312 week study plan; ETS PowerPrep for baseline. AWA templates for issue/argument. Scores valid 5 years."
+          },
+          {
+            "title": "Study focus",
+            "body": "Quant review, Vocabulary, AWA templates, Test-day checklist"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

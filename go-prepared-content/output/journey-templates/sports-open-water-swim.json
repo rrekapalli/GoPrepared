@@ -1,0 +1,56 @@
+{
+  "templateKey": "sports-open-water-swim",
+  "classification": {
+    "journeyType": "Sports",
+    "journeySubtype": "10K Run",
+    "activity": "Open Water Swim",
+    "location": "",
+    "title": "Preparing for Open Water Swim",
+    "confidence": 0.9
+  },
+  "cards": [
+    {
+      "title": "Training Plan",
+      "summary": "Practice sighting and drafting in open water. Wetsuit legal per water temp rules. Never swim alone in training....",
+      "category": "Training",
+      "icon": "running",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Practice sighting and drafting in open water. Wetsuit legal per water temp rules. Never swim alone in training."
+          },
+          {
+            "title": "Focus areas",
+            "body": "Wetsuit fit, Sighting drills, Safety buoy, Cold water acclimation"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Race Day Checklist",
+      "summary": "Gear, nutrition, and warm-up essentials.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 1
+    },
+    {
+      "title": "Nutrition & Hydration",
+      "summary": "Fuel strategy before and during the event.",
+      "category": "Health",
+      "icon": "nutrition",
+      "displayOrder": 2
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-event rest, stretching, and injury prevention.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 3
+    }
+  ]
+}

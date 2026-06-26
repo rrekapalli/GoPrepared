@@ -1,0 +1,56 @@
+{
+  "templateKey": "sports-cricket-match-series",
+  "classification": {
+    "journeyType": "Sports",
+    "journeySubtype": "10K Run",
+    "activity": "Cricket Match Series",
+    "location": "",
+    "title": "Preparing for Cricket Match Series",
+    "confidence": 0.9
+  },
+  "cards": [
+    {
+      "title": "Training Plan",
+      "summary": "Break in batting gloves and shoes. Warm up shoulders and core. Know format (T20/ODI) and field restrictions....",
+      "category": "Training",
+      "icon": "running",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Break in batting gloves and shoes. Warm up shoulders and core. Know format (T20/ODI) and field restrictions."
+          },
+          {
+            "title": "Focus areas",
+            "body": "Kit checklist, Bowling workload, Field placements, Hydration in heat"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Race Day Checklist",
+      "summary": "Gear, nutrition, and warm-up essentials.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 1
+    },
+    {
+      "title": "Nutrition & Hydration",
+      "summary": "Fuel strategy before and during the event.",
+      "category": "Health",
+      "icon": "nutrition",
+      "displayOrder": 2
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-event rest, stretching, and injury prevention.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 3
+    }
+  ]
+}

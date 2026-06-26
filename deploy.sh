@@ -11,6 +11,10 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=deployment/lib/ensure-linux-bash.sh
+source "${ROOT_DIR}/deployment/lib/ensure-linux-bash.sh"
+ensure_linux_bash "$@"
+
 DEPLOYMENT_DIR="${ROOT_DIR}/deployment"
 PROXMOX_DIR="${DEPLOYMENT_DIR}/proxmox"
 ARTIFACTS_DIR="${DEPLOYMENT_DIR}/artifacts"

@@ -1,0 +1,56 @@
+{
+  "templateKey": "sports-marathon",
+  "classification": {
+    "journeyType": "Sports",
+    "journeySubtype": "Marathon",
+    "activity": "Marathon",
+    "location": "",
+    "title": "Preparing for Marathon",
+    "confidence": 0.9
+  },
+  "cards": [
+    {
+      "title": "Training Plan",
+      "summary": "Follow a 16\u201320 week plan peaking at 20-mile long runs. Practice race-day fueling every long run. Taper two weeks before ...",
+      "category": "Training",
+      "icon": "running",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Follow a 16\u201320 week plan peaking at 20-mile long runs. Practice race-day fueling every long run. Taper two weeks before event."
+          },
+          {
+            "title": "Focus areas",
+            "body": "Long run schedule, Gel strategy, Race pace, Taper week"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Race Day Checklist",
+      "summary": "Gear, nutrition, and warm-up essentials.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 1
+    },
+    {
+      "title": "Nutrition & Hydration",
+      "summary": "Fuel strategy before and during the event.",
+      "category": "Health",
+      "icon": "nutrition",
+      "displayOrder": 2
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-event rest, stretching, and injury prevention.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 3
+    }
+  ]
+}

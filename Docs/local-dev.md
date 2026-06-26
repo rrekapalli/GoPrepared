@@ -25,6 +25,44 @@ cd go-prepared-app
 flutter run -d chrome
 ```
 
+## WSL (Ubuntu 24.04) — deploy & Linux tooling
+
+Same pattern as purana-samhitha and MoneyTree: use **Ubuntu 24.04** as the default WSL distro for `./deploy.sh`, not Fedora `podman-local`.
+
+**One-time setup (Windows):**
+
+```powershell
+powershell -File scripts/setup-wsl.ps1
+```
+
+This sets `Ubuntu-24.04` as default WSL, installs Java 21, Maven, `sshpass`, `zip`, `jq`, Python venv tools, and normalizes shell script line endings.
+
+**Manual setup (inside WSL):**
+
+```bash
+cd /mnt/c/vislesha/code/personal/GoPrepared
+./deployment/prepare-dev-machine.sh
+```
+
+**Deploy from WSL:**
+
+```bash
+./deploy.sh                  # build + deploy (API via Maven in WSL; PWA via Windows Flutter if needed)
+./deploy.sh --skip-build     # deploy existing artifacts
+```
+
+**Windows Flutter from WSL:** build the PWA on Windows first, then deploy:
+
+```powershell
+powershell -File scripts/build_pwa_artifact.ps1
+```
+
+```bash
+./deploy.sh --skip-build
+```
+
+Cursor opens an **Ubuntu-24.04** terminal at the repo root (see `.vscode/settings.json`).
+
 ## Dev auth
 
 ```powershell

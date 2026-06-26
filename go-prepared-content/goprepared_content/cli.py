@@ -48,7 +48,7 @@ def validate() -> None:
     """Validate output files exist."""
     required = [
         OUTPUT_DIR / "manifest.json",
-        OUTPUT_DIR / "journey-templates" / "bali-vacation.json",
+        OUTPUT_DIR / "journey-templates" / "travel-paris.json",
         OUTPUT_DIR / "knowledge" / "graph.json",
     ]
     missing = [p for p in required if not p.exists()]

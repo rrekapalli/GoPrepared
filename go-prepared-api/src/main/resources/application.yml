@@ -27,6 +27,9 @@ server:
   port: ${API_PORT:8080}
 
 goprepared:
+  content:
+    sync-on-startup: true
+    content-path: ${GOPREPARED_CONTENT_CONTENT_PATH:../go-prepared-content/output}
   ai:
     provider: ${GOPREPARED_AI_PROVIDER:ollama}
     structured-output: true

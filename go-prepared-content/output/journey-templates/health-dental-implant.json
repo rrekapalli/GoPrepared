@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-dental-implant",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Surgery",
+    "activity": "Dental Implant",
+    "location": "",
+    "title": "Preparing for Dental Implant",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Antibiotic prophylaxis if directed. Soft diet 1\u20132 weeks. No straws or smoking \u2014 protects clot....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Antibiotic prophylaxis if directed. Soft diet 1\u20132 weeks. No straws or smoking \u2014 protects clot."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Antibiotics, Soft foods, Smoking cessation, Follow-up imaging"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "templateKey": "sports-basketball-league",
+  "classification": {
+    "journeyType": "Sports",
+    "journeySubtype": "10K Run",
+    "activity": "Basketball League",
+    "location": "",
+    "title": "Preparing for Basketball League",
+    "confidence": 0.9
+  },
+  "cards": [
+    {
+      "title": "Training Plan",
+      "summary": "Condition with suicides and plyometrics. Ankle braces if injury-prone. Confirm game schedule and playoff format with lea...",
+      "category": "Training",
+      "icon": "running",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Condition with suicides and plyometrics. Ankle braces if injury-prone. Confirm game schedule and playoff format with league admin."
+          },
+          {
+            "title": "Focus areas",
+            "body": "League registration, Skill conditioning, Injury prevention, Playoff format"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Race Day Checklist",
+      "summary": "Gear, nutrition, and warm-up essentials.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 1
+    },
+    {
+      "title": "Nutrition & Hydration",
+      "summary": "Fuel strategy before and during the event.",
+      "category": "Health",
+      "icon": "nutrition",
+      "displayOrder": 2
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-event rest, stretching, and injury prevention.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 3
+    }
+  ]
+}

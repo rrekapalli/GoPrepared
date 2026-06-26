@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-cardiac-bypass",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Surgery",
+    "activity": "Cardiac Bypass",
+    "location": "",
+    "title": "Preparing for Cardiac Bypass",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Pulmonary toilet exercises pre-op. Sternotomy precautions \u2014 no lifting >10 lb 6 weeks. Cardiac rehab referral standard....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Pulmonary toilet exercises pre-op. Sternotomy precautions \u2014 no lifting >10 lb 6 weeks. Cardiac rehab referral standard."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Sternotomy care, Rehab enrollment, Medication changes, Warning signs"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

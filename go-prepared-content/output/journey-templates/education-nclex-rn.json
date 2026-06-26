@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-nclex-rn",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Exam",
+    "activity": "NCLEX-RN",
+    "location": "",
+    "title": "Preparing for NCLEX-RN",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Next Gen format \u2014 case studies and bow-tie items. UWorld or similar QBank daily. Computer adaptive test \u2014 stay calm if questions feel harder...",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Next Gen format \u2014 case studies and bow-tie items. UWorld or similar QBank daily. Computer adaptive test \u2014 stay calm if questions feel harder."
+          },
+          {
+            "title": "Study focus",
+            "body": "Next Gen format, QBank volume, Pharmacology, Test anxiety"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

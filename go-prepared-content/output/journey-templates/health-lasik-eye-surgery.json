@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-lasik-eye-surgery",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Surgery",
+    "activity": "LASIK Eye Surgery",
+    "location": "",
+    "title": "Preparing for LASIK Eye Surgery",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Stop contacts 2+ weeks before (varies by lens type). No makeup day of surgery. Drops schedule strict first month....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Stop contacts 2+ weeks before (varies by lens type). No makeup day of surgery. Drops schedule strict first month."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Contact lens hold, Dry eye treatment, Post-op drops, Screen time limits"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

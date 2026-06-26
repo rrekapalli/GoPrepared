@@ -6,12 +6,22 @@
   },
   {
     "rank": 2,
-    "title": "Schengen Visa",
-    "preparingCount": 6200
+    "title": "Vacation to Tokyo",
+    "preparingCount": 7200
   },
   {
     "rank": 3,
-    "title": "Stock Market Basics",
+    "title": "GRE Exam",
+    "preparingCount": 6100
+  },
+  {
+    "rank": 4,
+    "title": "Colonoscopy Prep",
+    "preparingCount": 5400
+  },
+  {
+    "rank": 5,
+    "title": "Vacation to Paris",
     "preparingCount": 5100
   }
 ]

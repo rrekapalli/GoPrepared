@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-sat",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Exam",
+    "activity": "SAT",
+    "location": "",
+    "title": "Preparing for SAT",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Digital adaptive format \u2014 practice on Bluebook app. Math formula sheet provided. Reading paired passages strategy matters....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Digital adaptive format \u2014 practice on Bluebook app. Math formula sheet provided. Reading paired passages strategy matters."
+          },
+          {
+            "title": "Study focus",
+            "body": "Bluebook practice, Calculator policy, Essay optional, Score choice"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

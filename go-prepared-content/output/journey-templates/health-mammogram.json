@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-mammogram",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Diagnostic Test",
+    "activity": "Mammogram",
+    "location": "",
+    "title": "Preparing for Mammogram",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Schedule after menstrual period for comfort. No deodorant day of exam. Bring prior images if changing facilities....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Schedule after menstrual period for comfort. No deodorant day of exam. Bring prior images if changing facilities."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Timing cycle, Deodorant rule, Prior films, Results follow-up"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

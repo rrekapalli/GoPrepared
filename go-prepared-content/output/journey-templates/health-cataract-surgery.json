@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-cataract-surgery",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Surgery",
+    "activity": "Cataract Surgery",
+    "location": "",
+    "title": "Preparing for Cataract Surgery",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Use prescribed drops starting days before. No food morning of surgery. Sunglasses and shield at night post-op....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Use prescribed drops starting days before. No food morning of surgery. Sunglasses and shield at night post-op."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Eye drops, Fasting, Post-op shield, Activity limits"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

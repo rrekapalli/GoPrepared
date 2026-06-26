@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-toefl-ibt",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Exam",
+    "activity": "TOEFL iBT",
+    "location": "",
+    "title": "Preparing for TOEFL iBT",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Integrated speaking/writing tasks combine reading+listening. Note templates for lecture summaries. Home edition rules differ....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Integrated speaking/writing tasks combine reading+listening. Note templates for lecture summaries. Home edition rules differ."
+          },
+          {
+            "title": "Study focus",
+            "body": "Integrated tasks, Note-taking, Home vs center, Score reporting"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

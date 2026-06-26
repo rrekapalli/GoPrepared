@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-university-freshman-year",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Exam",
+    "activity": "University Freshman Year",
+    "location": "",
+    "title": "Preparing for University Freshman Year",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Housing deposit and course registration deadlines. Health insurance waiver or campus plan. Budget textbooks vs rentals....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Housing deposit and course registration deadlines. Health insurance waiver or campus plan. Budget textbooks vs rentals."
+          },
+          {
+            "title": "Study focus",
+            "body": "Course registration, Housing, Meal plan, Campus health"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

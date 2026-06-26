@@ -2,17 +2,22 @@
   {
     "name": "Travel",
     "icon": "airplane",
-    "journeyCount": 128
+    "journeyCount": 1000
   },
   {
     "name": "Sports",
     "icon": "soccer",
-    "journeyCount": 64
+    "journeyCount": 525
   },
   {
     "name": "Education",
     "icon": "graduation",
-    "journeyCount": 96
+    "journeyCount": 750
+  },
+  {
+    "name": "Health",
+    "icon": "heart",
+    "journeyCount": 700
   },
   {
     "name": "Career",
@@ -23,10 +28,5 @@
     "name": "Finance",
     "icon": "bank",
     "journeyCount": 38
-  },
-  {
-    "name": "Health",
-    "icon": "heart",
-    "journeyCount": 55
   }
 ]

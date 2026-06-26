@@ -1,0 +1,49 @@
+{
+  "templateKey": "education-scrum-master-(csm)",
+  "classification": {
+    "journeyType": "Education",
+    "journeySubtype": "Certification",
+    "activity": "Scrum Master (CSM)",
+    "location": "",
+    "title": "Preparing for Scrum Master (CSM)",
+    "confidence": 0.91
+  },
+  "cards": [
+    {
+      "title": "Study Schedule",
+      "summary": "Two-day course mandatory. Scrum Guide read cover-to-cover. Servant leadership scenarios for exam....",
+      "category": "Education",
+      "icon": "school",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Two-day course mandatory. Scrum Guide read cover-to-cover. Servant leadership scenarios for exam."
+          },
+          {
+            "title": "Study focus",
+            "body": "Scrum Guide, Ceremonies, Course attendance, Exam format"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Resources & Materials",
+      "summary": "Books, practice exams, and official guides.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Test Day Logistics",
+      "summary": "ID requirements, timing, and what to bring.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 2
+    }
+  ]
+}

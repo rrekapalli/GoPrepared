@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-gallbladder-surgery",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Surgery",
+    "activity": "Gallbladder Surgery",
+    "location": "",
+    "title": "Preparing for Gallbladder Surgery",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Low-fat diet pre-op if instructed. Arrange help first 48 h home. Incision care \u2014 no heavy lifting 4\u20136 weeks....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Low-fat diet pre-op if instructed. Arrange help first 48 h home. Incision care \u2014 no heavy lifting 4\u20136 weeks."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Diet changes, Laparoscopic prep, Pain management, Lift restrictions"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

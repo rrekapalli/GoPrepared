@@ -31,6 +31,16 @@ server {
         proxy_set_header Host $host;
     }
 
+    location = /index.html {
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+        try_files $uri =404;
+    }
+
+    location = /version.json {
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+        try_files $uri =404;
+    }
+
     location = /flutter_service_worker.js {
         add_header Cache-Control "no-cache, no-store, must-revalidate";
         try_files $uri =404;
@@ -53,6 +63,7 @@ server {
     }
 
     location / {
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
         try_files $uri $uri/ /index.html;
     }
 

@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-angiogram",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Medical Procedure",
+    "activity": "Angiogram",
+    "location": "",
+    "title": "Preparing for Angiogram",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Fast 6\u20138 hours; inform team of metformin/blood thinners. Arrange ride home; drink fluids post-procedure. Watch puncture site for bleeding....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Fast 6\u20138 hours; inform team of metformin/blood thinners. Arrange ride home; drink fluids post-procedure. Watch puncture site for bleeding."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Fasting, Medication hold, Contrast allergy, Site care"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

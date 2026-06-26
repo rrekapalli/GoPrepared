@@ -1,0 +1,56 @@
+{
+  "templateKey": "sports-soccer-tournament",
+  "classification": {
+    "journeyType": "Sports",
+    "journeySubtype": "10K Run",
+    "activity": "Soccer Tournament",
+    "location": "",
+    "title": "Preparing for Soccer Tournament",
+    "confidence": 0.9
+  },
+  "cards": [
+    {
+      "title": "Training Plan",
+      "summary": "Arrive early for dynamic warm-up. Bring extra cleats, shin guards, and hydration. Know substitution and tie-break rules ...",
+      "category": "Training",
+      "icon": "running",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Arrive early for dynamic warm-up. Bring extra cleats, shin guards, and hydration. Know substitution and tie-break rules for your bracket."
+          },
+          {
+            "title": "Focus areas",
+            "body": "Team roster, Warm-up drills, Hydration plan, Tournament rules"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Race Day Checklist",
+      "summary": "Gear, nutrition, and warm-up essentials.",
+      "category": "Checklist",
+      "icon": "checklist",
+      "displayOrder": 1
+    },
+    {
+      "title": "Nutrition & Hydration",
+      "summary": "Fuel strategy before and during the event.",
+      "category": "Health",
+      "icon": "nutrition",
+      "displayOrder": 2
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-event rest, stretching, and injury prevention.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 3
+    }
+  ]
+}

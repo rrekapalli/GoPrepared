@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-wisdom-teeth-removal",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Surgery",
+    "activity": "Wisdom Teeth Removal",
+    "location": "",
+    "title": "Preparing for Wisdom Teeth Removal",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "No straws/smoking 5\u20137 days (dry socket risk). Soft foods and oral rinse as directed. Swelling peaks day 2\u20133....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "No straws/smoking 5\u20137 days (dry socket risk). Soft foods and oral rinse as directed. Swelling peaks day 2\u20133."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Dry socket prevention, Soft diet, Irrigation syringe, Swelling management"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}

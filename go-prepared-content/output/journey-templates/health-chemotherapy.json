@@ -1,0 +1,49 @@
+{
+  "templateKey": "health-chemotherapy",
+  "classification": {
+    "journeyType": "Health",
+    "journeySubtype": "Medical Procedure",
+    "activity": "Chemotherapy",
+    "location": "",
+    "title": "Preparing for Chemotherapy",
+    "confidence": 0.93
+  },
+  "cards": [
+    {
+      "title": "Pre-Procedure Instructions",
+      "summary": "Port care education if applicable. Anti-nausea meds filled before cycle 1. Low neutrophil precautions explained by oncology nurse....",
+      "category": "Health",
+      "icon": "medical",
+      "displayOrder": 0,
+      "detail": {
+        "dos": [],
+        "donts": [],
+        "emergencyContacts": [],
+        "sections": [
+          {
+            "title": "Overview",
+            "body": "Port care education if applicable. Anti-nausea meds filled before cycle 1. Low neutrophil precautions explained by oncology nurse."
+          },
+          {
+            "title": "Key preparations",
+            "body": "Port care, Anti-nausea, Neutropenic diet, Emergency numbers"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Medication Review",
+      "summary": "Blood thinners, fasting, and prescription adjustments.",
+      "category": "Documents",
+      "icon": "document",
+      "displayOrder": 1
+    },
+    {
+      "title": "Recovery Plan",
+      "summary": "Post-procedure care, restrictions, and follow-up.",
+      "category": "Recovery",
+      "icon": "recovery",
+      "displayOrder": 2
+    }
+  ]
+}
