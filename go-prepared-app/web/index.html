@@ -44,6 +44,29 @@
       user-select: none;
       -webkit-user-select: none;
     }
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #ffffff;
+    }
+    #splash img {
+      width: 96px;
+      height: 96px;
+      border-radius: 22%;
+    }
+    #splash p {
+      margin: 0;
+      font: 600 12px/1.4 system-ui, -apple-system, Segoe UI, sans-serif;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #616161;
+    }
     flt-glass-pane textarea,
     flt-glass-pane input,
     textarea, input {
@@ -53,6 +76,16 @@
   </style>
 </head>
 <body>
+  <div id="splash" aria-hidden="true">
+    <img src="icons/Icon-192.png" alt="">
+    <p>Be Ready Anywhere</p>
+  </div>
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var splash = document.getElementById('splash');
+      if (splash) splash.remove();
+    });
+  </script>
   <!--
     Version gate runs before flutter_bootstrap.js so a stale cached bootstrap
     cannot block PWA updates. See web/flutter_bootstrap.js for polling logic.

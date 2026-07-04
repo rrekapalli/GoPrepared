@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/config/app_config.dart';
 import '../../core/network/api_client.dart';
 import '../../core/theme/app_colors.dart';
+import 'app_logo.dart';
 
 /// Fixed top bar — same on every main tab (matches bottom nav persistence).
 class AppTopHeader extends StatelessWidget {
@@ -30,28 +31,27 @@ class AppTopHeader extends StatelessWidget {
             child: Row(
               children: [
                 if (leading != null) leading!,
+                const AppLogo(size: 36),
+                const SizedBox(width: 10),
                 Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: leading != null ? 0 : 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'GoPrepared',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                color: AppColors.primary,
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        Text(
-                          'BE READY ANYWHERE',
-                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                letterSpacing: 1.1,
-                                color: Colors.grey.shade600,
-                              ),
-                        ),
-                      ],
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'GoPrepared',
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      Text(
+                        'BE READY ANYWHERE',
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              letterSpacing: 1.1,
+                              color: Colors.grey.shade600,
+                            ),
+                      ),
+                    ],
                   ),
                 ),
                 IconButton(

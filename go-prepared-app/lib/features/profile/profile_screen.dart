@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../shared/widgets/app_logo.dart';
 
 import '../../data/models/ai_models.dart';
 
@@ -101,19 +102,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 children: [
 
                   Center(
-
-                    child: CircleAvatar(
-
-                      radius: 44,
-
-                      backgroundColor: AppColors.primary.withValues(alpha: 0.12),
-
-                      backgroundImage: user?.profilePicture != null ? NetworkImage(user!.profilePicture!) : null,
-
-                      child: user?.profilePicture == null ? Text(user?.name.substring(0, 1).toUpperCase() ?? '?', style: const TextStyle(fontSize: 32, color: AppColors.primary)) : null,
-
-                    ),
-
+                    child: user?.profilePicture != null
+                        ? CircleAvatar(
+                            radius: 44,
+                            backgroundColor: AppColors.primary.withValues(alpha: 0.12),
+                            backgroundImage: NetworkImage(user!.profilePicture!),
+                          )
+                        : const AppLogo(size: 88),
                   ),
 
                   const SizedBox(height: 12),
