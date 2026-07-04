@@ -19,6 +19,9 @@ public class User {
     @Column(name = "google_id", unique = true)
     private String googleId;
 
+    @Column(name = "microsoft_id", unique = true)
+    private String microsoftId;
+
     private String name;
     private String email;
 

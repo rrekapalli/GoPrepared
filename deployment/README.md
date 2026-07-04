@@ -125,7 +125,7 @@ Once joined:
 ## Configuration
 
 - **`deployment/proxmox/deployment.conf`** — VMID 7003, memory, template name (non-secret).
-- **`.env`** — Proxmox, Tailscale, Postgres, Ollama, JWT, `GOPREPARED_HOST`.
+- **`.env`** — Proxmox, Tailscale, Postgres, Ollama, JWT, OAuth client IDs, `GOPREPARED_AUTH_DEV_ENABLED=false` in production, `GOPREPARED_HOST`.
 
 ## Local dev (optional Docker)
 

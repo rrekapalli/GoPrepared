@@ -8,8 +8,9 @@ OpenAPI: `http://localhost:8080/swagger-ui.html`
 
 | Method | Path | Auth | Body |
 |--------|------|------|------|
-| POST | `/auth/dev` | — | `{ "email", "name?" }` |
+| POST | `/auth/dev` | — | `{ "email", "name?" }` — disabled when `GOPREPARED_AUTH_DEV_ENABLED=false` |
 | POST | `/auth/google` | — | `{ "idToken" }` |
+| POST | `/auth/microsoft` | — | `{ "idToken" }` |
 | GET | `/users/me` | Bearer JWT | — |
 
 **Response (auth):** `{ "accessToken", "user": { "id", "name", "email", "profilePicture" } }`

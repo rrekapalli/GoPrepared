@@ -24,6 +24,6 @@ public class OpenApiConfig {
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
                                         .bearerFormat("JWT")
-                                        .description("JWT from POST /api/v1/auth/dev or /auth/google")));
+                                        .description("JWT from POST /api/v1/auth/google, /auth/microsoft, or /auth/dev (dev only)")));
     }
 }

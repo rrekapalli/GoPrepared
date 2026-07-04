@@ -8,6 +8,24 @@ class AppConfig {
   static const enableKnowledge = true;
   static const enableCommunity = true;
 
+  static const googleClientId = String.fromEnvironment('GOOGLE_CLIENT_ID', defaultValue: '');
+  static const microsoftClientId = String.fromEnvironment('MICROSOFT_CLIENT_ID', defaultValue: '');
+  static const microsoftTenantId = String.fromEnvironment('MICROSOFT_TENANT_ID', defaultValue: 'common');
+  static const devAuthEnabled = bool.fromEnvironment('DEV_AUTH_ENABLED', defaultValue: true);
+
+  /// OAuth redirect URI for Microsoft (must match Entra app registration).
+  static String get oauthRedirectUri {
+    if (kIsWeb) {
+      final base = Uri.base;
+      final port = base.hasPort && base.port != 80 && base.port != 443 ? ':${base.port}' : '';
+      return '${base.scheme}://${base.host}$port${base.path}';
+    }
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      return 'msauth.com.goprepared.goPreparedApp://auth';
+    }
+    return 'msauth://com.goprepared.go_prepared_app/callback';
+  }
+
   static void init() {
     const fromDefine = String.fromEnvironment('API_BASE_URL');
     if (fromDefine.isNotEmpty) {

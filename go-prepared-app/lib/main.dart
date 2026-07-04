@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'core/config/app_config.dart';
 import 'core/routing/app_router.dart';
 import 'core/theme/app_theme.dart';
+import 'data/repositories/auth_repository.dart';
+import 'features/auth/auth_providers.dart';
+import 'core/network/api_client.dart';
 
 /// Prevents Material 3 primary-colored stretch glow on web scroll.
 class _AppScrollBehavior extends MaterialScrollBehavior {
@@ -12,16 +16,18 @@ class _AppScrollBehavior extends MaterialScrollBehavior {
   }
 }
 
-class GoPreparedApp extends StatelessWidget {
+class GoPreparedApp extends ConsumerWidget {
   const GoPreparedApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(appRouterProvider);
+
     return MaterialApp.router(
       title: 'GoPrepared',
       theme: AppTheme.light(),
       scrollBehavior: _AppScrollBehavior(),
-      routerConfig: appRouter,
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
         return ColoredBox(
@@ -41,5 +47,14 @@ class GoPreparedApp extends StatelessWidget {
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   AppConfig.init();
-  runApp(const ProviderScope(child: GoPreparedApp()));
+  runApp(
+    ProviderScope(
+      overrides: [
+        authRepositoryProvider.overrideWith(
+          (ref) => AuthRepository(ref.watch(dioProvider), navigatorKey: rootNavigatorKey),
+        ),
+      ],
+      child: const GoPreparedApp(),
+    ),
+  );
 }

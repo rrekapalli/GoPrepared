@@ -13,6 +13,8 @@ public final class ApiDtos {
 
     public record GoogleAuthRequest(@NotBlank String idToken) {}
 
+    public record MicrosoftAuthRequest(@NotBlank String idToken) {}
+
     public record DevAuthRequest(@NotBlank String email, String name) {}
 
     public record UserResponse(Long id, String name, String email, String profilePicture) {}

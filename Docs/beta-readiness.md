@@ -46,7 +46,7 @@ curl -X POST http://localhost:8080/api/v1/journeys \
 
 ## Known beta limitations
 
-- Google OAuth UI scaffold only (dev login for beta)
+- Google + Microsoft OAuth with hybrid access (Explore public; journeys require sign-in). See [Docs/oauth-setup.md](oauth-setup.md).
 - Map "Explore Map" button is placeholder
 - Notification toggles are local-only (no push yet)
 - Profile impact score is computed client-side from journey status

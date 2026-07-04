@@ -1,40 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../models/ai_models.dart';
 import '../../core/network/api_client.dart';
 
-final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  return AuthRepository(ref.watch(dioProvider));
-});
-
-final sessionProvider = FutureProvider<void>((ref) async {
-  await ref.read(authRepositoryProvider).ensureSession();
-});
-
-class AuthRepository {
-  AuthRepository(this._dio);
-  final Dio _dio;
-
-  Future<void> ensureSession() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (prefs.getString('access_token') != null) return;
-    await devLogin();
-  }
-
-  Future<String> devLogin({String email = 'dev@goprepared.app', String name = 'Dev User'}) async {
-    final res = await _dio.post('/auth/dev', data: {'email': email, 'name': name});
-    final token = res.data['accessToken'] as String;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('access_token', token);
-    return token;
-  }
-
-  Future<UserModel> me() async {
-    final res = await _dio.get('/users/me');
-    return UserModel.fromJson(res.data as Map<String, dynamic>);
-  }
-}
+export 'auth_repository.dart';
+export '../../features/auth/auth_providers.dart';
 
 final journeyRepositoryProvider = Provider<JourneyRepository>((ref) {
   return JourneyRepository(ref.watch(dioProvider));

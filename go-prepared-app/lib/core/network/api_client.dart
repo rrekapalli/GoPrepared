@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../auth/token_storage.dart';
 import '../config/app_config.dart';
 
 final dioProvider = Provider<Dio>((ref) {
@@ -14,9 +14,8 @@ final dioProvider = Provider<Dio>((ref) {
   );
   dio.interceptors.add(InterceptorsWrapper(
     onRequest: (options, handler) async {
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('access_token');
-      if (token != null) {
+      final token = await tokenStorage.readToken();
+      if (token != null && token.isNotEmpty) {
         options.headers['Authorization'] = 'Bearer $token';
       }
       handler.next(options);

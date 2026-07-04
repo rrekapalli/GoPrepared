@@ -37,8 +37,13 @@ goprepared:
   jwt:
     secret: ${JWT_SECRET:dev-secret-change-in-production-min-32-chars!!}
     expiration-ms: 86400000
+  auth:
+    dev-enabled: ${GOPREPARED_AUTH_DEV_ENABLED:true}
   google:
     client-id: ${GOOGLE_CLIENT_ID:}
+  microsoft:
+    client-id: ${MICROSOFT_CLIENT_ID:}
+    tenant-id: ${MICROSOFT_TENANT_ID:common}
   cors:
     allowed-origins: ${GOPREPARED_CORS_ORIGINS:http://localhost:*,http://127.0.0.1:*,http://goprepared.tailce422e.ts.net}
 
