@@ -25,7 +25,7 @@ if (Test-Path $EnvFile) {
 Push-Location $AppDir
 try {
     flutter pub get
-    flutter build web --release --pwa-strategy offline-first `
+    flutter build web --release `
         --dart-define="API_BASE_URL=$ApiBaseUrl"
 }
 finally {

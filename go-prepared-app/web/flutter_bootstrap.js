@@ -3,11 +3,15 @@
 
 (function () {
   const VERSION_KEY = 'goprepared.app.version';
-  const VERSION_POLL_MS = 5 * 60 * 1000;
+  const VERSION_POLL_MS = 60 * 1000;
 
   function isLocalDev() {
     const h = location.hostname;
     return h === 'localhost' || h === '127.0.0.1' || h === '[::1]';
+  }
+
+  function versionUrl() {
+    return new URL('version.json', document.baseURI).toString();
   }
 
   function releaseLabel(data) {
@@ -34,7 +38,10 @@
   }
 
   async function fetchReleaseLabel() {
-    const res = await fetch('/version.json?t=' + Date.now(), { cache: 'no-store' });
+    const res = await fetch(versionUrl() + '?t=' + Date.now(), {
+      cache: 'no-store',
+      headers: { 'Cache-Control': 'no-cache', Pragma: 'no-cache' },
+    });
     if (!res.ok) return null;
     const data = await res.json();
     return releaseLabel(data);
@@ -48,78 +55,42 @@
       const prev = localStorage.getItem(VERSION_KEY);
       if (prev && prev !== label) {
         await purgeClientCaches();
-        // Keep the old label until the next load fetches fresh assets.
-        localStorage.removeItem(VERSION_KEY);
+        localStorage.setItem(VERSION_KEY, label);
         const url = new URL(location.href);
         url.searchParams.set('_gp', String(Date.now()));
         location.replace(url.toString());
         return true;
       }
-      if (!prev) localStorage.setItem(VERSION_KEY, label);
+      if (!prev || prev !== label) localStorage.setItem(VERSION_KEY, label);
     } catch (err) {
       console.warn('[GoPrepared] version check failed', err);
     }
     return false;
   }
 
-  function listenForWaitingWorker() {
-    if (isLocalDev() || !('serviceWorker' in navigator)) return;
+  function scheduleVersionChecks() {
+    if (isLocalDev()) return;
 
-    let refreshing = false;
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (refreshing) return;
-      refreshing = true;
-      location.reload();
-    });
-
-    const activateWaiting = (reg) => {
-      const worker = reg?.waiting || reg?.installing;
-      if (worker && navigator.serviceWorker.controller) {
-        worker.postMessage({ type: 'skipWaiting' });
-      }
+    const check = () => {
+      bustCacheIfNewRelease();
     };
 
-    navigator.serviceWorker.getRegistration().then((reg) => {
-      if (!reg) return;
-      reg.update().catch(() => {});
-      activateWaiting(reg);
-      reg.addEventListener('updatefound', () => {
-        const worker = reg.installing;
-        if (!worker) return;
-        worker.addEventListener('statechange', () => {
-          if (worker.state === 'installed' && navigator.serviceWorker.controller) {
-            worker.postMessage({ type: 'skipWaiting' });
-          }
-        });
-      });
+    setInterval(check, VERSION_POLL_MS);
+    window.addEventListener('focus', check);
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) check();
     });
-
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState !== 'visible') return;
-      bustCacheIfNewRelease();
-      navigator.serviceWorker.getRegistration().then((reg) => {
-        if (!reg) return;
-        reg.update().catch(() => {});
-        activateWaiting(reg);
-      });
+      if (document.visibilityState === 'visible') check();
     });
   }
 
   async function startFlutter() {
-    const loadConfig = {};
-    if (!isLocalDev()) {
-      loadConfig.serviceWorkerSettings = {
-        serviceWorkerVersion: {{flutter_service_worker_version}},
-      };
-    }
-    _flutter.loader.load(loadConfig);
-    if (!isLocalDev()) {
-      setInterval(() => bustCacheIfNewRelease(), VERSION_POLL_MS);
-    }
+    _flutter.loader.load({});
+    scheduleVersionChecks();
   }
 
   async function boot() {
-    listenForWaitingWorker();
     if (!isLocalDev() && (await bustCacheIfNewRelease())) return;
     await startFlutter();
   }

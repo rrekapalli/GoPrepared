@@ -34,7 +34,7 @@ Or, if `flutter run -d chrome` is already running, **stop it first** (`q`) — h
 
 ### Flutter web dev notes
 
-On `localhost`, the PWA service worker and version polling are disabled so hot reload/restart is not fighting cache updates.
+On `localhost`, PWA version polling is disabled so hot reload/restart is not fighting cache updates.
 
 If hot restart logs `LateInitializationError: _handledContextLostEvent`, apply the one-time engine patch (stable 3.44.x is missing [flutter#184683](https://github.com/flutter/flutter/issues/184683)):
 

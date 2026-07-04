@@ -1,149 +1,187 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <base href="$FLUTTER_BASE_HREF">
-
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="GoPrepared — Be Ready Anywhere. AI-powered preparation intelligence.">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <meta name="theme-color" content="#1565C0">
-
-  <!-- iOS meta tags & icons -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="GoPrepared">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>GoPrepared</title>
-  <link rel="manifest" href="manifest.json">
-  <style>
-    html, body {
-      background: #ffffff;
-      margin: 0;
-      height: 100%;
-    }
-    /* Prevent accidental full-page text selection tint on Flutter web */
-    body {
-      user-select: none;
-      -webkit-user-select: none;
-    }
-    #splash {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      background: #ffffff;
-    }
-    #splash img {
-      width: 96px;
-      height: 96px;
-      border-radius: 22%;
-    }
-    #splash p {
-      margin: 0;
-      font: 600 12px/1.4 system-ui, -apple-system, Segoe UI, sans-serif;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #616161;
-    }
-    flt-glass-pane textarea,
-    flt-glass-pane input,
-    textarea, input {
-      user-select: text;
-      -webkit-user-select: text;
-    }
-  </style>
-</head>
-<body>
-  <div id="splash" aria-hidden="true">
-    <img src="icons/Icon-192.png" alt="">
-    <p>Be Ready Anywhere</p>
-  </div>
-  <script>
-    window.addEventListener('flutter-first-frame', function () {
-      var splash = document.getElementById('splash');
-      if (splash) splash.remove();
-    });
-  </script>
-  <!--
-    Version gate runs before flutter_bootstrap.js so a stale cached bootstrap
-    cannot block PWA updates. See web/flutter_bootstrap.js for polling logic.
-  -->
-  <script>
-    (function () {
-      var VERSION_KEY = 'goprepared.app.version';
-
-      function releaseLabel(data) {
-        var label = data.version + '+' + data.build_number;
-        if (data.build_id) label += '+' + data.build_id;
-        return label;
-      }
-
-      function purgeClient() {
-        var tasks = [];
-        if ('serviceWorker' in navigator) {
-          tasks.push(
-            navigator.serviceWorker.getRegistrations().then(function (regs) {
-              return Promise.all(regs.map(function (r) { return r.unregister(); }));
-            })
-          );
-        }
-        if ('caches' in window) {
-          tasks.push(
-            caches.keys().then(function (names) {
-              return Promise.all(names.map(function (n) { return caches.delete(n); }));
-            })
-          );
-        }
-        return Promise.all(tasks);
-      }
-
-      function loadBootstrap() {
-        var s = document.createElement('script');
-        s.src = 'flutter_bootstrap.js';
-        document.body.appendChild(s);
-      }
-
-      fetch('/version.json?t=' + Date.now(), { cache: 'no-store' })
-        .then(function (res) { return res.ok ? res.json() : null; })
-        .then(function (data) {
-          if (!data) return loadBootstrap();
-          var label = releaseLabel(data);
-          var prev = localStorage.getItem(VERSION_KEY);
-          if (prev && prev !== label) {
-            return purgeClient().then(function () {
-              localStorage.removeItem(VERSION_KEY);
-              var url = new URL(window.location.href);
-              url.searchParams.set('_gp', String(Date.now()));
-              window.location.replace(url.toString());
-            });
-          }
-          if (!prev) localStorage.setItem(VERSION_KEY, label);
-          loadBootstrap();
-        })
-        .catch(function () { loadBootstrap(); });
-    })();
-  </script>
-</body>
-</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="GoPrepared — Be Ready Anywhere. AI-powered preparation intelligence.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="theme-color" content="#1565C0">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="GoPrepared">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>GoPrepared</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    html, body {
+      background: #ffffff;
+      margin: 0;
+      height: 100%;
+    }
+    /* Prevent accidental full-page text selection tint on Flutter web */
+    body {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #ffffff;
+    }
+    #splash img {
+      width: 96px;
+      height: 96px;
+      border-radius: 22%;
+    }
+    #splash p {
+      margin: 0;
+      font: 600 12px/1.4 system-ui, -apple-system, Segoe UI, sans-serif;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #616161;
+    }
+    flt-glass-pane textarea,
+    flt-glass-pane input,
+    textarea, input {
+      user-select: text;
+      -webkit-user-select: text;
+    }
+  </style>
+</head>
+<body>
+  <div id="splash" aria-hidden="true">
+    <img src="icons/Icon-192.png" alt="">
+    <p>Be Ready Anywhere</p>
+  </div>
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var splash = document.getElementById('splash');
+      if (splash) splash.remove();
+    });
+  </script>
+  <!--
+    Version gate runs before flutter_bootstrap.js so a stale cached bootstrap
+    cannot block PWA updates. See web/flutter_bootstrap.js for polling logic.
+  -->
+  <script>
+    (function () {
+      var VERSION_KEY = 'goprepared.app.version';
+      var MIGRATION_KEY = 'goprepared.pwa.migrated-v3';
+
+      function isLocalDev() {
+        var h = location.hostname;
+        return h === 'localhost' || h === '127.0.0.1' || h === '[::1]';
+      }
+
+      function versionUrl() {
+        return new URL('version.json', document.baseURI).toString();
+      }
+
+      function releaseLabel(data) {
+        var label = data.version + '+' + data.build_number;
+        if (data.build_id) label += '+' + data.build_id;
+        return label;
+      }
+
+      function purgeClient() {
+        var tasks = [];
+        if ('serviceWorker' in navigator) {
+          tasks.push(
+            navigator.serviceWorker.getRegistrations().then(function (regs) {
+              return Promise.all(regs.map(function (r) { return r.unregister(); }));
+            })
+          );
+        }
+        if ('caches' in window) {
+          tasks.push(
+            caches.keys().then(function (names) {
+              return Promise.all(names.map(function (n) { return caches.delete(n); }));
+            })
+          );
+        }
+        return Promise.all(tasks);
+      }
+
+      function loadBootstrap() {
+        var s = document.createElement('script');
+        s.src = 'flutter_bootstrap.js?t=' + Date.now();
+        document.body.appendChild(s);
+      }
+
+      function fetchReleaseLabel() {
+        return fetch(versionUrl() + '?t=' + Date.now(), {
+          cache: 'no-store',
+          headers: { 'Cache-Control': 'no-cache', Pragma: 'no-cache' },
+        })
+          .then(function (res) { return res.ok ? res.json() : null; })
+          .then(function (data) { return data ? releaseLabel(data) : null; });
+      }
+
+      function runVersionGate() {
+        return fetchReleaseLabel().then(function (label) {
+          if (!label) return loadBootstrap();
+
+          var prev = localStorage.getItem(VERSION_KEY);
+          if (prev && prev !== label) {
+            return purgeClient().then(function () {
+              localStorage.setItem(VERSION_KEY, label);
+              var url = new URL(window.location.href);
+              url.searchParams.set('_gp', String(Date.now()));
+              window.location.replace(url.toString());
+            });
+          }
+          if (!prev || prev !== label) localStorage.setItem(VERSION_KEY, label);
+          loadBootstrap();
+        });
+      }
+
+      if (isLocalDev()) {
+        loadBootstrap();
+        return;
+      }
+
+      if (!localStorage.getItem(MIGRATION_KEY)) {
+        purgeClient().then(function () {
+          localStorage.setItem(MIGRATION_KEY, '1');
+          var url = new URL(window.location.href);
+          url.searchParams.set('_gp', String(Date.now()));
+          window.location.replace(url.toString());
+        }).catch(function () {
+          localStorage.setItem(MIGRATION_KEY, '1');
+          runVersionGate().catch(function () { loadBootstrap(); });
+        });
+        return;
+      }
+
+      runVersionGate().catch(function () { loadBootstrap(); });
+    })();
+  </script>
+</body>
+</html>

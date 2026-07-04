@@ -26,7 +26,7 @@ class KnowledgeApiImpl implements KnowledgeApi {
   @override
   Future<ApiResult<KnowledgeCategoriesResponse>> getCategories() {
     return client
-        .get('/api/v1/knowledge/categories')
+        .get('/knowledge/categories')
         .decodeJson(
           (json) => KnowledgeCategoriesResponse.fromJson(
             json as Map<String, dynamic>,
@@ -42,7 +42,7 @@ class KnowledgeApiImpl implements KnowledgeApi {
   }) {
     return client
         .get(
-          '/api/v1/knowledge/graph',
+          '/knowledge/graph',
           queryParameters: {
             if (category != null) 'category': category,
             if (type != null) 'type': type,
@@ -57,7 +57,7 @@ class KnowledgeApiImpl implements KnowledgeApi {
   @override
   Future<ApiResult<KnowledgeNode>> getNode(String nodeId) {
     return client
-        .get('/api/v1/knowledge/nodes/$nodeId')
+        .get('/knowledge/nodes/$nodeId')
         .decodeJson(
           (json) => KnowledgeNode.fromJson(json as Map<String, dynamic>),
         )
@@ -71,7 +71,7 @@ class KnowledgeApiImpl implements KnowledgeApi {
   }) {
     return client
         .get(
-          '/api/v1/knowledge/search',
+          '/knowledge/search',
           queryParameters: {
             'q': query,
             'limit': limit.toString(),

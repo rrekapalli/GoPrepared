@@ -123,6 +123,24 @@ run_powershell_script_windows() {
     return 1
 }
 
+inject_pwa_build_id() {
+    local build_dir="$1"
+    if [[ -f "${build_dir}/version.json" && -f "${build_dir}/.last_build_id" ]]; then
+        python3 - "${build_dir}" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+build_dir = Path(sys.argv[1])
+version_path = build_dir / "version.json"
+build_id = (build_dir / ".last_build_id").read_text().strip()
+data = json.loads(version_path.read_text())
+data["build_id"] = build_id
+version_path.write_text(json.dumps(data, separators=(",", ":")) + "\n")
+PY
+    fi
+}
+
 build_pwa_from_existing_web() {
     local root_dir="$1"
     local api_base_url="${2:-http://localhost:8080/api/v1}"
@@ -141,6 +159,8 @@ build_pwa_from_existing_web() {
     log_warn "Packaging existing Flutter web build from ${build_dir}"
     log_warn "Refresh on Windows first if needed: powershell -File scripts/build_pwa_artifact.ps1"
     log_info "Expected API_BASE_URL for this deploy: ${api_base_url}"
+
+    inject_pwa_build_id "$build_dir"
 
     rm -f "${artifacts_dir}/pwa-dist.zip"
     (cd "$build_dir" && zip -qr "${artifacts_dir}/pwa-dist.zip" .)
@@ -218,26 +238,13 @@ build_pwa_artifact_native() {
 
     log_info "Flutter API_BASE_URL=${api_base_url}"
     run_flutter "$app_dir" "$flutter_bin" pub get
-    run_flutter "$app_dir" "$flutter_bin" build web --release --pwa-strategy offline-first \
+    run_flutter "$app_dir" "$flutter_bin" build web --release \
         --dart-define="API_BASE_URL=${api_base_url}"
 
     [[ -d "$build_dir" ]] || { log_error "Build dir missing: $build_dir"; exit 1; }
     [[ -f "${build_dir}/index.html" ]] || { log_error "index.html missing in build output"; exit 1; }
 
-    if [[ -f "${build_dir}/version.json" && -f "${build_dir}/.last_build_id" ]]; then
-        python3 - "${build_dir}" <<'PY'
-import json
-import sys
-from pathlib import Path
-
-build_dir = Path(sys.argv[1])
-version_path = build_dir / "version.json"
-build_id = (build_dir / ".last_build_id").read_text().strip()
-data = json.loads(version_path.read_text())
-data["build_id"] = build_id
-version_path.write_text(json.dumps(data, separators=(",", ":")) + "\n")
-PY
-    fi
+    inject_pwa_build_id "$build_dir"
 
     rm -f "${artifacts_dir}/pwa-dist.zip"
     (cd "$build_dir" && zip -qr "${artifacts_dir}/pwa-dist.zip" .)
