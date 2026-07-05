@@ -7,7 +7,16 @@
 
   function isLocalDev() {
     const h = location.hostname;
-    return h === 'localhost' || h === '127.0.0.1' || h === '[::1]';
+    if (h === 'localhost' || h === '127.0.0.1' || h === '[::1]') return true;
+    const p = location.port;
+    return p === '51518' || p === '8080' || p === '5000' || p === '3000';
+  }
+
+  function withTimeout(promise, ms) {
+    return Promise.race([
+      promise,
+      new Promise((resolve) => setTimeout(resolve, ms)),
+    ]);
   }
 
   function versionUrl() {
@@ -52,16 +61,20 @@
       const label = await fetchReleaseLabel();
       if (!label) return false;
 
-      const prev = localStorage.getItem(VERSION_KEY);
+      let prev = null;
+      try { prev = localStorage.getItem(VERSION_KEY); } catch (err) { /* incognito / blocked storage */ }
+
       if (prev && prev !== label) {
-        await purgeClientCaches();
-        localStorage.setItem(VERSION_KEY, label);
+        await withTimeout(purgeClientCaches(), 3000);
+        try { localStorage.setItem(VERSION_KEY, label); } catch (err) { /* ignore */ }
         const url = new URL(location.href);
         url.searchParams.set('_gp', String(Date.now()));
         location.replace(url.toString());
         return true;
       }
-      if (!prev || prev !== label) localStorage.setItem(VERSION_KEY, label);
+      try {
+        if (!prev || prev !== label) localStorage.setItem(VERSION_KEY, label);
+      } catch (err) { /* ignore */ }
     } catch (err) {
       console.warn('[GoPrepared] version check failed', err);
     }
@@ -95,5 +108,8 @@
     await startFlutter();
   }
 
-  boot();
+  boot().catch((err) => {
+    console.error('[GoPrepared] Flutter boot failed', err);
+    if (typeof removeSplash === 'function') removeSplash();
+  });
 })();

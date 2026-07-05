@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/routing/route_policy.dart';
 import '../../features/auth/auth_providers.dart';
 import '../../features/auth/login_screen.dart';
 import '../../features/auth/microsoft_auth_callback_screen.dart';
@@ -18,28 +19,6 @@ import '../../shared/widgets/app_shell.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
-bool isPublicRoute(String location) {
-  return location == '/login' || location == '/auth' || location.startsWith('/explore');
-}
-
-bool isProtectedRoute(String location) {
-  if (isPublicRoute(location)) return false;
-  return location.startsWith('/home') ||
-      location.startsWith('/journeys') ||
-      location.startsWith('/me') ||
-      location.startsWith('/cards');
-}
-
-bool isOAuthCallbackUri(Uri uri) {
-  if (uri.path == '/auth') return true;
-  if (uri.queryParameters.containsKey('code') || uri.queryParameters.containsKey('error')) {
-    return true;
-  }
-  final path = uri.path;
-  if (path.startsWith('/code=') || path.startsWith('code=')) return true;
-  return false;
-}
-
 final appRouterProvider = Provider<GoRouter>((ref) {
   final refresh = ref.watch(routerRefreshNotifierProvider);
 
@@ -47,7 +26,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     navigatorKey: rootNavigatorKey,
-    initialLocation: '/home',
+    initialLocation: '/explore',
     refreshListenable: refresh,
     redirect: (context, state) {
       final uri = state.uri;
@@ -60,7 +39,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       }
 
       final auth = ref.read(authNotifierProvider);
-      final loggedIn = auth.valueOrNull != null;
+      final loggedIn = auth.hasValue && auth.valueOrNull != null;
       final onLogin = location == '/login';
       final onAuthCallback = location == '/auth';
       final awaitingSession = auth.isLoading && ref.read(authBootstrapHintProvider);

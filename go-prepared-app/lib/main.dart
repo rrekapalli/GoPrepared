@@ -52,8 +52,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureUrlStrategy();
   AppConfig.init();
-  final storedToken = await tokenStorage.readToken();
-  final hasStoredToken = storedToken != null && storedToken.isNotEmpty;
+  var hasStoredToken = false;
+  try {
+    final storedToken = await tokenStorage.readToken().timeout(const Duration(seconds: 3));
+    hasStoredToken = storedToken != null && storedToken.isNotEmpty;
+  } catch (_) {
+    hasStoredToken = false;
+  }
   runApp(
     ProviderScope(
       overrides: [

@@ -62,8 +62,8 @@ class AuthNotifier extends AsyncNotifier<AuthSession?> {
       ref.read(routerRefreshNotifierProvider).refresh();
       return user;
     } catch (e, st) {
-      state = AsyncError(e, st);
-      rethrow;
+      state = const AsyncData(null);
+      Error.throwWithStackTrace(e, st);
     }
   }
 
@@ -76,8 +76,8 @@ class AuthNotifier extends AsyncNotifier<AuthSession?> {
       ref.read(routerRefreshNotifierProvider).refresh();
       return user;
     } catch (e, st) {
-      state = AsyncError(e, st);
-      rethrow;
+      state = const AsyncData(null);
+      Error.throwWithStackTrace(e, st);
     }
   }
 
@@ -90,8 +90,8 @@ class AuthNotifier extends AsyncNotifier<AuthSession?> {
       ref.read(routerRefreshNotifierProvider).refresh();
       return user;
     } catch (e, st) {
-      state = AsyncError(e, st);
-      rethrow;
+      state = const AsyncData(null);
+      Error.throwWithStackTrace(e, st);
     }
   }
 
@@ -104,8 +104,8 @@ class AuthNotifier extends AsyncNotifier<AuthSession?> {
       ref.read(routerRefreshNotifierProvider).refresh();
       return user;
     } catch (e, st) {
-      state = AsyncError(e, st);
-      rethrow;
+      state = const AsyncData(null);
+      Error.throwWithStackTrace(e, st);
     }
   }
 
@@ -127,9 +127,12 @@ class AuthNotifier extends AsyncNotifier<AuthSession?> {
 
 final authNotifierProvider = AsyncNotifierProvider<AuthNotifier, AuthSession?>(AuthNotifier.new);
 
-/// Legacy hook for screens that awaited session bootstrap — no-op when router guards auth.
+/// Legacy hook for screens that awaited session bootstrap — never throws on auth errors.
 final sessionProvider = FutureProvider<void>((ref) async {
-  await ref.watch(authNotifierProvider.future);
+  final auth = ref.watch(authNotifierProvider);
+  if (auth.isLoading) {
+    await ref.watch(authNotifierProvider.future);
+  }
 });
 
 class GoRouterRefreshNotifier extends ChangeNotifier {

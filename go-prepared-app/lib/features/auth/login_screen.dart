@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/auth/oauth_browser.dart';
 import '../../core/config/app_config.dart';
 import '../../core/config/oauth_config.dart';
+import '../../core/network/api_client.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/repositories/auth_repository.dart';
 import '../../shared/widgets/app_logo.dart';
@@ -49,6 +51,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
     try {
       await action();
+      if (mounted) {
+        final loggedIn = ref.read(authNotifierProvider).valueOrNull != null;
+        if (loggedIn) {
+          final from = GoRouterState.of(context).uri.queryParameters['from'];
+          if (from != null && from.isNotEmpty) {
+            context.go(from);
+          } else {
+            context.go('/home');
+          }
+        }
+      }
     } on AuthCancelledException {
       if (mounted) setState(() => _loading = false);
       return;
@@ -56,12 +69,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       if (mounted) {
         setState(() {
           _loading = false;
-          _error = e.toString().replaceFirst('Exception: ', '');
+          _error = _formatLoginError(e);
         });
       }
       return;
     }
     if (mounted) setState(() => _loading = false);
+  }
+
+  String _formatLoginError(Object error) {
+    if (error is DioException) {
+      final status = error.response?.statusCode;
+      if (status == 502 || status == 503) {
+        return 'API server unavailable ($status). The backend may be restarting — try again in a minute.';
+      }
+      return friendlyApiError(error);
+    }
+    return error.toString().replaceFirst('Exception: ', '');
   }
 
   @override

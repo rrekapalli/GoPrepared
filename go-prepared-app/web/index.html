@@ -86,39 +86,48 @@
   <!-- Capture Microsoft OAuth return before Flutter path URL strategy runs -->
   <script>
     (function () {
-      function hasOAuthParams(search, hash) {
-        return /(?:^|[?&#])(code|error)=/.test(search) || /(?:^|[?&#])(code|error)=/.test(hash);
-      }
-      var search = window.location.search || '';
-      var hash = window.location.hash || '';
-      if (hasOAuthParams(search, hash)) {
-        sessionStorage.setItem('gp_msal_return', search + hash);
-        var path = window.location.pathname || '/';
-        if (path !== '/auth' && path !== '/auth/') {
-          window.history.replaceState(null, '', '/auth' + search + hash);
+      try {
+        function hasOAuthParams(search, hash) {
+          return /(?:^|[?&#])(code|error)=/.test(search) || /(?:^|[?&#])(code|error)=/.test(hash);
         }
+        var search = window.location.search || '';
+        var hash = window.location.hash || '';
+        if (hasOAuthParams(search, hash)) {
+          sessionStorage.setItem('gp_msal_return', search + hash);
+          var path = window.location.pathname || '/';
+          if (path !== '/auth' && path !== '/auth/') {
+            window.history.replaceState(null, '', '/auth' + search + hash);
+          }
+        }
+      } catch (e) {
+        console.warn('[GoPrepared] OAuth URL capture skipped', e);
       }
     })();
   </script>
   <!-- Init MSAL before Flutter boot so handleRedirectPromise sees the auth code -->
   <script>
     (function () {
-      var hasReturn = sessionStorage.getItem('gp_msal_return');
-      if (!hasReturn) return;
-      var clientId = sessionStorage.getItem('gp_msal_client_id');
-      var tenant = sessionStorage.getItem('gp_msal_tenant_id');
-      var redirectUri = sessionStorage.getItem('gp_msal_redirect_uri');
-      if (!clientId || !tenant || !redirectUri) return;
-      aadOauth.init({
-        clientId: clientId,
-        tenant: tenant,
-        redirectUri: redirectUri,
-        scope: 'openid profile offline_access email',
-        isB2C: false,
-        customParameters: '{}',
-        cacheLocation: 'localStorage',
-      });
-      sessionStorage.setItem('gp_msal_early_init', '1');
+      try {
+        var hasReturn = sessionStorage.getItem('gp_msal_return');
+        if (!hasReturn) return;
+        var clientId = sessionStorage.getItem('gp_msal_client_id');
+        var tenant = sessionStorage.getItem('gp_msal_tenant_id');
+        var redirectUri = sessionStorage.getItem('gp_msal_redirect_uri');
+        if (!clientId || !tenant || !redirectUri) return;
+        if (typeof aadOauth === 'undefined') return;
+        aadOauth.init({
+          clientId: clientId,
+          tenant: tenant,
+          redirectUri: redirectUri,
+          scope: 'openid profile offline_access email',
+          isB2C: false,
+          customParameters: '{}',
+          cacheLocation: 'localStorage',
+        });
+        sessionStorage.setItem('gp_msal_early_init', '1');
+      } catch (e) {
+        console.warn('[GoPrepared] MSAL early init skipped', e);
+      }
     })();
   </script>
   <div id="splash" aria-hidden="true">
@@ -126,10 +135,13 @@
     <p>Be Ready Anywhere</p>
   </div>
   <script>
-    window.addEventListener('flutter-first-frame', function () {
+    function removeSplash() {
       var splash = document.getElementById('splash');
       if (splash) splash.remove();
-    });
+    }
+    window.addEventListener('flutter-first-frame', removeSplash);
+    // Fallback if first frame never fires (incognito SW purge hang, CDN blocked, etc.)
+    setTimeout(removeSplash, 12000);
   </script>
   <!--
     Version gate runs before flutter_bootstrap.js so a stale cached bootstrap
@@ -142,7 +154,17 @@
 
       function isLocalDev() {
         var h = location.hostname;
-        return h === 'localhost' || h === '127.0.0.1' || h === '[::1]';
+        if (h === 'localhost' || h === '127.0.0.1' || h === '[::1]') return true;
+        // Flutter web dev server (see FLUTTER_WEB_PORT in .env)
+        var p = location.port;
+        return p === '51518' || p === '8080' || p === '5000' || p === '3000';
+      }
+
+      function withTimeout(promise, ms) {
+        return Promise.race([
+          promise,
+          new Promise(function (resolve) { setTimeout(resolve, ms); }),
+        ]);
       }
 
       function versionUrl() {
@@ -175,8 +197,14 @@
       }
 
       function loadBootstrap() {
+        if (window.__gpBootstrapLoaded) return;
+        window.__gpBootstrapLoaded = true;
         var s = document.createElement('script');
         s.src = 'flutter_bootstrap.js?t=' + Date.now();
+        s.onerror = function () {
+          console.error('[GoPrepared] flutter_bootstrap.js failed to load');
+          removeSplash();
+        };
         document.body.appendChild(s);
       }
 
@@ -193,16 +221,20 @@
         return fetchReleaseLabel().then(function (label) {
           if (!label) return loadBootstrap();
 
-          var prev = localStorage.getItem(VERSION_KEY);
+          var prev = null;
+          try { prev = localStorage.getItem(VERSION_KEY); } catch (e) {}
+
           if (prev && prev !== label) {
-            return purgeClient().then(function () {
-              localStorage.setItem(VERSION_KEY, label);
+            return withTimeout(purgeClient(), 3000).then(function () {
+              try { localStorage.setItem(VERSION_KEY, label); } catch (e) {}
               var url = new URL(window.location.href);
               url.searchParams.set('_gp', String(Date.now()));
               window.location.replace(url.toString());
             });
           }
-          if (!prev || prev !== label) localStorage.setItem(VERSION_KEY, label);
+          try {
+            if (!prev || prev !== label) localStorage.setItem(VERSION_KEY, label);
+          } catch (e) {}
           loadBootstrap();
         });
       }
@@ -212,20 +244,19 @@
         return;
       }
 
-      if (!localStorage.getItem(MIGRATION_KEY)) {
-        purgeClient().then(function () {
-          localStorage.setItem(MIGRATION_KEY, '1');
-          var url = new URL(window.location.href);
-          url.searchParams.set('_gp', String(Date.now()));
-          window.location.replace(url.toString());
-        }).catch(function () {
-          localStorage.setItem(MIGRATION_KEY, '1');
-          runVersionGate().catch(function () { loadBootstrap(); });
-        });
+      var migrated = false;
+      try { migrated = !!localStorage.getItem(MIGRATION_KEY); } catch (e) {}
+
+      if (!migrated) {
+        try { localStorage.setItem(MIGRATION_KEY, '1'); } catch (e) {}
+        // Do not block first paint on SW/cache purge (incognito can hang here).
+        withTimeout(purgeClient(), 3000).finally(loadBootstrap);
         return;
       }
 
       runVersionGate().catch(function () { loadBootstrap(); });
+      // Hard fallback if version gate never completes
+      setTimeout(loadBootstrap, 4000);
     })();
   </script>
 </body>

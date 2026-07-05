@@ -43,8 +43,10 @@ CONTENT_OUTPUT="${CONTENT_DIR}/output"
 log_info "=== GoPrepared API deploy (systemd) ==="
 log_info "Jar: $JAR_PATH"
 
+VMID="${FIXED_VMID}"
 if [[ "$SKIP_CONTAINER" != true ]]; then
     ensure_goprepared_container "$RECREATE"
+    VMID="${VMID:-$FIXED_VMID}"
     ensure_lxc_tailscale_prereqs "$VMID"
     bootstrap_container_basics "$VMID"
     ensure_java "$VMID"
@@ -78,6 +80,10 @@ GOPREPARED_AI_PROVIDER=${GOPREPARED_AI_PROVIDER:-ollama}
 OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama.tailce422e.ts.net}
 OLLAMA_MODEL=${OLLAMA_MODEL:-llama3.2}
 OPENAI_API_KEY=${OPENAI_API_KEY:-}
+MICROSOFT_CLIENT_ID=${MICROSOFT_CLIENT_ID:-}
+MICROSOFT_TENANT_ID=${MICROSOFT_TENANT_ID:-common}
+GOPREPARED_AUTH_DEV_ENABLED=${GOPREPARED_AUTH_DEV_ENABLED:-false}
+GOPREPARED_CORS_ORIGINS=${GOPREPARED_CORS_ORIGINS:-http://localhost:*,http://127.0.0.1:*,http://goprepared.tailce422e.ts.net}
 GOPREPARED_CONTENT_SYNC_ON_STARTUP=true
 GOPREPARED_CONTENT_CONTENT_PATH=${CONTENT_ROOT}/output
 EOF

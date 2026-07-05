@@ -51,7 +51,9 @@ function Get-FlutterMobileRunArgs {
     # Physical devices cannot reach localhost on the dev PC — prefer MOBILE_API_BASE_URL or production host.
     $mobileApiUrl = $env:MOBILE_API_BASE_URL
     if (-not $mobileApiUrl -and $env:GOPREPARED_HOST) {
-        $mobileApiUrl = "https://$($env:GOPREPARED_HOST)/api/v1"
+        $gpHost = $env:GOPREPARED_HOST.Trim().Trim('"')
+        if ($gpHost -notmatch '^https?://') { $gpHost = "http://$gpHost" }
+        $mobileApiUrl = "$gpHost/api/v1"
     }
 
     if ($mobileApiUrl) {

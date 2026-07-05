@@ -184,7 +184,7 @@ class _DemoBanner extends StatelessWidget {
           Expanded(
             child: Text(
               'Cannot reach API at ${AppConfig.displayApiHost} — showing samples. '
-              'On mobile use production URL or .\\scripts\\flutter-run-mobile.ps1',
+              'Check network or set MOBILE_API_BASE_URL in .env and run .\\scripts\\flutter-run-mobile.ps1',
               style: TextStyle(fontSize: 12, color: Colors.amber.shade900),
             ),
           ),

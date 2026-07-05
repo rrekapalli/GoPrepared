@@ -14,8 +14,24 @@ class AppConfig {
   static const microsoftRedirectUri = String.fromEnvironment('MICROSOFT_REDIRECT_URI', defaultValue: '');
   static const devAuthEnabled = bool.fromEnvironment('DEV_AUTH_ENABLED', defaultValue: true);
   static const gopreparedHost = String.fromEnvironment('GOPREPARED_HOST', defaultValue: '');
+  /// When native mobile runs without `--dart-define`, use deployed API (Tailscale HTTP, not HTTPS).
+  static const fallbackProductionHost = String.fromEnvironment(
+    'FALLBACK_PRODUCTION_HOST',
+    defaultValue: 'goprepared.tailce422e.ts.net',
+  );
   static const androidEmulatorHost =
       bool.fromEnvironment('ANDROID_USE_EMULATOR_HOST', defaultValue: false);
+
+  /// Hostname or full URL → API base (`…/api/v1`). Bare hostnames use HTTP (production has no TLS).
+  static String apiBaseUrlFromHost(String hostOrUrl) {
+    final trimmed = hostOrUrl.trim();
+    if (trimmed.isEmpty) return '';
+    if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+      final base = trimmed.replaceAll(RegExp(r'/+$'), '');
+      return base.endsWith('/api/v1') ? base : '$base/api/v1';
+    }
+    return 'http://$trimmed/api/v1';
+  }
 
   /// OAuth redirect URI for Microsoft (must match Entra app registration).
   /// Web uses `{origin}/auth` — register e.g. https://goprepared.example.com/auth
@@ -57,13 +73,19 @@ class AppConfig {
 
     // Native mobile: localhost is the device itself — use production host or LAN override.
     if (gopreparedHost.isNotEmpty) {
-      apiBaseUrl = 'https://$gopreparedHost/api/v1';
+      apiBaseUrl = apiBaseUrlFromHost(gopreparedHost);
       return;
     }
 
     // Android emulator → host machine loopback (physical devices need MOBILE_API_BASE_URL or GOPREPARED_HOST).
     if (androidEmulatorHost && defaultTargetPlatform == TargetPlatform.android) {
       apiBaseUrl = 'http://10.0.2.2:8080/api/v1';
+      return;
+    }
+
+    // Plain `flutter run` on a phone/emulator — default to deployed API, not device localhost.
+    if (fallbackProductionHost.isNotEmpty) {
+      apiBaseUrl = apiBaseUrlFromHost(fallbackProductionHost);
       return;
     }
 

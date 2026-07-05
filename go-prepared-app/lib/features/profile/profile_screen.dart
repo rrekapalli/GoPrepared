@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/models/ai_models.dart';
 import '../../data/repositories/journey_repository.dart';
+import '../../features/auth/auth_providers.dart';
+import '../../features/auth/guest_sign_in_prompt.dart';
 import '../../shared/widgets/app_logo.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -54,15 +56,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final user = auth.valueOrNull?.user;
     final stats = _stats;
 
-    if (!auth.isLoading && user == null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) context.go('/login?from=${Uri.encodeComponent('/me')}');
-      });
+    if (auth.isLoading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
-    if (auth.isLoading || user == null) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    if (user == null) {
+      return const Scaffold(body: GuestSignInPrompt(from: '/me'));
     }
 
     return Scaffold(

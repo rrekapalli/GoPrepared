@@ -13,20 +13,34 @@ $ZipPath = Join-Path $ArtifactsDir "pwa-dist.zip"
 $EnvFile = Join-Path $Root ".env"
 $ApiBaseUrl = "http://localhost:8080/api/v1"
 if (Test-Path $EnvFile) {
-    Get-Content $EnvFile | ForEach-Object {
-        if ($_ -match '^\s*GOPREPARED_HOST\s*=\s*(.+)\s*$') {
-            $gopreparedHost = $Matches[1].Trim().Trim('"')
-            if ($gopreparedHost -notmatch '^https?://') { $gopreparedHost = "http://$gopreparedHost" }
-            $ApiBaseUrl = "$gopreparedHost/api/v1"
+    . (Join-Path $Root "scripts\load-dotenv.ps1")
+    if ($env:GOPREPARED_HOST) {
+        $gpHost = $env:GOPREPARED_HOST.Trim().Trim('"')
+        if ($gpHost -notmatch '^https?://') { $gpHost = "http://$gpHost" }
+        $ApiBaseUrl = "$gpHost/api/v1"
+    }
+}
+
+$DartDefines = @("--dart-define=API_BASE_URL=$ApiBaseUrl")
+if (Test-Path (Join-Path $Root "scripts\load-dotenv.ps1")) {
+    foreach ($define in (Get-FlutterOAuthDartDefines)) {
+        if ($define -notmatch '^--dart-define=API_BASE_URL=') {
+            $DartDefines += $define
         }
     }
+}
+# Production PWA: never expose dev login (compile-time default is true).
+if ($DartDefines -notcontains '--dart-define=DEV_AUTH_ENABLED=false') {
+    $DartDefines += '--dart-define=DEV_AUTH_ENABLED=false'
+}
+if ($env:GOPREPARED_HOST) {
+    $DartDefines += "--dart-define=GOPREPARED_HOST=$($env:GOPREPARED_HOST)"
 }
 
 Push-Location $AppDir
 try {
     flutter pub get
-    flutter build web --release `
-        --dart-define="API_BASE_URL=$ApiBaseUrl"
+    flutter build web --release @DartDefines
 }
 finally {
     Pop-Location
