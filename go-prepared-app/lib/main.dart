@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/auth/token_storage.dart';
 import 'core/config/app_config.dart';
 import 'core/config/url_strategy_stub.dart'
     if (dart.library.html) 'core/config/url_strategy_web.dart';
@@ -47,13 +48,16 @@ class GoPreparedApp extends ConsumerWidget {
   }
 }
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureUrlStrategy();
   AppConfig.init();
+  final storedToken = await tokenStorage.readToken();
+  final hasStoredToken = storedToken != null && storedToken.isNotEmpty;
   runApp(
     ProviderScope(
       overrides: [
+        authBootstrapHintProvider.overrideWith((ref) => hasStoredToken),
         authRepositoryProvider.overrideWith(
           (ref) => AuthRepository(ref.watch(dioProvider), navigatorKey: rootNavigatorKey),
         ),

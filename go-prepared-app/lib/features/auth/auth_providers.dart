@@ -24,6 +24,9 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
   throw UnimplementedError('authRepositoryProvider must be overridden');
 });
 
+/// Set at startup from secure storage — lets the router wait for session restore when a token exists.
+final authBootstrapHintProvider = Provider<bool>((ref) => false);
+
 class AuthSession {
   const AuthSession({required this.user});
 
@@ -34,9 +37,20 @@ class AuthNotifier extends AsyncNotifier<AuthSession?> {
   @override
   Future<AuthSession?> build() async {
     final repo = ref.read(authRepositoryProvider);
-    final user = await repo.currentUser();
-    if (user == null) return null;
-    return AuthSession(user: user);
+    if (!await repo.isAuthenticated()) return null;
+    try {
+      final user = await repo.me().timeout(
+        const Duration(seconds: 12),
+        onTimeout: () => throw AuthSessionTimeoutException(),
+      );
+      return AuthSession(user: user);
+    } on AuthSessionTimeoutException {
+      await repo.logout();
+      return null;
+    } catch (_) {
+      await repo.logout();
+      return null;
+    }
   }
 
   Future<UserModel> loginWithGoogle() async {
@@ -121,3 +135,5 @@ final sessionProvider = FutureProvider<void>((ref) async {
 class GoRouterRefreshNotifier extends ChangeNotifier {
   void refresh() => notifyListeners();
 }
+
+class AuthSessionTimeoutException implements Exception {}

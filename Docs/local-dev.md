@@ -25,6 +25,28 @@ cd go-prepared-app
 ..\scripts\flutter-run-web.ps1
 ```
 
+### Flutter on a phone or emulator
+
+`localhost:8080` in `.env` is for **web on your PC only**. On a physical device it points at the phone itself, so the app shows sample/demo data.
+
+Use the mobile script (reads `GOPREPARED_HOST` from `.env` → `https://goprepared…/api/v1`):
+
+```powershell
+.\scripts\flutter-run-mobile.ps1
+# or pick a device:
+.\scripts\flutter-run-mobile.ps1 -Device <device-id>
+```
+
+For a **local API on your PC** from a physical phone, set in `.env`:
+
+```env
+MOBILE_API_BASE_URL=http://YOUR_PC_LAN_IP:8080/api/v1
+```
+
+Then re-run `flutter-run-mobile.ps1`. Phone and PC must be on the same network; allow port 8080 through Windows Firewall.
+
+**Android emulator** without dart-defines uses `http://10.0.2.2:8080/api/v1` automatically.
+
 Or, if `flutter run -d chrome` is already running, **stop it first** (`q`) — hot restart does not reload patched engine code.
 
 ```powershell

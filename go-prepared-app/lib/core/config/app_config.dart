@@ -13,6 +13,9 @@ class AppConfig {
   static const microsoftTenantId = String.fromEnvironment('MICROSOFT_TENANT_ID', defaultValue: 'common');
   static const microsoftRedirectUri = String.fromEnvironment('MICROSOFT_REDIRECT_URI', defaultValue: '');
   static const devAuthEnabled = bool.fromEnvironment('DEV_AUTH_ENABLED', defaultValue: true);
+  static const gopreparedHost = String.fromEnvironment('GOPREPARED_HOST', defaultValue: '');
+  static const androidEmulatorHost =
+      bool.fromEnvironment('ANDROID_USE_EMULATOR_HOST', defaultValue: false);
 
   /// OAuth redirect URI for Microsoft (must match Entra app registration).
   /// Web uses `{origin}/auth` — register e.g. https://goprepared.example.com/auth
@@ -49,6 +52,18 @@ class AppConfig {
       // Deployed PWA (nginx proxies /api/ to Spring Boot on same host)
       final port = page.hasPort && page.port != 80 && page.port != 443 ? ':${page.port}' : '';
       apiBaseUrl = '${page.scheme}://$host$port/api/v1';
+      return;
+    }
+
+    // Native mobile: localhost is the device itself — use production host or LAN override.
+    if (gopreparedHost.isNotEmpty) {
+      apiBaseUrl = 'https://$gopreparedHost/api/v1';
+      return;
+    }
+
+    // Android emulator → host machine loopback (physical devices need MOBILE_API_BASE_URL or GOPREPARED_HOST).
+    if (androidEmulatorHost && defaultTargetPlatform == TargetPlatform.android) {
+      apiBaseUrl = 'http://10.0.2.2:8080/api/v1';
       return;
     }
 

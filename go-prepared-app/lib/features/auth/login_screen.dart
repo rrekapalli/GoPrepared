@@ -68,6 +68,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     final canDevLogin = kDebugMode && AppConfig.devAuthEnabled;
     final oauthAsync = ref.watch(oauthConfigProvider);
+    final config = oauthAsync.value ?? OAuthConfig.fromAppConfig();
 
     return Scaffold(
       body: SafeArea(
@@ -96,14 +97,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
-                  oauthAsync.when(
-                    loading: () => const Center(child: Padding(
-                      padding: EdgeInsets.all(16),
-                      child: CircularProgressIndicator(),
-                    )),
-                    error: (_, __) => _buildSignInButtons(context, canDevLogin, const OAuthConfig()),
-                    data: (config) => _buildSignInButtons(context, canDevLogin, config),
-                  ),
+                  if (oauthAsync.isLoading)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Text(
+                        'Loading sign-in options…',
+                        style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  _buildSignInButtons(context, canDevLogin, config),
                 ],
               ),
             ),

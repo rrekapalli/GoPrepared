@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/config/app_config.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/demo/demo_data.dart';
 import '../../data/models/ai_models.dart';
@@ -182,7 +183,8 @@ class _DemoBanner extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'Sample journeys — connect API for your own data',
+              'Cannot reach API at ${AppConfig.displayApiHost} — showing samples. '
+              'On mobile use production URL or .\\scripts\\flutter-run-mobile.ps1',
               style: TextStyle(fontSize: 12, color: Colors.amber.shade900),
             ),
           ),

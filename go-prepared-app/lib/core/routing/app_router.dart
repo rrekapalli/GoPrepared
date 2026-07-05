@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -52,20 +53,24 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       final uri = state.uri;
       final location = state.matchedLocation;
 
-      // MSAL redirect sometimes lands as hash/query on wrong path — send to /auth
-      if (isOAuthCallbackUri(uri) && location != '/auth') {
+      // MSAL web redirect only — native mobile uses msauth:// deep links handled by aad_oauth.
+      if (kIsWeb && isOAuthCallbackUri(uri) && location != '/auth') {
         final q = uri.hasQuery ? '?${uri.query}' : '';
         return '/auth$q';
       }
 
       final auth = ref.read(authNotifierProvider);
-
-      if (auth.isLoading) return null;
-
       final loggedIn = auth.valueOrNull != null;
       final onLogin = location == '/login';
+      final onAuthCallback = location == '/auth';
+      final awaitingSession = auth.isLoading && ref.read(authBootstrapHintProvider);
 
-      if (!loggedIn && isProtectedRoute(location)) {
+      if (onAuthCallback && !kIsWeb) {
+        return '/login';
+      }
+
+      // Protected routes require a confirmed session.
+      if (!loggedIn && !awaitingSession && isProtectedRoute(location)) {
         final from = Uri.encodeComponent(state.uri.toString());
         return '/login?from=$from';
       }

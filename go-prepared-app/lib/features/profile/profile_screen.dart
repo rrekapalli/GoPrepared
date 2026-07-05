@@ -54,6 +54,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final user = auth.valueOrNull?.user;
     final stats = _stats;
 
+    if (!auth.isLoading && user == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) context.go('/login?from=${Uri.encodeComponent('/me')}');
+      });
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
     if (auth.isLoading || user == null) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
