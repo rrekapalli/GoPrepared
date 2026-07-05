@@ -31,7 +31,10 @@ function Get-FlutterOAuthDartDefines {
         $defines += "--dart-define=MICROSOFT_TENANT_ID=$($env:MICROSOFT_TENANT_ID)"
     }
     if ($env:API_BASE_URL) {
-        $defines += "--dart-define=API_BASE_URL=$($env:API_BASE_URL)"
+        $skipLocalApi = $env:GOPREPARED_HOST -and $env:API_BASE_URL -match 'localhost|127\.0\.0\.1'
+        if (-not $skipLocalApi) {
+            $defines += "--dart-define=API_BASE_URL=$($env:API_BASE_URL)"
+        }
     }
     if ($env:GOPREPARED_HOST) {
         $defines += "--dart-define=GOPREPARED_HOST=$($env:GOPREPARED_HOST)"

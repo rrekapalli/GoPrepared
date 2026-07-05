@@ -50,40 +50,60 @@ class AppConfig {
     return 'msauth://com.goprepared.go_prepared_app/callback';
   }
 
+  static bool _isLocalDevHost(String host) =>
+      host == 'localhost' || host == '127.0.0.1';
+
+  static bool _isLocalDevApiUrl(String url) {
+    final uri = Uri.tryParse(url);
+    if (uri == null) return false;
+    return _isLocalDevHost(uri.host) || uri.host == '10.0.2.2';
+  }
+
   static void init() {
     const fromDefine = String.fromEnvironment('API_BASE_URL');
-    if (fromDefine.isNotEmpty) {
-      apiBaseUrl = fromDefine;
-      return;
-    }
 
     if (kIsWeb) {
       final page = Uri.base;
       final host = page.host;
-      // Local Flutter web dev → Spring Boot on :8080
-      if (host == 'localhost' || host == '127.0.0.1') {
+      if (_isLocalDevHost(host)) {
+        // Local Flutter web dev: prefer production/Tailscale API unless explicitly overridden.
+        if (fromDefine.isNotEmpty && !_isLocalDevApiUrl(fromDefine)) {
+          apiBaseUrl = fromDefine;
+          return;
+        }
+        if (gopreparedHost.isNotEmpty) {
+          apiBaseUrl = apiBaseUrlFromHost(gopreparedHost);
+          return;
+        }
+        if (fallbackProductionHost.isNotEmpty) {
+          apiBaseUrl = apiBaseUrlFromHost(fallbackProductionHost);
+          return;
+        }
         apiBaseUrl = 'http://$host:8080/api/v1';
         return;
       }
-      // Deployed PWA (nginx proxies /api/ to Spring Boot on same host)
+      // Deployed PWA — same origin; ignore compile-time localhost define.
       final port = page.hasPort && page.port != 80 && page.port != 443 ? ':${page.port}' : '';
       apiBaseUrl = '${page.scheme}://$host$port/api/v1';
       return;
     }
 
-    // Native mobile: localhost is the device itself — use production host or LAN override.
+    // Native: compile-time localhost points at the device, not your dev machine.
+    if (fromDefine.isNotEmpty && !_isLocalDevApiUrl(fromDefine)) {
+      apiBaseUrl = fromDefine;
+      return;
+    }
+
     if (gopreparedHost.isNotEmpty) {
       apiBaseUrl = apiBaseUrlFromHost(gopreparedHost);
       return;
     }
 
-    // Android emulator → host machine loopback (physical devices need MOBILE_API_BASE_URL or GOPREPARED_HOST).
     if (androidEmulatorHost && defaultTargetPlatform == TargetPlatform.android) {
       apiBaseUrl = 'http://10.0.2.2:8080/api/v1';
       return;
     }
 
-    // Plain `flutter run` on a phone/emulator — default to deployed API, not device localhost.
     if (fallbackProductionHost.isNotEmpty) {
       apiBaseUrl = apiBaseUrlFromHost(fallbackProductionHost);
       return;

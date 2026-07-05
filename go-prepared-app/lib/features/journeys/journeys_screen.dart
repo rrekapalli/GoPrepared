@@ -183,8 +183,7 @@ class _DemoBanner extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'Cannot reach API at ${AppConfig.displayApiHost} — showing samples. '
-              'Check network or set MOBILE_API_BASE_URL in .env and run .\\scripts\\flutter-run-mobile.ps1',
+              'Cannot reach API at ${AppConfig.displayApiHost} — showing samples.',
               style: TextStyle(fontSize: 12, color: Colors.amber.shade900),
             ),
           ),

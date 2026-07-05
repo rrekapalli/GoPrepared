@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../auth/token_storage.dart';
 import '../config/app_config.dart';
@@ -46,7 +47,11 @@ final authTokenProvider = StateProvider<String?>((ref) => null);
 String friendlyApiError(Object error) {
   if (error is DioException) {
     if (error.type == DioExceptionType.connectionError || error.type == DioExceptionType.connectionTimeout) {
-      return 'Cannot reach API at ${AppConfig.displayApiHost}. Start the Spring Boot server (port 8080).';
+      final host = AppConfig.displayApiHost;
+      if (kIsWeb && (host.contains('localhost') || host.contains('127.0.0.1'))) {
+        return 'Cannot reach API at $host. Start Spring Boot locally or set GOPREPARED_HOST in .env.';
+      }
+      return 'Cannot reach API at $host. Check network or Tailscale connection.';
     }
     final status = error.response?.statusCode;
     if (status != null) return 'API error ($status). ${error.response?.data ?? ''}';
