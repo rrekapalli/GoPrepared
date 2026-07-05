@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../core/auth/oauth_browser.dart';
+import '../../core/auth/microsoft_oauth_web.dart'
+    if (dart.library.io) '../../core/auth/microsoft_oauth_stub.dart';
 import '../../core/auth/token_storage.dart';
 import '../../core/config/app_config.dart';
 import '../../core/config/oauth_config.dart';
@@ -102,19 +104,31 @@ class AuthRepository {
     }
     _ensureMicrosoftRedirectUri();
     if (kIsWeb && !hasOAuthCallbackInBrowserUrl && !hasMicrosoftOAuthReturn) {
-      throw Exception('No Microsoft sign-in response found. Start from the login page.');
+      throw Exception(
+        'No Microsoft sign-in response found. Tap Continue with Microsoft again, '
+        'or open this site in Safari if you use the home-screen icon on iPhone.',
+      );
     }
     _aadOAuth ??= _buildAadOAuth(_oauthConfig);
-    final result = await _aadOAuth!.refreshToken().timeout(
-      const Duration(seconds: 45),
-      onTimeout: () => throw Exception(
-        'Microsoft sign-in timed out. Check that the API is running and the Azure redirect URI matches this URL.',
-      ),
-    );
-    final user = await result.fold(
-      (failure) => throw Exception(failure.message),
-      (_) => _finishMicrosoftLogin(),
-    );
+    if (kIsWeb) {
+      await completeMicrosoftOAuthRedirectJs().timeout(
+        const Duration(seconds: 45),
+        onTimeout: () => throw Exception(
+          'Microsoft sign-in timed out. On iPhone, open the site in Safari (not only the home-screen icon) '
+          'or confirm Azure redirect URI ${AppConfig.oauthRedirectUri}',
+        ),
+      );
+    } else {
+      final result = await _aadOAuth!.refreshToken().timeout(
+        const Duration(seconds: 45),
+        onTimeout: () => throw Exception('Microsoft sign-in timed out.'),
+      );
+      await result.fold(
+        (failure) => throw Exception(failure.message),
+        (_) async {},
+      );
+    }
+    final user = await _finishMicrosoftLogin();
     _microsoftRedirectHandled = true;
     clearMicrosoftOAuthSessionFlag();
     clearMicrosoftOAuthRedirectState();

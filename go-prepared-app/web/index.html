@@ -86,14 +86,37 @@
   <!-- Capture Microsoft OAuth return before Flutter path URL strategy runs -->
   <script>
     (function () {
-      try {
-        function hasOAuthParams(search, hash) {
-          return /(?:^|[?&#])(code|error)=/.test(search) || /(?:^|[?&#])(code|error)=/.test(hash);
+      function oauthStore() {
+        try { return window.localStorage; } catch (e) { return window.sessionStorage; }
+      }
+      function readOAuth(key) {
+        var s = oauthStore();
+        var v = s.getItem(key);
+        if (v) return v;
+        try { return sessionStorage.getItem(key); } catch (e) { return null; }
+      }
+      function writeOAuth(key, value) {
+        try { oauthStore().setItem(key, value); } catch (e) {}
+        try { sessionStorage.setItem(key, value); } catch (e) {}
+      }
+      window.__gpOAuth = {
+        hasOAuthParams: function (search, hash) {
+          return /(?:^|[?&#])(code|error)=/.test(search || '') || /(?:^|[?&#])(code|error)=/.test(hash || '');
+        },
+        read: readOAuth,
+        write: writeOAuth,
+        isOAuthReturn: function () {
+          var search = window.location.search || '';
+          var hash = window.location.hash || '';
+          return this.hasOAuthParams(search, hash) || !!readOAuth('gp_msal_return');
         }
+      };
+
+      try {
         var search = window.location.search || '';
         var hash = window.location.hash || '';
-        if (hasOAuthParams(search, hash)) {
-          sessionStorage.setItem('gp_msal_return', search + hash);
+        if (window.__gpOAuth.hasOAuthParams(search, hash)) {
+          writeOAuth('gp_msal_return', search + hash);
           var path = window.location.pathname || '/';
           if (path !== '/auth' && path !== '/auth/') {
             window.history.replaceState(null, '', '/auth' + search + hash);
@@ -104,30 +127,69 @@
       }
     })();
   </script>
-  <!-- Init MSAL before Flutter boot so handleRedirectPromise sees the auth code -->
+  <!-- Init MSAL before Flutter boot so handleRedirectPromise sees the auth code (Safari PWA) -->
   <script>
     (function () {
-      try {
-        var hasReturn = sessionStorage.getItem('gp_msal_return');
-        if (!hasReturn) return;
-        var clientId = sessionStorage.getItem('gp_msal_client_id');
-        var tenant = sessionStorage.getItem('gp_msal_tenant_id');
-        var redirectUri = sessionStorage.getItem('gp_msal_redirect_uri');
-        if (!clientId || !tenant || !redirectUri) return;
-        if (typeof aadOauth === 'undefined') return;
-        aadOauth.init({
-          clientId: clientId,
-          tenant: tenant,
-          redirectUri: redirectUri,
-          scope: 'openid profile offline_access email',
-          isB2C: false,
-          customParameters: '{}',
-          cacheLocation: 'localStorage',
+      window.__gpMsalEarlyInit = function () {
+        return new Promise(function (resolve) {
+          try {
+            if (!window.__gpOAuth || !window.__gpOAuth.isOAuthReturn()) {
+              resolve(false);
+              return;
+            }
+            if (typeof aadOauth === 'undefined') {
+              resolve(false);
+              return;
+            }
+
+            function runInit(clientId, tenant, redirectUri) {
+              if (!clientId || !tenant || !redirectUri) {
+                resolve(false);
+                return;
+              }
+              aadOauth.init({
+                clientId: clientId,
+                tenant: tenant,
+                redirectUri: redirectUri,
+                scope: 'openid profile offline_access email',
+                isB2C: false,
+                customParameters: '{}',
+                cacheLocation: 'localStorage',
+              });
+              window.__gpOAuth.write('gp_msal_early_init', '1');
+              resolve(true);
+            }
+
+            var clientId = window.__gpOAuth.read('gp_msal_client_id');
+            var tenant = window.__gpOAuth.read('gp_msal_tenant_id');
+            var redirectUri = window.__gpOAuth.read('gp_msal_redirect_uri') || (location.origin + '/auth');
+
+            if (clientId && tenant) {
+              runInit(clientId, tenant, redirectUri);
+              return;
+            }
+
+            // iOS PWA may lose pre-redirect storage — load public OAuth config from API.
+            fetch('/api/v1/auth/config', { cache: 'no-store' })
+              .then(function (res) { return res.ok ? res.json() : null; })
+              .then(function (cfg) {
+                if (!cfg || !cfg.microsoftClientId) {
+                  resolve(false);
+                  return;
+                }
+                runInit(
+                  cfg.microsoftClientId,
+                  cfg.microsoftTenantId || 'common',
+                  redirectUri
+                );
+              })
+              .catch(function () { resolve(false); });
+          } catch (e) {
+            console.warn('[GoPrepared] MSAL early init skipped', e);
+            resolve(false);
+          }
         });
-        sessionStorage.setItem('gp_msal_early_init', '1');
-      } catch (e) {
-        console.warn('[GoPrepared] MSAL early init skipped', e);
-      }
+      };
     })();
   </script>
   <div id="splash" aria-hidden="true">
@@ -208,6 +270,15 @@
         document.body.appendChild(s);
       }
 
+      function startBootstrap() {
+        var boot = function () { loadBootstrap(); };
+        if (window.__gpMsalEarlyInit && window.__gpOAuth && window.__gpOAuth.isOAuthReturn()) {
+          window.__gpMsalEarlyInit().finally(boot);
+          return;
+        }
+        boot();
+      }
+
       function fetchReleaseLabel() {
         return fetch(versionUrl() + '?t=' + Date.now(), {
           cache: 'no-store',
@@ -218,8 +289,12 @@
       }
 
       function runVersionGate() {
+        if (window.__gpOAuth && window.__gpOAuth.isOAuthReturn()) {
+          startBootstrap();
+          return Promise.resolve();
+        }
         return fetchReleaseLabel().then(function (label) {
-          if (!label) return loadBootstrap();
+          if (!label) return startBootstrap();
 
           var prev = null;
           try { prev = localStorage.getItem(VERSION_KEY); } catch (e) {}
@@ -235,12 +310,17 @@
           try {
             if (!prev || prev !== label) localStorage.setItem(VERSION_KEY, label);
           } catch (e) {}
-          loadBootstrap();
+          startBootstrap();
         });
       }
 
       if (isLocalDev()) {
-        loadBootstrap();
+        startBootstrap();
+        return;
+      }
+
+      if (window.__gpOAuth && window.__gpOAuth.isOAuthReturn()) {
+        startBootstrap();
         return;
       }
 
@@ -250,13 +330,12 @@
       if (!migrated) {
         try { localStorage.setItem(MIGRATION_KEY, '1'); } catch (e) {}
         // Do not block first paint on SW/cache purge (incognito can hang here).
-        withTimeout(purgeClient(), 3000).finally(loadBootstrap);
+        withTimeout(purgeClient(), 3000).finally(startBootstrap);
         return;
       }
 
-      runVersionGate().catch(function () { loadBootstrap(); });
-      // Hard fallback if version gate never completes
-      setTimeout(loadBootstrap, 4000);
+      runVersionGate().catch(function () { startBootstrap(); });
+      setTimeout(startBootstrap, 4000);
     })();
   </script>
 </body>

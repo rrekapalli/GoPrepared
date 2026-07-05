@@ -30,8 +30,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      if (hasOAuthCallbackInBrowserUrl) {
+        final uri = Uri.base;
+        context.go('/auth${uri.hasQuery ? '?${uri.query}' : ''}');
+        return;
+      }
       final msalError = takeMicrosoftOAuthError();
-      if (msalError != null && mounted) {
+      if (msalError != null) {
         setState(() => _error = msalError);
       }
     });

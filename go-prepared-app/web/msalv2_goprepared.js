@@ -35,7 +35,7 @@ var aadOauth = (function () {
       },
       cache: {
         cacheLocation: config.cacheLocation,
-        storeAuthStateInCookie: false,
+        storeAuthStateInCookie: true,
       },
     };
 
@@ -53,6 +53,7 @@ var aadOauth = (function () {
     redirectHandlerTask = myMSALObj.handleRedirectPromise().catch(function (error) {
       var message = (error && (error.message || error.errorMessage)) || String(error);
       try {
+        localStorage.setItem('gp_msal_error', message);
         sessionStorage.setItem('gp_msal_error', message);
       } catch (e) {}
       return null;
