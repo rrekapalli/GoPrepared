@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/auth/auth_providers.dart';
 import '../../features/auth/login_screen.dart';
+import '../../features/auth/microsoft_auth_callback_screen.dart';
 import '../../features/card_detail/card_detail_screen.dart';
 import '../../features/checklist/checklist_screen.dart';
 import '../../features/deck/deck_screen.dart';
@@ -17,7 +18,7 @@ import '../../shared/widgets/app_shell.dart';
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 bool isPublicRoute(String location) {
-  return location == '/login' || location.startsWith('/explore');
+  return location == '/login' || location == '/auth' || location.startsWith('/explore');
 }
 
 bool isProtectedRoute(String location) {
@@ -26,6 +27,16 @@ bool isProtectedRoute(String location) {
       location.startsWith('/journeys') ||
       location.startsWith('/me') ||
       location.startsWith('/cards');
+}
+
+bool isOAuthCallbackUri(Uri uri) {
+  if (uri.path == '/auth') return true;
+  if (uri.queryParameters.containsKey('code') || uri.queryParameters.containsKey('error')) {
+    return true;
+  }
+  final path = uri.path;
+  if (path.startsWith('/code=') || path.startsWith('code=')) return true;
+  return false;
 }
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -38,7 +49,15 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     initialLocation: '/home',
     refreshListenable: refresh,
     redirect: (context, state) {
+      final uri = state.uri;
       final location = state.matchedLocation;
+
+      // MSAL redirect sometimes lands as hash/query on wrong path — send to /auth
+      if (isOAuthCallbackUri(uri) && location != '/auth') {
+        final q = uri.hasQuery ? '?${uri.query}' : '';
+        return '/auth$q';
+      }
+
       final auth = ref.read(authNotifierProvider);
 
       if (auth.isLoading) return null;
@@ -65,10 +84,34 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       return null;
     },
+    errorBuilder: (context, state) {
+      final uri = state.uri;
+      if (isOAuthCallbackUri(uri)) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (context.mounted) context.go('/auth${uri.hasQuery ? '?${uri.query}' : ''}');
+        });
+        return const Scaffold(
+          body: Center(child: CircularProgressIndicator()),
+        );
+      }
+      return Scaffold(
+        appBar: AppBar(title: const Text('Page not found')),
+        body: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Text(state.error?.toString() ?? 'Unknown routing error'),
+          ),
+        ),
+      );
+    },
     routes: [
       GoRoute(
         path: '/login',
         builder: (_, __) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: '/auth',
+        builder: (_, __) => const MicrosoftAuthCallbackScreen(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) => AppShell(navigationShell: navigationShell),

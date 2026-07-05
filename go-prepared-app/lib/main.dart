@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/config/app_config.dart';
+import 'core/config/url_strategy_stub.dart'
+    if (dart.library.html) 'core/config/url_strategy_web.dart';
 import 'core/routing/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'data/repositories/auth_repository.dart';
@@ -46,6 +49,7 @@ class GoPreparedApp extends ConsumerWidget {
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  configureUrlStrategy();
   AppConfig.init();
   runApp(
     ProviderScope(

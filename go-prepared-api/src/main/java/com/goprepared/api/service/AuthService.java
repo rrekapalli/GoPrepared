@@ -28,6 +28,40 @@ public class AuthService {
     @Value("${goprepared.auth.dev-enabled:true}")
     private boolean devEnabled;
 
+    @Value("${goprepared.google.client-id:}")
+    private String googleClientId;
+
+    @Value("${goprepared.microsoft.client-id:}")
+    private String microsoftClientId;
+
+    @Value("${goprepared.microsoft.tenant-id:common}")
+    private String microsoftTenantId;
+
+    @Value("${GOPREPARED_HOST:}")
+    private String gopreparedHost;
+
+    public OAuthConfigResponse getOAuthConfig() {
+        return new OAuthConfigResponse(
+                sanitizeClientId(googleClientId),
+                sanitizeClientId(microsoftClientId),
+                StringUtils.hasText(microsoftTenantId) ? microsoftTenantId : "common",
+                microsoftRedirectUri());
+    }
+
+    private String microsoftRedirectUri() {
+        if (StringUtils.hasText(gopreparedHost)) {
+            return "https://" + gopreparedHost + "/auth";
+        }
+        return "";
+    }
+
+    private static String sanitizeClientId(String value) {
+        if (!StringUtils.hasText(value) || value.startsWith("your-")) {
+            return "";
+        }
+        return value;
+    }
+
     @Transactional
     public AuthResponse devLogin(DevAuthRequest request) {
         if (!devEnabled) {

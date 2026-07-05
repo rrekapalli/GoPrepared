@@ -11,14 +11,21 @@ Configure both the **API** (`.env` at repo root) and the **Flutter app** (`--dar
 | `GOOGLE_CLIENT_ID` | API + Flutter | Google **Web** client ID (used to verify ID tokens) |
 | `MICROSOFT_CLIENT_ID` | API + Flutter | Entra app (client) ID |
 | `MICROSOFT_TENANT_ID` | API + Flutter | `common` for work + personal Microsoft accounts |
+| `FLUTTER_WEB_PORT` | Flutter dev only | Fixed local web port (default `51518`); must match Azure redirect `http://localhost:PORT/auth` |
 | `GOPREPARED_AUTH_DEV_ENABLED` | API only | Set `false` in production to disable `POST /auth/dev` |
 
-Flutter run example:
+Flutter run example (prefer the script — reads `.env` automatically):
+
+```powershell
+.\scripts\flutter-run-web.ps1
+```
+
+Manual run:
 
 ```powershell
 cd go-prepared-app
-flutter run -d chrome `
-  --dart-define=GOOGLE_CLIENT_ID=YOUR_WEB_CLIENT_ID.apps.googleusercontent.com `
+flutter run -d chrome --web-port=51518 `
+  --dart-define=MICROSOFT_REDIRECT_URI=http://localhost:51518/auth `
   --dart-define=MICROSOFT_CLIENT_ID=YOUR_ENTRA_CLIENT_ID `
   --dart-define=MICROSOFT_TENANT_ID=common
 ```
@@ -59,23 +66,34 @@ Optional: set the same ID in [`go-prepared-app/web/index.html`](../go-prepared-a
 
 ## Microsoft Entra (Azure) app registration
 
-1. [Azure Portal](https://portal.azure.com) → **Microsoft Entra ID** → **App registrations** → **New registration**.
+> **Critical for Flutter web:** MSAL redeems tokens in the browser. Entra must register redirect URIs under **Single-page application**, not **Web**. If you see `AADSTS9002326`, the URI is on the wrong platform — see [Troubleshooting](#troubleshooting).
+
+1. [Azure Portal](https://portal.azure.com) → **Microsoft Entra ID** → **App registrations** → **New registration** (or open your existing app).
 2. Name: `GoPrepared`
 3. Supported account types: **Accounts in any organizational directory and personal Microsoft accounts**
-4. Redirect URIs — add **all** platforms you ship:
+4. **Authentication** → **Add a platform** → **Single-page application** (not “Web”):
 
-| Platform | Redirect URI |
-|----------|----------------|
-| Web (SPA) | `http://localhost:<port>/` (Flutter web dev) |
-| Web (SPA) | Production PWA origin, e.g. `https://goprepared.example.com/` |
-| Mobile/desktop | `msauth://com.goprepared.go_prepared_app/callback` (Android) |
-| Mobile/desktop | `msauth.com.goprepared.goPreparedApp://auth` (iOS) |
+| Redirect URI | When |
+|--------------|------|
+| `http://localhost:51518/auth` | Local Flutter web (`FLUTTER_WEB_PORT` in `.env`) |
+| `https://goprepared.tailce422e.ts.net/auth` | Production PWA — must match exactly |
 
-5. **Authentication** → enable **ID tokens** (implicit / hybrid not required; aad_oauth uses authorization code).
-6. **API permissions** → Microsoft Graph → delegated: `openid`, `profile`, `email`, `User.Read`.
-7. Copy **Application (client) ID** → `MICROSOFT_CLIENT_ID`.
+5. If the same URIs also appear under a **Web** platform, **remove them from Web** (keep only under SPA).
+6. Do **not** create a client secret for browser sign-in.
+7. **Authentication** → **Implicit grant and hybrid flows** — optional; auth code + PKCE (MSAL default) does not require implicit grant.
+8. **API permissions** → Microsoft Graph → delegated: `openid`, `profile`, `email`, `User.Read`.
+9. Copy **Application (client) ID** → `MICROSOFT_CLIENT_ID`.
 
 Set `MICROSOFT_TENANT_ID=common` unless you restrict to a single tenant.
+
+### Mobile redirect URIs (separate platform)
+
+Under **Authentication** → **Add a platform** → **Mobile and desktop applications**:
+
+| Redirect URI |
+|--------------|
+| `msauth://com.goprepared.go_prepared_app/callback` (Android) |
+| `msauth.com.goprepared.goPreparedApp://auth` (iOS) |
 
 ---
 
@@ -124,8 +142,10 @@ flutter build web `
 
 | Issue | Fix |
 |-------|-----|
+| `AADSTS9002326` / “Cross-origin token redemption… Single-Page Application” | Redirect URI is on **Web** platform instead of **SPA**. Entra → Authentication → add **Single-page application**, move `http://localhost:51518/auth` and production `/auth` there, remove from **Web** |
 | Google `Invalid ID token` | Web client ID must match token audience; on mobile use Web client ID as `serverClientId` |
-| Microsoft button disabled | Set `MICROSOFT_CLIENT_ID` in `--dart-define` |
+| Microsoft button disabled | Set `MICROSOFT_CLIENT_ID` in `--dart-define` or API `/auth/config` |
 | Microsoft redirect error | Redirect URI in Entra must exactly match [`AppConfig.oauthRedirectUri`](../go-prepared-app/lib/core/config/app_config.dart) for the platform |
 | `503 Google OAuth is not configured` | Set `GOOGLE_CLIENT_ID` in API `.env` |
 | Dev login fails in release | Expected — use OAuth or enable dev auth only in debug |
+| App restarts twice on `/auth` | Usually MSAL token redemption failing (check console for `AADSTS…` errors); fix Entra SPA config first |

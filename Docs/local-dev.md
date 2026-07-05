@@ -34,6 +34,8 @@ Or, if `flutter run -d chrome` is already running, **stop it first** (`q`) — h
 
 ### Flutter web dev notes
 
+Set `FLUTTER_WEB_PORT=51518` in repo `.env` so the dev server always uses the same port as your Azure Entra redirect URI (`http://localhost:51518/auth`). `.\scripts\flutter-run-web.ps1` passes `--web-port` and OAuth dart-defines from `.env` automatically.
+
 On `localhost`, PWA version polling is disabled so hot reload/restart is not fighting cache updates.
 
 If hot restart logs `LateInitializationError: _handledContextLostEvent`, apply the one-time engine patch (stable 3.44.x is missing [flutter#184683](https://github.com/flutter/flutter/issues/184683)):

@@ -81,6 +81,43 @@ flutter_is_windows_sdk_in_wsl() {
     return 0
 }
 
+# WSL shim scripts (e.g. ~/bin/flutter) that shell out to Windows flutter.bat via cmd.exe.
+flutter_delegates_to_windows() {
+    local flutter_bin="$1"
+    is_wsl || return 1
+    [[ -f "$flutter_bin" ]] || return 1
+    head -40 "$flutter_bin" 2>/dev/null | grep -qE '(cmd\.exe|flutter\.bat|powershell\.exe|wslpath -w)'
+}
+
+needs_windows_flutter_in_wsl() {
+    local flutter_bin="$1"
+    flutter_is_windows_sdk_in_wsl "$flutter_bin" && return 0
+    flutter_delegates_to_windows "$flutter_bin" && return 0
+    return 1
+}
+
+build_pwa_with_windows_flutter_fallback() {
+    local root_dir="$1"
+    local api_base_url="$2"
+
+    if build_pwa_artifact_powershell "$root_dir"; then
+        return 0
+    fi
+    if build_pwa_from_existing_web "$root_dir" "$api_base_url"; then
+        return 0
+    fi
+
+    log_error "Cannot build PWA from WSL with a Windows-only Flutter SDK."
+    log_error "Do one of the following:"
+    log_error "  1) Windows PowerShell:  powershell -File scripts/build_pwa_artifact.ps1"
+    log_error "     Then WSL:           ./deploy.sh --skip-build"
+    log_error "  2) Windows:             flutter build web --release (in go-prepared-app)"
+    log_error "     Then retry deploy from WSL (reuses build/web)"
+    log_error "  3) Install Flutter natively in WSL: FLUTTER=~/flutter/bin/flutter"
+    log_error "  4) Enable WSL interop in /etc/wsl.conf: [interop] enabled=true"
+    exit 1
+}
+
 find_linux_flutter() {
     local candidate
     for candidate in \
@@ -90,6 +127,7 @@ find_linux_flutter() {
         "/opt/flutter/bin/flutter"; do
         [[ -n "$candidate" && -x "$candidate" ]] || continue
         [[ "$candidate" == /mnt/c/* ]] && continue
+        flutter_delegates_to_windows "$candidate" && continue
         echo "$candidate"
         return 0
     done
@@ -214,25 +252,13 @@ build_pwa_artifact_native() {
         exit 1
     }
 
-    if flutter_is_windows_sdk_in_wsl "$flutter_bin"; then
+    if needs_windows_flutter_in_wsl "$flutter_bin"; then
         local linux_flutter
         linux_flutter="$(find_linux_flutter || true)"
         if [[ -n "$linux_flutter" ]]; then
             flutter_bin="$linux_flutter"
-        elif build_pwa_artifact_powershell "$root_dir"; then
+        elif build_pwa_with_windows_flutter_fallback "$root_dir" "$api_base_url"; then
             return 0
-        elif build_pwa_from_existing_web "$root_dir" "$api_base_url"; then
-            return 0
-        else
-            log_error "Cannot build PWA from WSL with a Windows-only Flutter SDK."
-            log_error "Do one of the following:"
-            log_error "  1) Windows PowerShell:  powershell -File scripts/build_pwa_artifact.ps1"
-            log_error "     Then WSL:           ./deploy.sh --skip-build"
-            log_error "  2) Windows:             flutter build web --release (in go-prepared-app)"
-            log_error "     Then retry deploy from WSL (reuses build/web)"
-            log_error "  3) Install Flutter natively in WSL: FLUTTER=~/flutter/bin/flutter"
-            log_error "  4) Enable WSL interop in /etc/wsl.conf: [interop] enabled=true"
-            exit 1
         fi
     fi
 
@@ -257,9 +283,13 @@ build_api_artifact() {
     local artifacts_dir="${root_dir}/deployment/artifacts"
     local mvnw="${api_dir}/mvnw"
 
+    # shellcheck source=ensure-java21.sh
+    source "${root_dir}/deployment/lib/ensure-java21.sh"
+    ensure_java21_env || return 1
+
     [[ -x "$mvnw" ]] || chmod +x "$mvnw" 2>/dev/null || true
 
-    log_info "Building Spring Boot API (Maven)..."
+    log_info "Building Spring Boot API (Maven) with $(java -version 2>&1 | head -1)..."
     (cd "$api_dir" && ./mvnw -q -DskipTests package) || {
         log_error "Maven package failed"
         exit 1

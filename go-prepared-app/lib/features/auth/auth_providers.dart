@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/config/oauth_config.dart';
+import '../../core/network/api_client.dart';
 import '../../data/models/ai_models.dart';
 import '../../data/repositories/auth_repository.dart';
+
+/// Public OAuth client IDs from compile-time defines or GET /auth/config.
+final oauthConfigProvider = FutureProvider<OAuthConfig>((ref) async {
+  final config = await OAuthConfig.load(ref.read(dioProvider));
+  ref.read(authRepositoryProvider).applyOAuthConfig(config);
+  return config;
+});
 
 /// Notifies [GoRouter] when auth state changes.
 final routerRefreshNotifierProvider = Provider<GoRouterRefreshNotifier>((ref) {
@@ -48,6 +57,20 @@ class AuthNotifier extends AsyncNotifier<AuthSession?> {
     state = const AsyncLoading();
     try {
       final user = await ref.read(authRepositoryProvider).loginWithMicrosoft();
+      final session = AuthSession(user: user);
+      state = AsyncData(session);
+      ref.read(routerRefreshNotifierProvider).refresh();
+      return user;
+    } catch (e, st) {
+      state = AsyncError(e, st);
+      rethrow;
+    }
+  }
+
+  Future<UserModel> completeMicrosoftRedirect() async {
+    state = const AsyncLoading();
+    try {
+      final user = await ref.read(authRepositoryProvider).completeMicrosoftRedirect();
       final session = AuthSession(user: user);
       state = AsyncData(session);
       ref.read(routerRefreshNotifierProvider).refresh();

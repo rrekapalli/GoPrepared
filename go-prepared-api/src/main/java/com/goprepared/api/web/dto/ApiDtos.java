@@ -11,6 +11,9 @@ public final class ApiDtos {
 
     public record AuthResponse(String accessToken, UserResponse user) {}
 
+    public record OAuthConfigResponse(
+            String googleClientId, String microsoftClientId, String microsoftTenantId, String microsoftRedirectUri) {}
+
     public record GoogleAuthRequest(@NotBlank String idToken) {}
 
     public record MicrosoftAuthRequest(@NotBlank String idToken) {}

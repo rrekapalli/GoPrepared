@@ -11,6 +11,7 @@ OpenAPI: `http://localhost:8080/swagger-ui.html`
 | POST | `/auth/dev` | — | `{ "email", "name?" }` — disabled when `GOPREPARED_AUTH_DEV_ENABLED=false` |
 | POST | `/auth/google` | — | `{ "idToken" }` |
 | POST | `/auth/microsoft` | — | `{ "idToken" }` |
+| GET | `/auth/config` | — | `{ googleClientId, microsoftClientId, microsoftTenantId, microsoftRedirectUri }` |
 | GET | `/users/me` | Bearer JWT | — |
 
 **Response (auth):** `{ "accessToken", "user": { "id", "name", "email", "profilePicture" } }`

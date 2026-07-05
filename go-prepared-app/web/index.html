@@ -35,6 +35,11 @@
 
   <title>GoPrepared</title>
   <link rel="manifest" href="manifest.json">
+  <!-- Required for Microsoft sign-in on web (aad_oauth / MSAL.js) -->
+  <script type="text/javascript" src="https://alcdn.msauth.net/browser/2.13.1/js/msal-browser.min.js"
+    integrity="sha384-2Vr9MyareT7qv+wLp1zBt78ZWB4aljfCTMUrml3/cxm0W81ahmDOC6uyNmmn0Vrc"
+    crossorigin="anonymous"></script>
+  <script src="msalv2_goprepared.js"></script>
   <style>
     html, body {
       background: #ffffff;
@@ -78,6 +83,44 @@
   </style>
 </head>
 <body>
+  <!-- Capture Microsoft OAuth return before Flutter path URL strategy runs -->
+  <script>
+    (function () {
+      function hasOAuthParams(search, hash) {
+        return /(?:^|[?&#])(code|error)=/.test(search) || /(?:^|[?&#])(code|error)=/.test(hash);
+      }
+      var search = window.location.search || '';
+      var hash = window.location.hash || '';
+      if (hasOAuthParams(search, hash)) {
+        sessionStorage.setItem('gp_msal_return', search + hash);
+        var path = window.location.pathname || '/';
+        if (path !== '/auth' && path !== '/auth/') {
+          window.history.replaceState(null, '', '/auth' + search + hash);
+        }
+      }
+    })();
+  </script>
+  <!-- Init MSAL before Flutter boot so handleRedirectPromise sees the auth code -->
+  <script>
+    (function () {
+      var hasReturn = sessionStorage.getItem('gp_msal_return');
+      if (!hasReturn) return;
+      var clientId = sessionStorage.getItem('gp_msal_client_id');
+      var tenant = sessionStorage.getItem('gp_msal_tenant_id');
+      var redirectUri = sessionStorage.getItem('gp_msal_redirect_uri');
+      if (!clientId || !tenant || !redirectUri) return;
+      aadOauth.init({
+        clientId: clientId,
+        tenant: tenant,
+        redirectUri: redirectUri,
+        scope: 'openid profile offline_access email',
+        isB2C: false,
+        customParameters: '{}',
+        cacheLocation: 'localStorage',
+      });
+      sessionStorage.setItem('gp_msal_early_init', '1');
+    })();
+  </script>
   <div id="splash" aria-hidden="true">
     <img src="icons/Icon-192.png" alt="">
     <p>Be Ready Anywhere</p>

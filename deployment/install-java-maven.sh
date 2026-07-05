@@ -5,30 +5,14 @@ set -euo pipefail
 log() { echo "[INFO] $*"; }
 err() { echo "[ERROR] $*" >&2; }
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=lib/ensure-java21.sh
+source "${SCRIPT_DIR}/lib/ensure-java21.sh"
+
 JAVA_PKG="${JAVA_PKG:-openjdk-21-jdk}"
-JAVA_HOME_CANDIDATES=(
-  "/usr/lib/jvm/java-21-openjdk-amd64"
-  "/usr/lib/jvm/java-21-openjdk-arm64"
-)
 
 detect_java_home() {
-    local dir
-    for dir in "${JAVA_HOME_CANDIDATES[@]}"; do
-        if [[ -d "$dir" && -x "$dir/bin/javac" ]]; then
-            echo "$dir"
-            return 0
-        fi
-    done
-    if command -v java >/dev/null 2>&1; then
-        local java_bin jdk_dir
-        java_bin="$(readlink -f "$(command -v java)" 2>/dev/null || command -v java)"
-        jdk_dir="$(dirname "$(dirname "$java_bin")")"
-        if [[ -x "$jdk_dir/bin/javac" ]]; then
-            echo "$jdk_dir"
-            return 0
-        fi
-    fi
-    return 1
+    probe_java21_home
 }
 
 ensure_java_home_in_profile() {

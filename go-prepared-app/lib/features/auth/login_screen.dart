@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/auth/oauth_browser.dart';
 import '../../core/config/app_config.dart';
+import '../../core/config/oauth_config.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/repositories/auth_repository.dart';
 import '../../shared/widgets/app_logo.dart';
@@ -21,6 +23,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   String? _error;
   bool _showDevLogin = false;
   final _devEmailController = TextEditingController(text: 'dev@goprepared.app');
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final msalError = takeMicrosoftOAuthError();
+      if (msalError != null && mounted) {
+        setState(() => _error = msalError);
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -54,6 +67,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final canDevLogin = kDebugMode && AppConfig.devAuthEnabled;
+    final oauthAsync = ref.watch(oauthConfigProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -82,8 +96,31 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
+                  oauthAsync.when(
+                    loading: () => const Center(child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: CircularProgressIndicator(),
+                    )),
+                    error: (_, __) => _buildSignInButtons(context, canDevLogin, const OAuthConfig()),
+                    data: (config) => _buildSignInButtons(context, canDevLogin, config),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSignInButtons(BuildContext context, bool canDevLogin, OAuthConfig config) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
                   FilledButton.icon(
-                    onPressed: _loading ? null : () => _run(() => ref.read(authNotifierProvider.notifier).loginWithGoogle()),
+                    onPressed: _loading || !config.hasGoogle
+                        ? null
+                        : () => _run(() => ref.read(authNotifierProvider.notifier).loginWithGoogle()),
                     icon: _loading
                         ? const SizedBox(
                             width: 20,
@@ -97,9 +134,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                   ),
+                  if (!config.hasGoogle)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text(
+                        'Google sign-in requires GOOGLE_CLIENT_ID in API .env.',
+                        style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   const SizedBox(height: 12),
                   OutlinedButton.icon(
-                    onPressed: _loading || AppConfig.microsoftClientId.isEmpty
+                    onPressed: _loading || !config.hasMicrosoft
                         ? null
                         : () => _run(() => ref.read(authNotifierProvider.notifier).loginWithMicrosoft()),
                     icon: const Icon(Icons.mail_outline),
@@ -109,11 +155,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       foregroundColor: AppColors.primary,
                     ),
                   ),
-                  if (AppConfig.microsoftClientId.isEmpty)
+                  if (!config.hasMicrosoft)
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
-                        'Microsoft sign-in requires MICROSOFT_CLIENT_ID.',
+                        'Microsoft sign-in requires MICROSOFT_CLIENT_ID in API .env.',
                         style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
                         textAlign: TextAlign.center,
                       ),
@@ -157,12 +203,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
                     ],
                   ],
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+      ],
     );
   }
 }

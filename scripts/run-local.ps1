@@ -35,8 +35,11 @@ if ($apiUp) {
     }
 
     Write-Host "Starting Spring Boot API on http://localhost:8080 ..."
+    . "$Root\scripts\load-dotenv.ps1"
     $env:SPRING_FLYWAY_VALIDATE_ON_MIGRATE = "false"
     $apiJob = Start-Job -ScriptBlock {
+        . (Join-Path $using:Root "scripts\load-dotenv.ps1")
+        $env:SPRING_FLYWAY_VALIDATE_ON_MIGRATE = "false"
         Set-Location $using:Root\go-prepared-api
         & .\mvnw.cmd spring-boot:run 2>&1
     }
@@ -55,7 +58,12 @@ if ($apiUp) {
     }
 }
 
-# 3. Flutter web
+# 3. Flutter web (fixed port + OAuth from repo .env)
 Write-Host "Starting Flutter web..."
+. "$Root\scripts\load-dotenv.ps1"
+$flutterArgs = Get-FlutterWebRunArgs
+if ($flutterArgs.Count -gt 0) {
+    Write-Host "Flutter web args from .env: $($flutterArgs -join ' ')" -ForegroundColor Cyan
+}
 Set-Location "$Root\go-prepared-app"
-flutter run -d chrome
+flutter run -d chrome @flutterArgs
