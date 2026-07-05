@@ -72,5 +72,18 @@ load_goprepared_env() {
     local host="${DOMAIN#http://}"
     host="${host#https://}"
     host="${host%%/*}"
-    PWA_API_BASE_URL="http://${host}/api/v1"
+    GOPREPARED_HTTPS="$(strip_cr "${GOPREPARED_HTTPS:-}")"
+    if [[ -z "$GOPREPARED_HTTPS" && "$host" == *".ts.net" ]]; then
+        GOPREPARED_HTTPS="true"
+    fi
+    if [[ "$GOPREPARED_HTTPS" == "true" || "$GOPREPARED_HTTPS" == "1" ]]; then
+        PWA_API_BASE_URL="https://${host}/api/v1"
+        PWA_PUBLIC_URL="https://${host}"
+    else
+        PWA_API_BASE_URL="http://${host}/api/v1"
+        PWA_PUBLIC_URL="http://${host}"
+    fi
+    TLS_DIR="$(strip_cr "${GOPREPARED_TLS_DIR:-/etc/goprepared/tls}")"
+    TLS_CERT="${TLS_DIR}/${host}.crt"
+    TLS_KEY="${TLS_DIR}/${host}.key"
 }

@@ -16,8 +16,14 @@ if (Test-Path $EnvFile) {
     . (Join-Path $Root "scripts\load-dotenv.ps1")
     if ($env:GOPREPARED_HOST) {
         $gpHost = $env:GOPREPARED_HOST.Trim().Trim('"')
-        if ($gpHost -notmatch '^https?://') { $gpHost = "http://$gpHost" }
-        $ApiBaseUrl = "$gpHost/api/v1"
+        $gpHost = $gpHost -replace '^https?://', ''
+        $useHttps = ($env:GOPREPARED_HTTPS -eq 'true') -or ($env:GOPREPARED_HTTPS -eq '1')
+        if (-not $useHttps -and $gpHost -match '\.ts\.net$') { $useHttps = $true }
+        $scheme = if ($useHttps) { 'https' } else { 'http' }
+        $ApiBaseUrl = "${scheme}://${gpHost}/api/v1"
+    }
+    if ($env:API_BASE_URL) {
+        $ApiBaseUrl = $env:API_BASE_URL.Trim().Trim('"')
     }
 }
 
@@ -36,6 +42,9 @@ if ($DartDefines -notcontains '--dart-define=DEV_AUTH_ENABLED=false') {
 }
 if ($env:GOPREPARED_HOST) {
     $DartDefines += "--dart-define=GOPREPARED_HOST=$($env:GOPREPARED_HOST)"
+}
+if ($ApiBaseUrl -match '^https://') {
+    $DartDefines += '--dart-define=GOPREPARED_USE_HTTPS=true'
 }
 
 Push-Location $AppDir

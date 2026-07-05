@@ -14,7 +14,9 @@ class AppConfig {
   static const microsoftRedirectUri = String.fromEnvironment('MICROSOFT_REDIRECT_URI', defaultValue: '');
   static const devAuthEnabled = bool.fromEnvironment('DEV_AUTH_ENABLED', defaultValue: true);
   static const gopreparedHost = String.fromEnvironment('GOPREPARED_HOST', defaultValue: '');
-  /// When native mobile runs without `--dart-define`, use deployed API (Tailscale HTTP, not HTTPS).
+  /// Production Tailscale + Azure Entra OAuth require HTTPS redirect URIs.
+  static const gopreparedUseHttps = bool.fromEnvironment('GOPREPARED_USE_HTTPS', defaultValue: true);
+  /// When native mobile runs without `--dart-define`, use deployed API (HTTPS on Tailscale).
   static const fallbackProductionHost = String.fromEnvironment(
     'FALLBACK_PRODUCTION_HOST',
     defaultValue: 'goprepared.tailce422e.ts.net',
@@ -22,7 +24,7 @@ class AppConfig {
   static const androidEmulatorHost =
       bool.fromEnvironment('ANDROID_USE_EMULATOR_HOST', defaultValue: false);
 
-  /// Hostname or full URL → API base (`…/api/v1`). Bare hostnames use HTTP (production has no TLS).
+  /// Hostname or full URL → API base (`…/api/v1`).
   static String apiBaseUrlFromHost(String hostOrUrl) {
     final trimmed = hostOrUrl.trim();
     if (trimmed.isEmpty) return '';
@@ -30,7 +32,9 @@ class AppConfig {
       final base = trimmed.replaceAll(RegExp(r'/+$'), '');
       return base.endsWith('/api/v1') ? base : '$base/api/v1';
     }
-    return 'http://$trimmed/api/v1';
+    final useHttps = gopreparedUseHttps || trimmed.endsWith('.ts.net');
+    final scheme = useHttps ? 'https' : 'http';
+    return '$scheme://$trimmed/api/v1';
   }
 
   /// OAuth redirect URI for Microsoft (must match Entra app registration).
@@ -70,56 +74,54 @@ class AppConfig {
   }
 
   static void init() {
+    apiBaseUrl = _resolveApiBaseUrl();
+    _normalizeApiBaseUrl();
+  }
+
+  static String _resolveApiBaseUrl() {
     const fromDefine = String.fromEnvironment('API_BASE_URL');
 
     if (kIsWeb) {
       final page = Uri.base;
       final host = page.host;
       if (_isLocalDevHost(host)) {
-        // Local Flutter web dev: prefer production/Tailscale API unless explicitly overridden.
         if (fromDefine.isNotEmpty && !_isLocalDevApiUrl(fromDefine)) {
-          apiBaseUrl = fromDefine;
-          return;
+          return fromDefine;
         }
         if (gopreparedHost.isNotEmpty) {
-          apiBaseUrl = apiBaseUrlFromHost(gopreparedHost);
-          return;
+          return apiBaseUrlFromHost(gopreparedHost);
         }
         if (fallbackProductionHost.isNotEmpty) {
-          apiBaseUrl = apiBaseUrlFromHost(fallbackProductionHost);
-          return;
+          return apiBaseUrlFromHost(fallbackProductionHost);
         }
-        apiBaseUrl = 'http://$host:8080/api/v1';
-        return;
+        return 'http://$host:8080/api/v1';
       }
-      // Deployed PWA — same origin; ignore compile-time localhost define.
       final port = page.hasPort && page.port != 80 && page.port != 443 ? ':${page.port}' : '';
-      apiBaseUrl = '${page.scheme}://$host$port/api/v1';
-      return;
+      return '${page.scheme}://$host$port/api/v1';
     }
 
-    // Native: compile-time localhost points at the device, not your dev machine.
     if (fromDefine.isNotEmpty && !_isLocalDevApiUrl(fromDefine)) {
-      apiBaseUrl = fromDefine;
-      return;
+      return fromDefine;
     }
-
     if (gopreparedHost.isNotEmpty) {
-      apiBaseUrl = apiBaseUrlFromHost(gopreparedHost);
-      return;
+      return apiBaseUrlFromHost(gopreparedHost);
     }
-
     if (androidEmulatorHost && defaultTargetPlatform == TargetPlatform.android) {
-      apiBaseUrl = 'http://10.0.2.2:8080/api/v1';
-      return;
+      return 'http://10.0.2.2:8080/api/v1';
     }
-
     if (fallbackProductionHost.isNotEmpty) {
-      apiBaseUrl = apiBaseUrlFromHost(fallbackProductionHost);
-      return;
+      return apiBaseUrlFromHost(fallbackProductionHost);
     }
+    return 'http://localhost:8080/api/v1';
+  }
 
-    apiBaseUrl = 'http://localhost:8080/api/v1';
+  /// Production Tailscale hosts use HTTPS; HTTP breaks CORS preflight (301 redirect).
+  static void _normalizeApiBaseUrl() {
+    final uri = Uri.tryParse(apiBaseUrl);
+    if (uri == null || uri.scheme != 'http') return;
+    if (uri.host.contains('.ts.net') || gopreparedUseHttps) {
+      apiBaseUrl = apiBaseUrl.replaceFirst('http://', 'https://');
+    }
   }
 
   static String get displayApiHost {

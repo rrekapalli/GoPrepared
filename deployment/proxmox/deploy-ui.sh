@@ -13,6 +13,8 @@ source "${SCRIPT_DIR}/lib/load-env.sh" "$SCRIPT_DIR"
 source "${SCRIPT_DIR}/lib/proxmox-remote.sh"
 # shellcheck source=lib/pwa-zip.sh
 source "${SCRIPT_DIR}/lib/pwa-zip.sh"
+# shellcheck source=scripts/ensure-tailscale-tls.sh
+source "${SCRIPT_DIR}/scripts/ensure-tailscale-tls.sh"
 
 RECREATE=false
 SKIP_CONTAINER=false
@@ -64,9 +66,24 @@ REMOTE_ZIP="/tmp/pwa-dist.zip"
 proxmox_push_file "$VMID" "$ZIP_PATH" "$REMOTE_ZIP"
 proxmox_exec_in_container "$VMID" "unzip -o -q ${REMOTE_ZIP} -d ${WEB_ROOT} && rm -f ${REMOTE_ZIP} && chown -R www-data:www-data ${WEB_ROOT}" || exit 1
 
+USE_HTTPS=false
 NGINX_TEMPLATE="${SCRIPT_DIR}/nginx/goprepared.conf.template"
-[[ -f "$NGINX_TEMPLATE" ]] || { log_error "Missing nginx template"; exit 1; }
-NGINX_CONF=$(sed -e "s|__DOMAIN__|${DOMAIN}|g" -e "s|__WEB_ROOT__|${WEB_ROOT}|g" -e "s|__API_PORT__|${API_PORT}|g" "$NGINX_TEMPLATE")
+if [[ "${GOPREPARED_HTTPS:-}" == "true" || "${GOPREPARED_HTTPS:-}" == "1" ]]; then
+    if ensure_tailscale_tls "$VMID" "$DOMAIN"; then
+        USE_HTTPS=true
+        NGINX_TEMPLATE="${SCRIPT_DIR}/nginx/goprepared-https.conf.template"
+    else
+        log_warn "HTTPS requested but Tailscale cert unavailable — serving HTTP only"
+    fi
+fi
+
+[[ -f "$NGINX_TEMPLATE" ]] || { log_error "Missing nginx template: $NGINX_TEMPLATE"; exit 1; }
+NGINX_CONF=$(sed -e "s|__DOMAIN__|${DOMAIN}|g" \
+    -e "s|__WEB_ROOT__|${WEB_ROOT}|g" \
+    -e "s|__API_PORT__|${API_PORT}|g" \
+    -e "s|__TLS_CERT__|${TLS_CERT}|g" \
+    -e "s|__TLS_KEY__|${TLS_KEY}|g" \
+    "$NGINX_TEMPLATE")
 TMP_NGINX="/tmp/goprepared-nginx.conf"
 echo "$NGINX_CONF" > "$TMP_NGINX"
 proxmox_push_file "$VMID" "$TMP_NGINX" "/etc/nginx/sites-available/goprepared"
@@ -74,7 +91,13 @@ rm -f "$TMP_NGINX"
 
 proxmox_exec_in_container "$VMID" "ln -sf /etc/nginx/sites-available/goprepared /etc/nginx/sites-enabled/goprepared && rm -f /etc/nginx/sites-enabled/default && nginx -t && systemctl reload nginx 2>/dev/null || systemctl restart nginx" || exit 1
 
-if proxmox_exec_in_container "$VMID" "curl -sf -o /dev/null -w '%{http_code}' http://127.0.0.1:${UI_PORT}/" 2>/dev/null | grep -qE '200|304'; then
+if [[ "$USE_HTTPS" == true ]]; then
+    if proxmox_exec_in_container "$VMID" "curl -sfk -o /dev/null -w '%{http_code}' https://127.0.0.1/" 2>/dev/null | grep -qE '200|304'; then
+        log_success "PWA serving on HTTPS (port 443)"
+    else
+        log_warn "HTTPS curl check inconclusive; verify: https://${DOMAIN}/"
+    fi
+elif proxmox_exec_in_container "$VMID" "curl -sf -o /dev/null -w '%{http_code}' http://127.0.0.1:${UI_PORT}/" 2>/dev/null | grep -qE '200|304'; then
     log_success "PWA serving on port ${UI_PORT}"
 else
     log_warn "HTTP curl check inconclusive; verify manually"
@@ -85,4 +108,4 @@ if [[ "$SKIP_CONTAINER" != true ]]; then
 fi
 
 log_success "PWA deployed to ${CONTAINER_NAME} (VMID ${VMID})"
-log_info "  http://${DOMAIN}/"
+log_info "  ${PWA_PUBLIC_URL:-http://${DOMAIN}/}/"

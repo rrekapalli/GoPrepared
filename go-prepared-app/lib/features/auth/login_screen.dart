@@ -98,7 +98,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     final canDevLogin = kDebugMode && AppConfig.devAuthEnabled;
     final oauthAsync = ref.watch(oauthConfigProvider);
-    final config = oauthAsync.value ?? OAuthConfig.fromAppConfig();
+    final baked = OAuthConfig.fromAppConfig();
+    final config = oauthAsync.maybeWhen(
+      data: (remote) => baked.merge(remote),
+      orElse: () => baked,
+    );
 
     return Scaffold(
       body: SafeArea(
@@ -167,11 +171,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                   ),
-                  if (!config.hasGoogle)
+                  if (!config.hasGoogle && !oauthAsync.isLoading)
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
-                        'Google sign-in requires GOOGLE_CLIENT_ID in API .env.',
+                        'Google sign-in requires GOOGLE_CLIENT_ID in .env (optional).',
                         style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
                         textAlign: TextAlign.center,
                       ),
@@ -188,11 +192,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       foregroundColor: AppColors.primary,
                     ),
                   ),
-                  if (!config.hasMicrosoft)
+                  if (!config.hasMicrosoft && !oauthAsync.isLoading)
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
-                        'Microsoft sign-in requires MICROSOFT_CLIENT_ID in API .env.',
+                        oauthAsync.hasError
+                            ? 'Could not load sign-in config. Use .\\scripts\\flutter-run-web.ps1 or check API reachability.'
+                            : 'Microsoft sign-in requires MICROSOFT_CLIENT_ID in .env.',
                         style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
                         textAlign: TextAlign.center,
                       ),

@@ -75,8 +75,10 @@ Optional: set the same ID in [`go-prepared-app/web/index.html`](../go-prepared-a
 
 | Redirect URI | When |
 |--------------|------|
-| `http://localhost:51518/auth` | Local Flutter web (`FLUTTER_WEB_PORT` in `.env`) |
-| `https://goprepared.tailce422e.ts.net/auth` | Production PWA — must match exactly |
+| `http://localhost:51518/auth` | Local Flutter web only (Entra allows http for localhost) |
+| `https://goprepared.tailce422e.ts.net/auth` | Production PWA — **must be HTTPS** (Azure rejects http:// except localhost) |
+
+> **HTTPS on Tailscale:** Enable **HTTPS** in [Tailscale DNS settings](https://login.tailscale.com/admin/dns), then redeploy UI (`./deployment/proxmox/deploy-ui.sh`) to issue a cert via `tailscale cert`. Set `GOPREPARED_HTTPS=true` in `.env`.
 
 5. If the same URIs also appear under a **Web** platform, **remove them from Web** (keep only under SPA).
 6. Do **not** create a client secret for browser sign-in.

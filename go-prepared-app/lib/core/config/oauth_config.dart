@@ -48,7 +48,7 @@ class OAuthConfig {
 
   static Future<OAuthConfig> load(Dio dio) async {
     final base = OAuthConfig.fromAppConfig();
-    if (base.hasGoogle && base.hasMicrosoft) return base;
+    if (base.hasMicrosoft) return base;
     try {
       final res = await dio.get('/auth/config');
       return base.merge(OAuthConfig.fromJson(res.data as Map<String, dynamic>));

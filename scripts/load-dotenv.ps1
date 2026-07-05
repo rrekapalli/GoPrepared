@@ -54,9 +54,11 @@ function Get-FlutterMobileRunArgs {
     # Physical devices cannot reach localhost on the dev PC — prefer MOBILE_API_BASE_URL or production host.
     $mobileApiUrl = $env:MOBILE_API_BASE_URL
     if (-not $mobileApiUrl -and $env:GOPREPARED_HOST) {
-        $gpHost = $env:GOPREPARED_HOST.Trim().Trim('"')
-        if ($gpHost -notmatch '^https?://') { $gpHost = "http://$gpHost" }
-        $mobileApiUrl = "$gpHost/api/v1"
+        $gpHost = $env:GOPREPARED_HOST.Trim().Trim('"') -replace '^https?://', ''
+        $useHttps = ($env:GOPREPARED_HTTPS -eq 'true') -or ($env:GOPREPARED_HTTPS -eq '1')
+        if (-not $useHttps -and $gpHost -match '\.ts\.net$') { $useHttps = $true }
+        $scheme = if ($useHttps) { 'https' } else { 'http' }
+        $mobileApiUrl = "${scheme}://${gpHost}/api/v1"
     }
 
     if ($mobileApiUrl) {
@@ -72,6 +74,14 @@ function Get-FlutterWebRunArgs {
     if ($env:FLUTTER_WEB_PORT) {
         $args += "--web-port=$($env:FLUTTER_WEB_PORT)"
     }
-    $args += Get-FlutterOAuthDartDefines
+    $defines = @(Get-FlutterOAuthDartDefines)
+    # Local web dev: always HTTPS for Tailscale API (HTTP 301 breaks CORS preflight).
+    if ($env:FLUTTER_WEB_PORT -and $env:GOPREPARED_HOST) {
+        $gpHost = $env:GOPREPARED_HOST.Trim().Trim('"') -replace '^https?://', ''
+        $defines = @($defines | Where-Object { $_ -notmatch '^--dart-define=API_BASE_URL=' })
+        $defines += "--dart-define=API_BASE_URL=https://${gpHost}/api/v1"
+        $defines += '--dart-define=GOPREPARED_USE_HTTPS=true'
+    }
+    $args += $defines
     return $args
 }

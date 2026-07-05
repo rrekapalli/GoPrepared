@@ -86,7 +86,7 @@ String _formatMicrosoftOAuthError(String raw) {
         '1. Add platform "Single-page application"\n'
         '2. Add redirect URIs:\n'
         '   • http://localhost:51518/auth (local dev)\n'
-        '   • http://goprepared.tailce422e.ts.net/auth (production PWA)\n'
+        '   • https://goprepared.tailce422e.ts.net/auth (production PWA — Azure requires HTTPS)\n'
         '3. Remove the same URIs from the "Web" platform if listed there\n\n'
         'See Docs/oauth-setup.md for details.';
   }
