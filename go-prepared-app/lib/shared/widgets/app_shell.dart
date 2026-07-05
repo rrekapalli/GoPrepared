@@ -189,9 +189,7 @@ class _ApiOfflineBanner extends StatelessWidget {
             const SizedBox(width: 8),
             Expanded(
               child: Text(
-                kIsWeb && !AppConfig.displayApiHost.contains('localhost')
-                    ? 'API unavailable (${AppConfig.displayApiHost}). The server may be restarting — try again shortly.'
-                    : 'API offline at ${AppConfig.displayApiHost}. Run: cd go-prepared-api && .\\mvnw.cmd spring-boot:run',
+                AppConfig.apiUnreachableHint,
                 style: TextStyle(fontSize: 11, color: Colors.orange.shade900),
               ),
             ),

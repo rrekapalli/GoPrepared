@@ -45,7 +45,7 @@ goprepared:
     client-id: ${MICROSOFT_CLIENT_ID:}
     tenant-id: ${MICROSOFT_TENANT_ID:common}
   cors:
-    allowed-origins: ${GOPREPARED_CORS_ORIGINS:http://localhost:*,http://127.0.0.1:*,http://goprepared.tailce422e.ts.net}
+    allowed-origins: ${GOPREPARED_CORS_ORIGINS:http://localhost:*,http://127.0.0.1:*,http://goprepared.*,http://*.tailce422e.ts.net,http://192.168.*:*}
 
 springdoc:
   api-docs:

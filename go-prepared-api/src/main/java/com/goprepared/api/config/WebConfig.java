@@ -18,7 +18,11 @@ public class WebConfig {
                                 "http://localhost:*",
                                 "http://127.0.0.1:*",
                                 "http://goprepared.*",
-                                "https://goprepared.*")
+                                "https://goprepared.*",
+                                "http://*.tailce422e.ts.net",
+                                "https://*.tailce422e.ts.net",
+                                "http://192.168.*:*",
+                                "http://10.*:*")
                         .allowedMethods("*")
                         .allowedHeaders("*")
                         .allowCredentials(true);

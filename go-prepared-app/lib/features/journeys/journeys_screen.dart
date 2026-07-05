@@ -1,11 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/config/app_config.dart';
+import '../../core/network/api_client.dart';
 import '../../core/theme/app_colors.dart';
-import '../../data/demo/demo_data.dart';
 import '../../data/models/ai_models.dart';
 import '../../data/repositories/journey_repository.dart';
+import '../../features/auth/auth_providers.dart';
+import '../../features/auth/guest_sign_in_prompt.dart';
 import '../../shared/widgets/ui_helpers.dart';
 
 enum _JourneyFilter { recent, upcoming, archived }
@@ -20,7 +23,7 @@ class JourneysScreen extends ConsumerStatefulWidget {
 class _JourneysScreenState extends ConsumerState<JourneysScreen> {
   List<JourneyModel> _journeys = [];
   bool _loading = true;
-  bool _usingDemo = false;
+  bool _apiUnreachable = false;
   String _search = '';
   _JourneyFilter _filter = _JourneyFilter.recent;
 
@@ -30,34 +33,45 @@ class _JourneysScreenState extends ConsumerState<JourneysScreen> {
     _load();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   Future<void> _load() async {
+    setState(() {
+      _loading = true;
+      _apiUnreachable = false;
+    });
+
     try {
       await ref.read(sessionProvider.future);
+      final session = ref.read(authNotifierProvider).valueOrNull;
+      if (session == null) {
+        if (!mounted) return;
+        setState(() {
+          _journeys = [];
+          _loading = false;
+        });
+        return;
+      }
+
       final list = await ref.read(journeyRepositoryProvider).listJourneys();
       if (!mounted) return;
       setState(() {
-        if (list.isEmpty) {
-          _journeys = DemoData.journeysWithDates;
-          _usingDemo = true;
-        } else {
-          _journeys = list;
-          _usingDemo = false;
-        }
+        _journeys = list;
+        _loading = false;
+      });
+    } on DioException catch (e) {
+      if (!mounted) return;
+      final offline = e.type == DioExceptionType.connectionError ||
+          e.type == DioExceptionType.connectionTimeout;
+      setState(() {
+        _journeys = [];
+        _apiUnreachable = offline;
         _loading = false;
       });
     } catch (_) {
-      if (mounted) {
-        setState(() {
-          _journeys = DemoData.journeysWithDates;
-          _usingDemo = true;
-          _loading = false;
-        });
-      }
+      if (!mounted) return;
+      setState(() {
+        _journeys = [];
+        _loading = false;
+      });
     }
   }
 
@@ -79,6 +93,11 @@ class _JourneysScreenState extends ConsumerState<JourneysScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final auth = ref.watch(authNotifierProvider);
+    if (!auth.isLoading && auth.valueOrNull == null) {
+      return const Scaffold(body: GuestSignInPrompt(from: '/journeys'));
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -86,11 +105,14 @@ class _JourneysScreenState extends ConsumerState<JourneysScreen> {
           Expanded(
             child: _loading
                 ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
-                : ListView(
+                : RefreshIndicator(
+                    color: AppColors.primary,
+                    onRefresh: _load,
+                    child: ListView(
                     physics: const AlwaysScrollableScrollPhysics(),
                     padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                     children: [
-                        if (_usingDemo) const _DemoBanner(),
+                        if (_apiUnreachable) const _ApiUnreachableBanner(),
                         Text(
                           'Journeys',
                           style: TextStyle(
@@ -148,6 +170,7 @@ class _JourneysScreenState extends ConsumerState<JourneysScreen> {
                         const SizedBox(height: 72),
                       ],
                     ),
+                  ),
           ),
         ],
       ),
@@ -164,8 +187,8 @@ class _JourneysScreenState extends ConsumerState<JourneysScreen> {
   }
 }
 
-class _DemoBanner extends StatelessWidget {
-  const _DemoBanner();
+class _ApiUnreachableBanner extends StatelessWidget {
+  const _ApiUnreachableBanner();
 
   @override
   Widget build(BuildContext context) {
@@ -179,11 +202,11 @@ class _DemoBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.auto_stories_outlined, size: 18, color: Colors.amber.shade900),
+          Icon(Icons.cloud_off_outlined, size: 18, color: Colors.amber.shade900),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'Cannot reach API at ${AppConfig.displayApiHost} — showing samples.',
+              AppConfig.apiUnreachableHint,
               style: TextStyle(fontSize: 12, color: Colors.amber.shade900),
             ),
           ),

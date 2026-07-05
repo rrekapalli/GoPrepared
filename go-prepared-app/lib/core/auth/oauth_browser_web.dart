@@ -63,12 +63,14 @@ String? takeMicrosoftOAuthError() {
 }
 
 String _formatMicrosoftOAuthError(String raw) {
-  if (raw.contains('9002326') || raw.contains('Single-Page Application')) {
+    if (raw.contains('9002326') || raw.contains('Single-Page Application')) {
     return 'Azure Entra app must be registered as a Single-page application (SPA), not Web.\n\n'
         'In Azure Portal → App registrations → Authentication:\n'
         '1. Add platform "Single-page application"\n'
-        '2. Add redirect URI http://localhost:51518/auth (and your production /auth URL)\n'
-        '3. Remove the same URI from the "Web" platform if it is listed there\n\n'
+        '2. Add redirect URIs:\n'
+        '   • http://localhost:51518/auth (local dev)\n'
+        '   • http://goprepared.tailce422e.ts.net/auth (production PWA)\n'
+        '3. Remove the same URIs from the "Web" platform if listed there\n\n'
         'See Docs/oauth-setup.md for details.';
   }
   return raw;

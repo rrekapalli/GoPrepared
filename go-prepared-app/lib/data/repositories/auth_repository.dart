@@ -123,8 +123,9 @@ class AuthRepository {
   }
 
   void _ensureMicrosoftRedirectUri() {
-    if (!kIsWeb || AppConfig.microsoftRedirectUri.isEmpty) return;
-    final expected = Uri.parse(AppConfig.microsoftRedirectUri);
+    if (!kIsWeb) return;
+    final expected = Uri.parse(AppConfig.oauthRedirectUri);
+    if (!_isLocalDevRedirect(expected)) return;
     final actualPort = Uri.base.hasPort ? Uri.base.port : (Uri.base.scheme == 'https' ? 443 : 80);
     if (expected.hasPort && actualPort != expected.port) {
       throw Exception(
@@ -133,6 +134,9 @@ class AuthRepository {
       );
     }
   }
+
+  static bool _isLocalDevRedirect(Uri uri) =>
+      uri.host == 'localhost' || uri.host == '127.0.0.1';
 
   Future<UserModel> _finishMicrosoftLogin() async {
     final idToken = await _aadOAuth!.getIdToken();

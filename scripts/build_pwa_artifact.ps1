@@ -24,9 +24,10 @@ if (Test-Path $EnvFile) {
 $DartDefines = @("--dart-define=API_BASE_URL=$ApiBaseUrl")
 if (Test-Path (Join-Path $Root "scripts\load-dotenv.ps1")) {
     foreach ($define in (Get-FlutterOAuthDartDefines)) {
-        if ($define -notmatch '^--dart-define=API_BASE_URL=') {
-            $DartDefines += $define
-        }
+        if ($define -match '^--dart-define=API_BASE_URL=') { continue }
+        # Never bake localhost Microsoft redirect into production PWA (runtime uses page origin).
+        if ($define -match '^--dart-define=MICROSOFT_REDIRECT_URI=http://localhost') { continue }
+        $DartDefines += $define
     }
 }
 # Production PWA: never expose dev login (compile-time default is true).

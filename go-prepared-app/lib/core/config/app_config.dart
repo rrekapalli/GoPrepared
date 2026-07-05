@@ -34,15 +34,25 @@ class AppConfig {
   }
 
   /// OAuth redirect URI for Microsoft (must match Entra app registration).
-  /// Web uses `{origin}/auth` — register e.g. https://goprepared.example.com/auth
+  /// Web uses `{origin}/auth` — register e.g. http://goprepared.example.com/auth
   static String get oauthRedirectUri {
-    if (microsoftRedirectUri.isNotEmpty) {
-      return microsoftRedirectUri;
-    }
     if (kIsWeb) {
       final base = Uri.base;
       final port = base.hasPort && base.port != 80 && base.port != 443 ? ':${base.port}' : '';
-      return '${base.scheme}://${base.host}$port/auth';
+      final runtime = '${base.scheme}://${base.host}$port/auth';
+
+      if (microsoftRedirectUri.isNotEmpty) {
+        final configured = Uri.tryParse(microsoftRedirectUri);
+        // Dev-only compile-time URI (localhost:51518) must not override production PWA origin.
+        if (configured != null &&
+            _isLocalDevHost(configured.host) == _isLocalDevHost(base.host)) {
+          return microsoftRedirectUri;
+        }
+      }
+      return runtime;
+    }
+    if (microsoftRedirectUri.isNotEmpty) {
+      return microsoftRedirectUri;
     }
     if (defaultTargetPlatform == TargetPlatform.iOS) {
       return 'msauth.com.goprepared.goPreparedApp://auth';
@@ -115,5 +125,17 @@ class AppConfig {
   static String get displayApiHost {
     final uri = Uri.tryParse(apiBaseUrl);
     return uri != null ? '${uri.host}${uri.hasPort ? ':${uri.port}' : ''}' : apiBaseUrl;
+  }
+
+  /// User-facing hint when the API host cannot be reached from this device.
+  static String get apiUnreachableHint {
+    final host = displayApiHost;
+    if (host.contains('.ts.net')) {
+      return 'Cannot reach $host. Install Tailscale on this device, join the same tailnet, then retry.';
+    }
+    if (_isLocalDevHost(host)) {
+      return 'API offline at $host. Start Spring Boot locally or point API_BASE_URL to production in .env.';
+    }
+    return 'Cannot reach API at $host. Check your network connection and retry.';
   }
 }
